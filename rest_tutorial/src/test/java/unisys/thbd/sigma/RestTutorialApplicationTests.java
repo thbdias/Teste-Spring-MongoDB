@@ -1,4 +1,4 @@
-package io.codementor.gtommee.rest_tutorial;
+package unisys.thbd.sigma;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

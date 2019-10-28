@@ -1,13 +1,13 @@
-package io.codementor.gtommee.rest_tutorial;
+package unisys.thbd.sigma;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class RestTutorialApplication {
+public class SigmaApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(RestTutorialApplication.class, args);
+		SpringApplication.run(SigmaApplication.class, args);
 	}
 
 }
