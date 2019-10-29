@@ -1,21 +1,6 @@
 package unisys.thbd.sigma.controllers;
 
-import unisys.thbd.sigma.models.ContratoDistiruicaoModel;
-import unisys.thbd.sigma.repositories.ContratoDistribuicaoRepository;
-import org.bson.types.ObjectId;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import javax.validation.Valid;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.List;
 
 @RestController
 @RequestMapping("/contrato_distribuicao")
