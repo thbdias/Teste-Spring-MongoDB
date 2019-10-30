@@ -46,6 +46,16 @@ public class PetsController {
         return pets;
     }
 
+    @RequestMapping(value = "/array", method = RequestMethod.POST)
+    public List<Pets> createPet(@Valid @RequestBody List<Pets> pets) {
+        pets.forEach(pet -> {
+            pet.set_id(ObjectId.get());
+            repository.save(pet);
+        });
+
+        return pets;
+    }
+
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public void deletePet(@PathVariable ObjectId id) {
         repository.delete(repository.findBy_id(id));
