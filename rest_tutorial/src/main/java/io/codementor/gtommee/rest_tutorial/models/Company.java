@@ -1,30 +1,46 @@
 package io.codementor.gtommee.rest_tutorial.models;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import javax.validation.Valid;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Document(collection="company")
 public class Company {
+
+//    private int id;
     @Id
-    private int id;
+    public ObjectId _id;
+
     private String name;
 
     private List<Product> products;
 
     private Contact contact;
 
-    public void setId(int id){
-        this.id = id;
-    }
+    @Valid
+    private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
-    public int getId(){
-        return this.id;
-    }
+//    public void setId(int id){
+//        this.id = id;
+//    }
+//
+//    public int getId(){
+//        return this.id;
+//    }
+
+    // ObjectId needs to be converted to string
+    public String get_id() { return _id.toHexString(); }
+    public void set_id(ObjectId _id) { this._id = _id; }
 
     public void setName(String name){
         this.name = name;
@@ -50,8 +66,8 @@ public class Company {
         return this.contact;
     }
 
-    public Company(int id, String name, List<Product> products, Contact contact){
-        this.id = id;
+    public Company(ObjectId _id, String name, List<Product> products, Contact contact){
+        this._id = _id;
         this.name = name;
         this.products = products;
         this.contact = contact;
@@ -70,5 +86,19 @@ public class Company {
         }
 
         return jsonString;
+    }
+
+    public void setAdditionalProperties(Map<String, Object> additionalProperties) {
+        this.additionalProperties = additionalProperties;
+    }
+
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return this.additionalProperties;
+    }
+
+    @JsonAnySetter
+    public void setAdditionalProperty(String name, Object value) {
+        this.additionalProperties.put(name, value);
     }
 }
