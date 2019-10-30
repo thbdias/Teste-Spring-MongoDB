@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "9208d587-771b-4f0f-9f7d-cfae1eec93e0",
+		"_postman_id": "fda45ea8-25a3-4c4f-b919-fc4253066f6a",
 		"name": "spring_mongo",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -19,6 +19,26 @@
 					"port": "8080",
 					"path": [
 						"pets",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getCompany",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/company/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"company",
 						""
 					]
 				}
