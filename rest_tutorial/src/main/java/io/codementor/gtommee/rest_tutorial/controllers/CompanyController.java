@@ -19,7 +19,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/pets")
-public class PetsController {
+public class CompanyController {
     @Autowired
     private PetsRepository repository;
 
@@ -28,10 +28,10 @@ public class PetsController {
         return repository.findAll();
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public Pets getPetById(@PathVariable("id") ObjectId id) {
-        return repository.findBy_id(id);
-    }
+//    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+//    public Pets getPetById(@PathVariable("id") ObjectId id) {
+//        return repository.findBy_id(id);
+//    }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     public void modifyPetById(@PathVariable("id") ObjectId id, @Valid @RequestBody Pets pets) {
@@ -56,10 +56,10 @@ public class PetsController {
         return pets;
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    public void deletePet(@PathVariable ObjectId id) {
-        repository.delete(repository.findBy_id(id));
-    }
+//    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+//    public void deletePet(@PathVariable ObjectId id) {
+//        repository.delete(repository.findBy_id(id));
+//    }
 
 
     @RequestMapping(value = "/write_json", method = RequestMethod.GET)
