@@ -158,6 +158,78 @@
 			"response": []
 		},
 		{
+			"name": "createPet array",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "[{\r\n    \"name\": \"loro1\",\r\n    \"species\": \"bird1\",\r\n    \"breed\": \"sparrow1\",\r\n    \"altura\": \"101\"\r\n},\r\n{\r\n    \"name\": \"loro2\",\r\n    \"species\": \"bird2\",\r\n    \"breed\": \"sparrow2\",\r\n    \"altura\": \"102\"\r\n}]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/pets/array",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"pets",
+						"array"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "createCompany",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\": \"Apple\",\n\t\"products\": [\n\t\t\t{\n\t\t\t\t\"code\": \"A-123\",\n\t\t\t\t\"name\": \"Iphone 7\",\n\t\t\t\t\"details\": \"Price 649.00 USD & FREE shipping\"\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"code\": \"A-456\",\n\t\t\t\t\"name\": \"IPadPro\",\n\t\t\t\t\"details\": \"Price 417.67 USD & FREE shipping\"\n\t\t\t}\n\t\t],\n\t\"contact\": {\n\t\t\"address\": \"Cupertino, CA 95014\",\n\t\t\"phone\": \"1-408-996-1010\"\n\t}\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/company/array",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"company",
+						"array"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "deletePet",
 			"request": {
 				"method": "DELETE",
