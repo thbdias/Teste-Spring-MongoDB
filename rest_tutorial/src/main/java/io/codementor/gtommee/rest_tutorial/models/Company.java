@@ -20,13 +20,9 @@ public class Company {
 //    private int id;
     @Id
     public ObjectId _id;
-
     private String name;
-
     private List<Product> products;
-
     private Contact contact;
-
     @Valid
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
@@ -72,6 +68,8 @@ public class Company {
         this.products = products;
         this.contact = contact;
     }
+
+    public Company(){}
 
     @Override
     public String toString() {

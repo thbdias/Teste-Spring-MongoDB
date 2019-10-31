@@ -11,6 +11,8 @@ public class Product {
         this.details = details;
     }
 
+    public Product(){}
+
     public void setCode(String code){
         this.code = code;
     }
