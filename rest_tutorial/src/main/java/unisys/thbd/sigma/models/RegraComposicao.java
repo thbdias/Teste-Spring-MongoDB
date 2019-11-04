@@ -31,13 +31,14 @@ public class RegraComposicao extends Regra {
      *
      * @return
      */
-    public Boolean isReadOnlyDataInicio() {
-        return getId() != null && DataVigenciaUtil.isDataInformadaInferiorDiaAtual(getInicioVigenciaNoBanco());
-    }
+//    public Boolean isReadOnlyDataInicio() {
+//        return getId() != null && DataVigenciaUtil.isDataInformadaInferiorDiaAtual(getInicioVigenciaNoBanco());
+//    }
 
     @Override
     public Boolean isDatasValidas() {
-        if (!isReadOnlyDataInicio() && getInicioVigencia().before(DateUtil.getDataAtual())) {
+//        if (!isReadOnlyDataInicio() && getInicioVigencia().before(DateUtil.getDataAtual())) {
+        if (getInicioVigencia().before(DateUtil.getDataAtual())) {
             throw new VigenciaInicialRetroativaInvalidaException();
         }
         return super.isDatasValidas();
