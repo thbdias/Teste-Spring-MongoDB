@@ -4,13 +4,13 @@ import java.io.Serializable;
 
 public abstract class EntidadeCobrancaTerceirizada extends Entidade implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+//	private static final long serialVersionUID = 1L;
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
+//		result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
 		return result;
 	}
 
@@ -26,13 +26,13 @@ public abstract class EntidadeCobrancaTerceirizada extends Entidade implements S
 			return false;
 		}
 		EntidadeCobrancaTerceirizada other = (EntidadeCobrancaTerceirizada) obj;
-		if (getId() == null) {
-			if (other.getId() != null) {
-				return false;
-			}
-		} else if (!this.getId().equals(other.getId())) {
-			return false;
-		}
+//		if (getId() == null) {
+//			if (other.getId() != null) {
+//				return false;
+//			}
+//		} else if (!this.getId().equals(other.getId())) {
+//			return false;
+//		}
 		return true;
 	}
 

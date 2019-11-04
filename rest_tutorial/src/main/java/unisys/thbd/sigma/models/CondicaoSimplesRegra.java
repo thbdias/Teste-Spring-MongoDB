@@ -6,17 +6,11 @@ public class CondicaoSimplesRegra extends EntidadeAuditavelCobrancaTerceirizada 
 
 //    private static final long serialVersionUID = 1L;
 //    private Long id;
-
     private CondicaoCompostaRegra condicaoComposicao;
-
     private Atributo atributo;
-
     private String operador;
-
     private String valor;
-
     private Integer ordem;
-
     private String operadorLogico;
 
     @Override

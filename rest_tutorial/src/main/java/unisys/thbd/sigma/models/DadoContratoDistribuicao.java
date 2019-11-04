@@ -7,9 +7,7 @@ public class DadoContratoDistribuicao extends EntidadeCobrancaTerceirizada {
 //    private Long id;
 
     private ContratoDistribuicaoRegra contratoDistribuicaoRegra;
-
     private Atributo atributo;
-
     private String valor;
 
     /**

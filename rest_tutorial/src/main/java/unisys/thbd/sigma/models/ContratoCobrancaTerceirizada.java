@@ -12,31 +12,18 @@ import java.util.Map;
 public class ContratoCobrancaTerceirizada extends EntidadeCobrancaTerceirizada {
 
     private ClienteCobrancaTerceirizada clienteCobrancaTerceirizada;
-
     private ContratoDistribuicaoModel contratoDistribuicao;
-
     private String numeroContrato;
-
     private Integer diasAtraso;
-
     private Double valorDivida;
-
     private Double valorDividaAtualizada;
-
     private Date dataInclusao;
-
     private Date dataAtualizacaoValorDivida;
-
     private List<DadoContratoCobrancaTerceirizada> dadosContratoCobrancaTerceirizada;
-
     private Long execucaoSelecao;
-
     private Long execucaoDistribuicao;
-
     private Map<String, DadoContratoCobrancaTerceirizada> mapDadosContratoCobrancaTerceirizada = null;
-
     private Map<String, DadoContratoCobrancaTerceirizada> dadosSistemicosContratoCobrancaTerceirizada = null;
-
     private String descricaoEncerramento;
 
     public String getDataInclusaoFormatada() {

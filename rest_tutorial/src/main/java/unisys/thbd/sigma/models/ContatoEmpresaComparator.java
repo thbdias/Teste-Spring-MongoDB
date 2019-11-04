@@ -5,7 +5,7 @@ import java.util.Comparator;
 
 public class ContatoEmpresaComparator implements Comparator<ContatoEmpresa>, Serializable {
 
-    private static final long serialVersionUID = 1L;
+//    private static final long serialVersionUID = 1L;
 
     @Override
     public int compare(ContatoEmpresa r1, ContatoEmpresa r2) {

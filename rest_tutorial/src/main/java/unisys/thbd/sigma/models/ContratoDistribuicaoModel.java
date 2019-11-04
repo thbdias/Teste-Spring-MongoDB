@@ -27,41 +27,23 @@ public abstract class ContratoDistribuicaoModel extends EntidadeCobrancaTerceiri
 //    }
 
     private ContratoCobrancaTerceirizada contratoCobrancaTerceirizada;
-
     private Integer situacao;
-
     private Convenio convenio;
-
     private ClienteCobrancaTerceirizada clienteCobrancaTerceirizada;
-
     private Date dataDistribuicao;
-
     private List<ContratoDistribuicaoRegra> contratoDistribuicaoRegras;
-
     private List<Pagamento> pagamentos;
-
     private Date dataTerminoPermancencia;
-
     private Date dataEncerramento;
-
     private Date dataRemessaEncerramento;
-
     private String usuarioResponsavel;
-
     private Integer motivoEncerramento;
-
     private Date dataIncorporacao;
-
     private Date dataApuracao;
-
     private String descricaoEncerramento;
-
     private List<Integer> filtroSituacao;
-
     private Date dataIncio;
-
     private Date dataFim;
-
     private Map<TipoRegraEnum, List<ContratoDistribuicaoRegra>> mapaContratoDistribuicaoRegraPorTipo;
 
 

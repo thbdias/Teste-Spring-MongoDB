@@ -7,23 +7,14 @@ public class EnderecoEmpresa extends EntidadeCobrancaTerceirizada {
 //    private Long id;
 
     private EmpresaTerceirizada empresaTerceirizada;
-
     private String tipoEndereco;
-
     private String abreviacaoLogradouro;
-
     private Long numeroLogradouro;
-
     private String complementoLogradouro;
-
     private String logradouro;
-
     private Long cep;
-
     private String bairro;
-
     private String cidade;
-
     private String siglaUf;
 
 //    public Long getId() {

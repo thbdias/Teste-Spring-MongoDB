@@ -12,30 +12,18 @@ package unisys.thbd.sigma.models;
 public class AmbienteDistribuicaoContrato {
 
     private Map<TipoRegraEnum, List<Regra>> mapaDeRegras;
-
     private Map<Long, Convenio> mapaDeConvenios;
-
     private static List<ContratoDistribuicaoModel> listaContratosDistribuidosSimples = new ArrayList<ContratoDistribuicaoModel>();
-
     private static List<ContratoDistribuicaoModel> listaContratosDistribuidosMultiplos = new ArrayList<ContratoDistribuicaoModel>();
-
     private static Map<String, List<ContratoDistribuicaoModel>> mapaContratosPorConveniosEnquadrados =
             new HashMap<String, List<ContratoDistribuicaoModel>>();
-
     private Map<String, Double> mapaSomatorioValorDividaPorCriteriosOrdenacao;
-
     private List<Convenio> conveniosMultiplosCorrente;
-
     private Convenio[] arrayConveniosMultiplosCorrente;
-
     // private Map<Long, Double> valoresDistribuidosPorConvenio;
-
     private Map<Long, Map<String, Double>> valoresDistribuidosPorConvenio;
-
     private int posicaoCampoValorDividaCorrente;
-
     private int posicaoConvenioCorrente = 0;
-
     private Date dataApuracao;
 
     /**
@@ -88,7 +76,7 @@ public class AmbienteDistribuicaoContrato {
      */
     public void adicionarConvenio(Convenio convenio) {
         iniciaMapaDeConvenios();
-        this.mapaDeConvenios.put(convenio.getId(), convenio);
+//        this.mapaDeConvenios.put(convenio.getId(), convenio);
     }
 
     /**
@@ -187,7 +175,7 @@ public class AmbienteDistribuicaoContrato {
 
         for (ContratoDistribuicaoRegra cdrRegra : contratoDistribuicao.recuperaRegraEnquadrada(TipoRegraEnum.REGRA_DISTRIBUICAO)) {
             Convenio convenio = ((RegraDistribuicao) cdrRegra.getRegra()).getConvenio();
-            convenios.add(convenio.getId());
+//            convenios.add(convenio.getId());
         }
 
         Collections.sort(convenios);
@@ -243,7 +231,7 @@ public class AmbienteDistribuicaoContrato {
 
             for (Convenio convenio : getConveniosMultiplosCorrente()) {
                 arrayConveniosMultiplosCorrente[posicaoAtual++] = convenio;
-                valoresDistribuidosPorConvenio.put(convenio.getId(), new HashMap<String, Double>());
+//                valoresDistribuidosPorConvenio.put(convenio.getId(), new HashMap<String, Double>());
             }
         }
     }
@@ -288,16 +276,16 @@ public class AmbienteDistribuicaoContrato {
         }
 
         Convenio convenio = arrayConveniosMultiplosCorrente[posicaoConvenioCorrente];
-        Map<String, Double> valoresDistribuidosPorConvenioECriterios = valoresDistribuidosPorConvenio.get(convenio.getId());
-        Double valorDistribuido = valoresDistribuidosPorConvenioECriterios.get(getValorAtributosSemValorDivida(valoresAtributosOrdem));
-        valorDistribuido = valorDistribuido != null ? valorDistribuido : 0.0D;
+//        Map<String, Double> valoresDistribuidosPorConvenioECriterios = valoresDistribuidosPorConvenio.get(convenio.getId());
+//        Double valorDistribuido = valoresDistribuidosPorConvenioECriterios.get(getValorAtributosSemValorDivida(valoresAtributosOrdem));
+//        valorDistribuido = valorDistribuido != null ? valorDistribuido : 0.0D;
         posicaoConvenioCorrente++;
 
-        if (valorDistribuido <= this.getValorMedioValoresPorCriteriosOrdenacao(valoresAtributosOrdem)) {
+//        if (valorDistribuido <= this.getValorMedioValoresPorCriteriosOrdenacao(valoresAtributosOrdem)) {
             return convenio;
-        } else {
-            return proximoConvenio(valorDivida, valoresAtributosOrdem);
-        }
+//        } else {
+//            return proximoConvenio(valorDivida, valoresAtributosOrdem);
+//        }
     }
 
     /**

@@ -6,15 +6,10 @@ public class ContatoEmpresa extends EntidadeCobrancaTerceirizada {
 //    private Long id;
 
     private EmpresaTerceirizada empresaTerceirizada;
-
     private String nome;
-
     private String descricao;
-
     private Long comercial;
-
     private Long celular;
-
     private String email;
 
     public String getCelularFormatado() {

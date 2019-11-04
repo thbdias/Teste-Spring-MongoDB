@@ -19,17 +19,11 @@ public abstract class Regra extends EntidadeAuditavelCobrancaTerceirizada implem
 //    private Long id;
 
     private String nome;
-
     private Date inicioVigencia;
-
     private Date fimVigencia;
-
     private Integer tipoRegra;
-
     private List<CondicaoCompostaRegra> condicoesComposta;
-
     private List<AcaoRegra> acoesRegra;
-
     private ClienteCobrancaTerceirizada clienteCobrancaTerceirizada;
 
     private Boolean ativo;

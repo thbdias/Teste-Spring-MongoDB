@@ -8,16 +8,13 @@ package unisys.thbd.sigma.models;
 
 public class ContratoDistribuicaoRegra extends EntidadeCobrancaTerceirizada {
 
-    private static final long serialVersionUID = 1L;
+//    private static final long serialVersionUID = 1L;
 
 //    private Long id;
 
     private ContratoDistribuicaoModel contratoDistribuicao;
-
     private Regra regra;
-
     private List<DadoContratoDistribuicao> dadosContratoDistribuicao;
-
     private Map<String, DadoContratoDistribuicao> mapDadosContratoDistribuicao = null;
 
     /**
