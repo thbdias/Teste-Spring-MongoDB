@@ -1,0 +1,19 @@
+{
+	"name": "Apple",
+	"products": [
+			{
+				"code": "A-123",
+				"name": "Iphone 7",
+				"details": "Price 649.00 USD & FREE shipping"
+			},
+			{
+				"code": "A-456",
+				"name": "IPadPro",
+				"details": "Price 417.67 USD & FREE shipping"
+			}
+		],
+	"contact": {
+		"address": "Cupertino, CA 95014",
+		"phone": "1-408-996-1010"
+	}
+}
