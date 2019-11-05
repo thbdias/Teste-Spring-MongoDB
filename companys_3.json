@@ -11,11 +11,12 @@
 					"code": "A-456",
 					"name": "IPadPro",
 					"details": "Price 417.67 USD & FREE shipping"
-				}
+				}				
 			],
 		"contact": {
 			"address": "Cupertino, CA 95014",
-			"phone": "1-408-996-1010"
+			"phone": "1-408-996-1010",
+			"referencia": "N/A"
 		},
 		"novo1": "novo valor 1"
 	},
@@ -31,6 +32,11 @@
 					"code": "Z-444",
 					"name": "IES",
 					"details": "Price 555.78 USD & FREE shipping"
+				},
+				{
+					"code": "X-111",
+					"name": "KKKKK",
+					"chave nada a ver": "Sem valor"
 				}
 			],
 		"contact": {
