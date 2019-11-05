@@ -13,8 +13,8 @@ public class ContratoCobrancaTerceirizada extends EntidadeCobrancaTerceirizada {
     private ContratoDistribuicaoModel contratoDistribuicao;
     private String numeroContrato;
     private Integer diasAtraso;
-    private Double valorDivida;
-    private Double valorDividaAtualizada;
+    private String valorDivida;
+    private String valorDividaAtualizada;
     private Date dataInclusao;
     private Date dataAtualizacaoValorDivida;
     private List<DadoContratoCobrancaTerceirizada> dadosContratoCobrancaTerceirizada;
@@ -23,6 +23,23 @@ public class ContratoCobrancaTerceirizada extends EntidadeCobrancaTerceirizada {
     private Map<String, DadoContratoCobrancaTerceirizada> mapDadosContratoCobrancaTerceirizada = null;
     private Map<String, DadoContratoCobrancaTerceirizada> dadosSistemicosContratoCobrancaTerceirizada = null;
     private String descricaoEncerramento;
+
+    //contrutor
+    public ContratoCobrancaTerceirizada (){
+        clienteCobrancaTerceirizada = null;
+        contratoDistribuicao = null;
+        numeroContrato = null;
+        diasAtraso = null;
+        valorDivida = null;
+        valorDividaAtualizada = null;
+        dataInclusao = null;
+        dataAtualizacaoValorDivida = null;
+        dadosContratoCobrancaTerceirizada = null;
+        execucaoSelecao = null;
+        execucaoDistribuicao = null;
+        mapDadosContratoCobrancaTerceirizada = null;
+        dadosSistemicosContratoCobrancaTerceirizada = null;
+    }
 
     public String getDataInclusaoFormatada() {
         if (this.dataInclusao != null) {
@@ -271,9 +288,9 @@ public class ContratoCobrancaTerceirizada extends EntidadeCobrancaTerceirizada {
      *
      * @return the valorDivida
      */
-    public Double getValorDivida() {
+    public String getValorDivida() {
         if (this.valorDivida == null) {
-            this.valorDivida = AtributoSistemaUtil.toDouble(getValorAtributo(AtributoSistemaEnum.VALOR_DIVIDA.getAtributo()));
+//            this.valorDivida = AtributoSistemaUtil.toDouble(getValorAtributo(AtributoSistemaEnum.VALOR_DIVIDA.getAtributo()));
         }
         return this.valorDivida;
     }
@@ -284,7 +301,7 @@ public class ContratoCobrancaTerceirizada extends EntidadeCobrancaTerceirizada {
      * @param valorDivida
      *            the valorDivida to set
      */
-    public void setValorDivida(Double valorDivida) {
+    public void setValorDivida(String valorDivida) {
         this.valorDivida = valorDivida;
     }
 
@@ -293,7 +310,7 @@ public class ContratoCobrancaTerceirizada extends EntidadeCobrancaTerceirizada {
      *
      * @return the valorDividaAtualizada
      */
-    public Double getValorDividaAtualizada() {
+    public String getValorDividaAtualizada() {
         return this.valorDividaAtualizada;
     }
 
@@ -302,7 +319,7 @@ public class ContratoCobrancaTerceirizada extends EntidadeCobrancaTerceirizada {
      *
      * @param valorDividaAtualizada the valorDivida to set
      */
-    public void setValorDividaAtualizada(Double valorDividaAtualizada) {
+    public void setValorDividaAtualizada(String valorDividaAtualizada) {
         this.valorDividaAtualizada = valorDividaAtualizada;
     }
 

@@ -30,6 +30,32 @@ public class Convenio extends EntidadeAuditavelCobrancaTerceirizada {
     private Double meta;
     private Boolean vigenteNoBanco = null;
 
+    //contrutor
+    public Convenio(){
+        String nome = null;
+        Date inicioVigencia = null;
+        Date fimVigencia = null;
+        Integer situacaoConvenio = null;
+        TipoDistribuicao tipoDistribuicao = null;
+        Date dataSuspensao = null;
+        String descricaoSuspensao = null;
+        Date dataReativacao = null;
+        String descricaoReativacao = null;
+        Date dataEncerramento = null;
+        String descricaoEncerramento = null;
+        EmpresaTerceirizada empresaTerceirizada = null;
+        ClienteCobrancaTerceirizada clienteCobrancaTerceirizada = null;
+        RegraDistribuicao regra = null;
+        String numeroEdital = null;
+        String codigoOrcamento = null;
+        String numeroContrato = null;
+        Long permanencia = null;
+        Double remuneracao = null;
+        Double remuneracaoDemaisCanais = null;
+        Double meta = null;
+        Boolean vigenteNoBanco = null;
+    }
+
     @Override
     public Boolean isAuditoriaComHistorico() {
         return Boolean.TRUE;

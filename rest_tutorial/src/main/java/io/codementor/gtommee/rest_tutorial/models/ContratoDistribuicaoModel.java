@@ -11,17 +11,11 @@ import java.util.*;
 
 public abstract class ContratoDistribuicaoModel extends EntidadeCobrancaTerceirizada {
 
-    private static final long serialVersionUID = 1L;
+//    private static final long serialVersionUID = 1L;
     @Id
     private ObjectId id;
     @Valid
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
-
-    // Constructors
-    public ContratoDistribuicaoModel() {}
-
-//    public ContratoDistiruicaoModel( ) {
-//    }
 
     private ContratoCobrancaTerceirizada contratoCobrancaTerceirizada;
     private Integer situacao;
@@ -43,7 +37,54 @@ public abstract class ContratoDistribuicaoModel extends EntidadeCobrancaTerceiri
     private Date dataFim;
     private Map<TipoRegraEnum, List<ContratoDistribuicaoRegra>> mapaContratoDistribuicaoRegraPorTipo;
 
+    // Constructors
+    public ContratoDistribuicaoModel() {}
 
+    public ContratoDistribuicaoModel(
+                                    ObjectId id,
+//                                    Map<String, Object> additionalProperties,
+                                    ContratoCobrancaTerceirizada contratoCobrancaTerceirizada,
+                                    Integer situacao,
+                                    Convenio convenio,
+                                    ClienteCobrancaTerceirizada clienteCobrancaTerceirizada,
+                                    Date dataDistribuicao,
+                                    List<ContratoDistribuicaoRegra> contratoDistribuicaoRegras,
+                                    List<Pagamento> pagamentos,
+                                    Date dataTerminoPermancencia,
+                                    Date dataEncerramento,
+                                    Date dataRemessaEncerramento,
+                                    String usuarioResponsavel,
+                                    Integer motivoEncerramento,
+                                    Date dataIncorporacao,
+                                    Date dataApuracao,
+                                    String descricaoEncerramento,
+                                    List<Integer> filtroSituacao,
+                                    Date dataIncio,
+                                    Date dataFim,
+                                    Map<TipoRegraEnum, List<ContratoDistribuicaoRegra>> mapaContratoDistribuicaoRegraPorTipo
+                                    ) {
+        this.id = id;
+//        this.additionalProperties = additionalProperties;
+        this.contratoCobrancaTerceirizada = contratoCobrancaTerceirizada;
+        this.situacao = situacao;
+        this.convenio = convenio;
+        this.clienteCobrancaTerceirizada = clienteCobrancaTerceirizada;
+        this.dataDistribuicao = dataDistribuicao;
+        this.contratoDistribuicaoRegras = contratoDistribuicaoRegras;
+        this.pagamentos = pagamentos;
+        this.dataTerminoPermancencia = dataTerminoPermancencia;
+        this.dataEncerramento = dataEncerramento;
+        this.dataRemessaEncerramento = dataRemessaEncerramento;
+        this.usuarioResponsavel = usuarioResponsavel;
+        this.motivoEncerramento = motivoEncerramento;
+        this.dataIncorporacao = dataIncorporacao;
+        this.dataApuracao = dataApuracao;
+        this.descricaoEncerramento = descricaoEncerramento;
+        this.filtroSituacao = filtroSituacao;
+        this.dataIncio = dataIncio;
+        this.dataFim = dataFim;
+        this.mapaContratoDistribuicaoRegraPorTipo = mapaContratoDistribuicaoRegraPorTipo;
+    }
 
     // ObjectId needs to be converted to string
     public String get_id() { return id.toHexString(); }

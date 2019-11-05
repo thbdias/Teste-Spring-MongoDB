@@ -12,6 +12,14 @@ public class ClienteCobrancaTerceirizada extends EntidadeAuditavelCobrancaTercei
 //        this.id = id;
 //    }
 
+    public ClienteCobrancaTerceirizada (){
+        nome = null;
+        descricao = null;
+        codigo = null;
+        administrador = null;
+        credor = null;
+    }
+
     public String getNome() {
         return nome;
     }
