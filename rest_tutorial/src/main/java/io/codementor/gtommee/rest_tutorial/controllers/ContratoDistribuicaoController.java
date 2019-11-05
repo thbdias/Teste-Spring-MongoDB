@@ -29,19 +29,21 @@ public class ContratoDistribuicaoController {
     @RequestMapping(value = "/object_from_json", method = RequestMethod.GET)
     public String createCompany() {
 
-        try (FileReader reader = new FileReader("C:\\Users\\balbinth\\Documents\\cont1.json"))
+        try (FileReader reader = new FileReader("C:\\Users\\balbinth\\Documents\\cont3.json"))
         {
             JsonElement jsonElement = JsonParser.parseReader(reader);
-            JsonObject controtoObject = jsonElement.getAsJsonObject();
-//            parseContratoObject(controtoObject);
+            JsonArray contratoArray = jsonElement.getAsJsonArray();
+//            JsonObject controtoObject = jsonElement.getAsJsonObject();
 
-            try {
-                contratoDistribuicaoRepository.save(parseContratoObject(controtoObject));
-//                contratoDistribuicaoRepository.save(parseContratoObject2(controtoObject));
-//                teste(controtoObject);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            contratoArray.forEach(itemContratoArray -> {
+                try {
+                    contratoDistribuicaoRepository.save(parseContratoObject(itemContratoArray.getAsJsonObject()));
+    //                contratoDistribuicaoRepository.save(parseContratoObject2(controtoObject));
+    //                teste(controtoObject);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            });
 
             return "+ teste object from json +";
         } catch (FileNotFoundException e) {
