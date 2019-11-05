@@ -160,40 +160,40 @@ public class AmbienteDistribuicaoContrato {
     /**
      * @param contratoMultiplo
      */
-    public static synchronized void adicionaContratoDistribuidoMultiplo(ContratoDistribuicaoModel contratoMultiplo) {
-        listaContratosDistribuidosMultiplos.add(contratoMultiplo);
-        adicionarContratoEnquadradosMultiplosConvenios(contratoMultiplo);
-    }
+//    public static synchronized void adicionaContratoDistribuidoMultiplo(ContratoDistribuicaoModel contratoMultiplo) {
+//        listaContratosDistribuidosMultiplos.add(contratoMultiplo);
+//        adicionarContratoEnquadradosMultiplosConvenios(contratoMultiplo);
+//    }
 
     /*
      * Adicionar Contrato Multiplos
      */
-    private static void adicionarContratoEnquadradosMultiplosConvenios(ContratoDistribuicaoModel contratoDistribuicao) {
-        String codigoConvenios = "";
-
-        List<Long> convenios = new ArrayList<Long>();
-
-        for (ContratoDistribuicaoRegra cdrRegra : contratoDistribuicao.recuperaRegraEnquadrada(TipoRegraEnum.REGRA_DISTRIBUICAO)) {
-            Convenio convenio = ((RegraDistribuicao) cdrRegra.getRegra()).getConvenio();
-//            convenios.add(convenio.getId());
-        }
-
-        Collections.sort(convenios);
-
-        for (Long idConvenio : convenios) {
-            codigoConvenios = codigoConvenios.toString() + idConvenio + ";";
-        }
-
-        List<ContratoDistribuicaoModel> contratosDistribuicao = mapaContratosPorConveniosEnquadrados.get(codigoConvenios);
-
-        if (contratosDistribuicao == null) {
-            contratosDistribuicao = new ArrayList<ContratoDistribuicaoModel>();
-        }
-        contratosDistribuicao.add(contratoDistribuicao);
-
-        mapaContratosPorConveniosEnquadrados.put(codigoConvenios, contratosDistribuicao);
-
-    }
+//    private static void adicionarContratoEnquadradosMultiplosConvenios(ContratoDistribuicaoModel contratoDistribuicao) {
+//        String codigoConvenios = "";
+//
+//        List<Long> convenios = new ArrayList<Long>();
+//
+//        for (ContratoDistribuicaoRegra cdrRegra : contratoDistribuicao.recuperaRegraEnquadrada(TipoRegraEnum.REGRA_DISTRIBUICAO)) {
+//            Convenio convenio = ((RegraDistribuicao) cdrRegra.getRegra()).getConvenio();
+////            convenios.add(convenio.getId());
+//        }
+//
+//        Collections.sort(convenios);
+//
+//        for (Long idConvenio : convenios) {
+//            codigoConvenios = codigoConvenios.toString() + idConvenio + ";";
+//        }
+//
+//        List<ContratoDistribuicaoModel> contratosDistribuicao = mapaContratosPorConveniosEnquadrados.get(codigoConvenios);
+//
+//        if (contratosDistribuicao == null) {
+//            contratosDistribuicao = new ArrayList<ContratoDistribuicaoModel>();
+//        }
+//        contratosDistribuicao.add(contratoDistribuicao);
+//
+//        mapaContratosPorConveniosEnquadrados.put(codigoConvenios, contratosDistribuicao);
+//
+//    }
 
     /**
      * @return the mapaContratosPorConveniosEnquadrados

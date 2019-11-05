@@ -31,12 +31,12 @@ public class RegraCampanha extends Regra {
 
     private static final String FORMATO_RECEBIMENTO_PAGAMENTO = "yyyyMMdd";
 
-    @Override
-    public Boolean avaliaRegra(ContratoDistribuicaoModel contratoDistribuicao, AmbienteDistribuicaoContrato ambienteDistribuicao) {
-        return contratoDistribuicao.recuperaRegraEnquadrada(TipoRegraEnum.REGRA_DISTRIBUICAO).size() > 0
-                && contratoDistribuicao.recuperaRegraEnquadrada(TipoRegraEnum.REGRA_CAMPANHA).size() <= 0
-                && super.avaliaRegra(contratoDistribuicao, ambienteDistribuicao);
-    }
+//    @Override
+//    public Boolean avaliaRegra(ContratoDistribuicaoModel contratoDistribuicao, AmbienteDistribuicaoContrato ambienteDistribuicao) {
+//        return contratoDistribuicao.recuperaRegraEnquadrada(TipoRegraEnum.REGRA_DISTRIBUICAO).size() > 0
+//                && contratoDistribuicao.recuperaRegraEnquadrada(TipoRegraEnum.REGRA_CAMPANHA).size() <= 0
+//                && super.avaliaRegra(contratoDistribuicao, ambienteDistribuicao);
+//    }
 
     @Override
     public Boolean isVigente() {

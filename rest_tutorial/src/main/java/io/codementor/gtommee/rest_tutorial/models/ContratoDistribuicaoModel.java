@@ -2,6 +2,7 @@ package io.codementor.gtommee.rest_tutorial.models;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 
@@ -9,16 +10,16 @@ import javax.validation.Valid;
 import java.io.Serializable;
 import java.util.*;
 
-public abstract class ContratoDistribuicaoModel extends EntidadeCobrancaTerceirizada {
+//public abstract class ContratoDistribuicaoModel extends EntidadeCobrancaTerceirizada {
+public class ContratoDistribuicaoModel {
 
-//    private static final long serialVersionUID = 1L;
     @Id
     private ObjectId id;
     @Valid
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
-    private ContratoCobrancaTerceirizada contratoCobrancaTerceirizada;
     private Integer situacao;
+    private ContratoCobrancaTerceirizada contratoCobrancaTerceirizada;
     private Convenio convenio;
     private ClienteCobrancaTerceirizada clienteCobrancaTerceirizada;
     private Date dataDistribuicao;
@@ -37,59 +38,14 @@ public abstract class ContratoDistribuicaoModel extends EntidadeCobrancaTerceiri
     private Date dataFim;
     private Map<TipoRegraEnum, List<ContratoDistribuicaoRegra>> mapaContratoDistribuicaoRegraPorTipo;
 
+
     // Constructors
     public ContratoDistribuicaoModel() {}
-
-    public ContratoDistribuicaoModel(
-                                    ObjectId id,
-//                                    Map<String, Object> additionalProperties,
-                                    ContratoCobrancaTerceirizada contratoCobrancaTerceirizada,
-                                    Integer situacao,
-                                    Convenio convenio,
-                                    ClienteCobrancaTerceirizada clienteCobrancaTerceirizada,
-                                    Date dataDistribuicao,
-                                    List<ContratoDistribuicaoRegra> contratoDistribuicaoRegras,
-                                    List<Pagamento> pagamentos,
-                                    Date dataTerminoPermancencia,
-                                    Date dataEncerramento,
-                                    Date dataRemessaEncerramento,
-                                    String usuarioResponsavel,
-                                    Integer motivoEncerramento,
-                                    Date dataIncorporacao,
-                                    Date dataApuracao,
-                                    String descricaoEncerramento,
-                                    List<Integer> filtroSituacao,
-                                    Date dataIncio,
-                                    Date dataFim,
-                                    Map<TipoRegraEnum, List<ContratoDistribuicaoRegra>> mapaContratoDistribuicaoRegraPorTipo
-                                    ) {
-        this.id = id;
-//        this.additionalProperties = additionalProperties;
-        this.contratoCobrancaTerceirizada = contratoCobrancaTerceirizada;
-        this.situacao = situacao;
-        this.convenio = convenio;
-        this.clienteCobrancaTerceirizada = clienteCobrancaTerceirizada;
-        this.dataDistribuicao = dataDistribuicao;
-        this.contratoDistribuicaoRegras = contratoDistribuicaoRegras;
-        this.pagamentos = pagamentos;
-        this.dataTerminoPermancencia = dataTerminoPermancencia;
-        this.dataEncerramento = dataEncerramento;
-        this.dataRemessaEncerramento = dataRemessaEncerramento;
-        this.usuarioResponsavel = usuarioResponsavel;
-        this.motivoEncerramento = motivoEncerramento;
-        this.dataIncorporacao = dataIncorporacao;
-        this.dataApuracao = dataApuracao;
-        this.descricaoEncerramento = descricaoEncerramento;
-        this.filtroSituacao = filtroSituacao;
-        this.dataIncio = dataIncio;
-        this.dataFim = dataFim;
-        this.mapaContratoDistribuicaoRegraPorTipo = mapaContratoDistribuicaoRegraPorTipo;
-    }
 
     // ObjectId needs to be converted to string
     public String get_id() { return id.toHexString(); }
     public void set_id(ObjectId id) { this.id = id; }
-    public abstract Serializable getId();
+
 
     public void setAdditionalProperties(Map<String, Object> additionalProperties) {
         this.additionalProperties = additionalProperties;
@@ -105,70 +61,16 @@ public abstract class ContratoDistribuicaoModel extends EntidadeCobrancaTerceiri
         this.getAdditionalProperties().put(name, value);
     }
 
-
-//    public String getDataDistribuicaoFormatada() {
-//        if (this.dataDistribuicao != null) {
-//            return DateUtil.formataData(this.dataDistribuicao);
-//        }
-//        return "";
-//    }
-//
-//    /**
-//     * Metodo que formata a data de incorporacao.
-//     *
-//     * @return
-//     */
-//    public String getDataIncorporacaoFormatada() {
-//        if (this.dataIncorporacao != null) {
-//            return DateUtil.formataData(this.dataIncorporacao);
-//        }
-//        return "";
-//    }
-//
-//    /**
-//     * Metodo quje formata a data de apuracao.
-//     *
-//     * @return
-//     */
-//    public String getDataApuracaoFormatada() {
-//        if (this.dataApuracao != null) {
-//            return DateUtil.formataDataMesAno(this.dataApuracao);
-//        }
-//        return "";
-//    }
-//
-//    /**
-//     *
-//     * @return
-//     */
-//    public String getDataTerminoPermancenciaFormatada() {
-//        if (this.dataTerminoPermancencia != null) {
-//            return DateUtil.formataData(this.dataTerminoPermancencia);
-//        }
-//        return "";
-//    }
-//
-//    /**
-//     *
-//     * @return
-//     */
-//    public String getDataEncerramentoFormatada() {
-//        if (this.dataEncerramento != null) {
-//            return DateUtil.formataData(this.dataEncerramento);
-//        }
-//        return "";
-//    }
-//
 //    /**
 //     * Retorna a lista de Filhos de acordo com o atributo.
 //     *
 //     * @param codigoAtributo
 //     * @return
 //     */
-    public List<ContratoDistribuicaoRegra> recuperaRegraEnquadrada(TipoRegraEnum tipoRegra) {
-        List<ContratoDistribuicaoRegra> listaContratoDistribuicaoRegra = getMapaContratoDistribuicaoRegraPorTipo().get(tipoRegra);
-        return listaContratoDistribuicaoRegra == null ? Collections.emptyList() : listaContratoDistribuicaoRegra;
-    }
+//    public List<ContratoDistribuicaoRegra> recuperaRegraEnquadrada(TipoRegraEnum tipoRegra) {
+//        List<ContratoDistribuicaoRegra> listaContratoDistribuicaoRegra = getMapaContratoDistribuicaoRegraPorTipo().get(tipoRegra);
+//        return listaContratoDistribuicaoRegra == null ? Collections.emptyList() : listaContratoDistribuicaoRegra;
+//    }
 
     private void iniciaMapaContratoDistribuicaoRegraPorTipo() {
         if (this.mapaContratoDistribuicaoRegraPorTipo == null) {
@@ -196,29 +98,18 @@ public abstract class ContratoDistribuicaoModel extends EntidadeCobrancaTerceiri
         return this.mapaContratoDistribuicaoRegraPorTipo;
     }
 
-//    /**
-//     * @param id
-//     *            the id to set
-//     */
-//    public void setId(Long id) {
-//        this.id = id;
-//    }
-//
-//    /**
-//     * @return the contratoCobrancaTerceirizada
-//     */
-//    public ContratoCobrancaTerceirizada getContratoCobrancaTerceirizada() {
-//        return contratoCobrancaTerceirizada;
-//    }
-//
-//    /**
-//     * @param contratoCobrancaTerceirizada
-//     *            the contratoCobrancaTerceirizada to set
-//     */
-//    public void setContratoCobrancaTerceirizada(ContratoCobrancaTerceirizada contratoCobrancaTerceirizada) {
-//        this.contratoCobrancaTerceirizada = contratoCobrancaTerceirizada;
-//    }
-//
+    public ContratoCobrancaTerceirizada getContratoCobrancaTerceirizada() {
+        return contratoCobrancaTerceirizada;
+    }
+
+    /**
+     * @param contratoCobrancaTerceirizada
+     *            the contratoCobrancaTerceirizada to set
+     */
+    public void setContratoCobrancaTerceirizada(ContratoCobrancaTerceirizada contratoCobrancaTerceirizada) {
+        this.contratoCobrancaTerceirizada = contratoCobrancaTerceirizada;
+    }
+
 //    /**
 //     * @return the situacao
 //     */
@@ -233,76 +124,66 @@ public abstract class ContratoDistribuicaoModel extends EntidadeCobrancaTerceiri
 //     * @param situacao
 //     *            the situacao to set
 //     */
-    public void setSituacao(SituacaoContratoDistribuicaoEnum situacao) {
-        if (situacao == null) {
-            this.situacao = null;
-        } else {
-            this.situacao = situacao.getCodigo();
-        }
-    }
+//    public void setSituacao(SituacaoContratoDistribuicaoEnum situacao) {
+//        if (situacao == null) {
+//            this.situacao = null;
+//        } else {
+//            this.situacao = situacao.getCodigo();
+//        }
+//    }
 
 
     public Convenio getConvenio() {
         return convenio;
     }
 
-//    /**
-//     * @param convenio
-//     *            the convenio to set
-//     */
-//    public void setConvenio(Convenio convenio) {
-//        this.convenio = convenio;
-//    }
-//
-//    /**
-//     * @return the clienteCobrancaTerceirizada
-//     */
-//    public ClienteCobrancaTerceirizada getClienteCobrancaTerceirizada() {
-//        return clienteCobrancaTerceirizada;
-//    }
-//
-//    /**
-//     * @param clienteCobrancaTerceirizada
-//     *            the clienteCobrancaTerceirizada to set
-//     */
-//    public void setClienteCobrancaTerceirizada(ClienteCobrancaTerceirizada clienteCobrancaTerceirizada) {
-//        this.clienteCobrancaTerceirizada = clienteCobrancaTerceirizada;
-//    }
-//
-//    /**
-//     * @return the contratoDistribuicaoRegras
-//     */
+    public void setConvenio(Convenio convenio) {
+        this.convenio = convenio;
+    }
+
+
+    public ClienteCobrancaTerceirizada getClienteCobrancaTerceirizada() {
+        return clienteCobrancaTerceirizada;
+    }
+
+    public void setClienteCobrancaTerceirizada(ClienteCobrancaTerceirizada clienteCobrancaTerceirizada) {
+        this.clienteCobrancaTerceirizada = clienteCobrancaTerceirizada;
+    }
+
+    /**
+     * @return the contratoDistribuicaoRegras
+     */
     public List<ContratoDistribuicaoRegra> getContratoDistribuicaoRegras() {
         this.iniciaContratoDistribuicaoRegras();
         return Collections.unmodifiableList(contratoDistribuicaoRegras);
     }
 
-//    /**
-//     * @param contratoDistribuicaoRegras
-//     *            the contratoDistribuicaoRegras to set
-//     */
-//    public void setContratoDistribuicaoRegras(List<ContratoDistribuicaoRegra> contratoDistribuicaoRegras) {
-//        this.contratoDistribuicaoRegras = null;
-//        this.iniciaContratoDistribuicaoRegras();
-//        if (contratoDistribuicaoRegras != null) {
-//            for (ContratoDistribuicaoRegra contratoDistribuicaoRegra : contratoDistribuicaoRegras) {
-//                adicionaContratoDistribuicaoRegra(contratoDistribuicaoRegra);
-//            }
-//        }
-//    }
-//
-//    /**
-//     * Inicializa a lista contratoDistribuicaoRegras.
-//     */
+    /**
+     * @param contratoDistribuicaoRegras
+     *            the contratoDistribuicaoRegras to set
+     */
+    public void setContratoDistribuicaoRegras(List<ContratoDistribuicaoRegra> contratoDistribuicaoRegras) {
+        this.contratoDistribuicaoRegras = null;
+        this.iniciaContratoDistribuicaoRegras();
+        if (contratoDistribuicaoRegras != null) {
+            for (ContratoDistribuicaoRegra contratoDistribuicaoRegra : contratoDistribuicaoRegras) {
+                adicionaContratoDistribuicaoRegra(contratoDistribuicaoRegra);
+            }
+        }
+    }
+
+    /**
+     * Inicializa a lista contratoDistribuicaoRegras.
+     */
     private void iniciaContratoDistribuicaoRegras() {
         if (this.contratoDistribuicaoRegras == null) {
             this.contratoDistribuicaoRegras = new ArrayList<ContratoDistribuicaoRegra>();
         }
     }
 
-//    /**
-//     * @param contratoDistribuicaoRegra
-//     */
+    /**
+     * @param contratoDistribuicaoRegra
+     */
     public void adicionaContratoDistribuicaoRegra(ContratoDistribuicaoRegra contratoDistribuicaoRegra) {
         this.iniciaContratoDistribuicaoRegras();
         if (contratoDistribuicaoRegra != null && !this.contratoDistribuicaoRegras.contains(contratoDistribuicaoRegra)) {
@@ -332,45 +213,45 @@ public abstract class ContratoDistribuicaoModel extends EntidadeCobrancaTerceiri
 //            listaContratoDistribuicaoRegras.remove(contratoDistribuicaoRegra);
 //        }
 //    }
-//
-//    /**
-//     * @return the dataDistribuicao
-//     */
-//    public Date getDataDistribuicao() {
-//        return dataDistribuicao != null ? new Date(dataDistribuicao.getTime()) : null;
-//    }
-//
-//    /**
-//     * @param dataDistribuicao
-//     *            the dataDistribuicao to set
-//     */
+
+    /**
+     * @return the dataDistribuicao
+     */
+    public Date getDataDistribuicao() {
+        return dataDistribuicao != null ? new Date(dataDistribuicao.getTime()) : null;
+    }
+
+    /**
+     * @param dataDistribuicao
+     *            the dataDistribuicao to set
+     */
     public void setDataDistribuicao(Date dataDistribuicao) {
         this.dataDistribuicao = dataDistribuicao != null ? new Date(dataDistribuicao.getTime()) : null;
     }
 
-//    public List<Integer> getFiltroSituacao() {
-//        return filtroSituacao;
-//    }
-//
-//    public void setFiltroSituacao(List<Integer> filtroSituacao) {
-//        this.filtroSituacao = filtroSituacao;
-//    }
-//
-//    /**
-//     * @return the dataTerminoPermancencia
-//     */
-//    public Date getDataTerminoPermancencia() {
-//        return dataTerminoPermancencia != null ? new Date(dataTerminoPermancencia.getTime()) : null;
-//    }
-//
-//    /**
-//     * @param dataTerminoPermancencia
-//     *            the dataTerminoPermancencia to set
-//     */
-//    public void setDataTerminoPermancencia(Date dataTerminoPermancencia) {
-//        this.dataTerminoPermancencia = dataTerminoPermancencia != null ? new Date(dataTerminoPermancencia.getTime()) : null;
-//    }
-//
+    public List<Integer> getFiltroSituacao() {
+        return filtroSituacao;
+    }
+
+    public void setFiltroSituacao(List<Integer> filtroSituacao) {
+        this.filtroSituacao = filtroSituacao;
+    }
+
+    /**
+     * @return the dataTerminoPermancencia
+     */
+    public Date getDataTerminoPermancencia() {
+        return dataTerminoPermancencia != null ? new Date(dataTerminoPermancencia.getTime()) : null;
+    }
+
+    /**
+     * @param dataTerminoPermancencia
+     *            the dataTerminoPermancencia to set
+     */
+    public void setDataTerminoPermancencia(Date dataTerminoPermancencia) {
+        this.dataTerminoPermancencia = dataTerminoPermancencia != null ? new Date(dataTerminoPermancencia.getTime()) : null;
+    }
+
 //    /**
 //     *
 //     */
@@ -392,158 +273,142 @@ public abstract class ContratoDistribuicaoModel extends EntidadeCobrancaTerceiri
 //        return null;
 //
 //    }
-//
-//    /**
-//     * @return the dataEncerramento
-//     */
-//    public Date getDataEncerramento() {
-//        return dataEncerramento != null ? new Date(dataEncerramento.getTime()) : null;
-//    }
-//
-//    /**
-//     * @param dataEncerramento
-//     *            the dataEncerramento to set
-//     */
-//    public void setDataEncerramento(Date dataEncerramento) {
-//        this.dataEncerramento = dataEncerramento != null ? new Date(dataEncerramento.getTime()) : null;
-//    }
-//
-//    /**
-//     * @return the usuarioResponsavel
-//     */
-//    public String getUsuarioResponsavel() {
-//        return usuarioResponsavel;
-//    }
-//
-//    /**
-//     * @param usuarioResponsavel
-//     *            the usuarioResponsavel to set
-//     */
-//    public void setUsuarioResponsavel(String usuarioResponsavel) {
-//        this.usuarioResponsavel = usuarioResponsavel;
-//    }
-//
-//    /**
-//     * @return the motivoEncerramento
-//     */
-//    public MotivoEncerramentoEnum getMotivoEncerramento() {
-//        if (this.motivoEncerramento == null) {
-//            return null;
-//        }
-//        return MotivoEncerramentoEnum.getMotivoEncerramentoEnum(this.motivoEncerramento);
-//    }
-//
-//    /**
-//     * @param motivoEncerramento
-//     *            the motivoEncerramento to set
-//     */
-//    public void setMotivoEncerramento(MotivoEncerramentoEnum motivoEncerramento) {
-//        if (motivoEncerramento == null) {
-//            this.motivoEncerramento = null;
-//        } else {
-//            this.motivoEncerramento = motivoEncerramento.getCodigo();
-//        }
-//    }
-//
-//    public Date getDataIncio() {
-//        return dataIncio != null ? new Date(dataIncio.getTime()) : null;
-//    }
-//
-//    /**
-//     * @param dataIncio
-//     */
-//    public void setDataIncio(Date dataIncio) {
-//        this.dataIncio = dataIncio != null ? new Date(dataIncio.getTime()) : null;
-//    }
-//
-//    public Date getDataFim() {
-//        return dataFim != null ? new Date(dataFim.getTime()) : null;
-//    }
-//
-//    /**
-//     * @param dataFim
-//     */
-//    public void setDataFim(Date dataFim) {
-//        this.dataFim = dataFim != null ? new Date(dataFim.getTime()) : null;
-//    }
-//
-//    /**
-//     * @return the dataIncorporacao
-//     */
-//    public Date getDataIncorporacao() {
-//        return dataIncorporacao != null ? new Date(dataIncorporacao.getTime()) : null;
-//    }
-//
-//    /**
-//     * @param dataIncorporacao
-//     *            the dataIncorporacao to set
-//     */
-//    public void setDataIncorporacao(Date dataIncorporacao) {
-//        this.dataIncorporacao = dataIncorporacao != null ? new Date(dataIncorporacao.getTime()) : null;
-//    }
-//
-//    /**
-//     * @return the descricaoEncerramento
-//     */
-//    public String getDescricaoEncerramento() {
-//        return descricaoEncerramento;
-//    }
-//
-//    /**
-//     * @param descricaoEncerramento
-//     *            the descricaoEncerramento to set
-//     */
-//    public void setDescricaoEncerramento(String descricaoEncerramento) {
-//        this.descricaoEncerramento = descricaoEncerramento;
-//    }
-//
-//    /**
-//     * @param situacao
-//     *            the situacao to set
-//     */
+
+    /**
+     * @return the dataEncerramento
+     */
+    public Date getDataEncerramento() {
+        return dataEncerramento != null ? new Date(dataEncerramento.getTime()) : null;
+    }
+
+    /**
+     * @param dataEncerramento
+     *            the dataEncerramento to set
+     */
+    public void setDataEncerramento(Date dataEncerramento) {
+        this.dataEncerramento = dataEncerramento != null ? new Date(dataEncerramento.getTime()) : null;
+    }
+
+    /**
+     * @return the usuarioResponsavel
+     */
+    public String getUsuarioResponsavel() {
+        return usuarioResponsavel;
+    }
+
+    /**
+     * @param usuarioResponsavel
+     *            the usuarioResponsavel to set
+     */
+    public void setUsuarioResponsavel(String usuarioResponsavel) {
+        this.usuarioResponsavel = usuarioResponsavel;
+    }
+
+
+
+    public Date getDataIncio() {
+        return dataIncio != null ? new Date(dataIncio.getTime()) : null;
+    }
+
+    /**
+     * @param dataIncio
+     */
+    public void setDataIncio(Date dataIncio) {
+        this.dataIncio = dataIncio != null ? new Date(dataIncio.getTime()) : null;
+    }
+
+    public Date getDataFim() {
+        return dataFim != null ? new Date(dataFim.getTime()) : null;
+    }
+
+    /**
+     * @param dataFim
+     */
+    public void setDataFim(Date dataFim) {
+        this.dataFim = dataFim != null ? new Date(dataFim.getTime()) : null;
+    }
+
+    /**
+     * @return the dataIncorporacao
+     */
+    public Date getDataIncorporacao() {
+        return dataIncorporacao != null ? new Date(dataIncorporacao.getTime()) : null;
+    }
+
+    /**
+     * @param dataIncorporacao
+     *            the dataIncorporacao to set
+     */
+    public void setDataIncorporacao(Date dataIncorporacao) {
+        this.dataIncorporacao = dataIncorporacao != null ? new Date(dataIncorporacao.getTime()) : null;
+    }
+
+    /**
+     * @return the descricaoEncerramento
+     */
+    public String getDescricaoEncerramento() {
+        return descricaoEncerramento;
+    }
+
+    /**
+     * @param descricaoEncerramento
+     *            the descricaoEncerramento to set
+     */
+    public void setDescricaoEncerramento(String descricaoEncerramento) {
+        this.descricaoEncerramento = descricaoEncerramento;
+    }
+
+    /**
+     * @param situacao
+     *            the situacao to set
+     */
     public void setSituacao(Integer situacao) {
         this.situacao = situacao;
     }
 
-//    /**
-//     * @param motivoEncerramento
-//     *            the motivoEncerramento to set
-//     */
-//    public void setMotivoEncerramento(Integer motivoEncerramento) {
-//        this.motivoEncerramento = motivoEncerramento;
-//    }
-//
-//    /**
-//     * Obter data de Apuração.
-//     * @return
-//     */
-//    public Date getDataApuracao() {
-//        return dataApuracao != null ? new Date(dataApuracao.getTime()) : null;
-//    }
-//
-//    /**
-//     * Setar data de Apuração.
-//     *
-//     * @param dataApuracao
-//     */
-//    public void setDataApuracao(Date dataApuracao) {
-//        this.dataApuracao = dataApuracao != null ? new Date(dataDistribuicao.getTime()) : null;
-//    }
-//
-//    public Date getDataRemessaEncerramento() {
-//        return dataRemessaEncerramento != null ? new Date(dataRemessaEncerramento.getTime()) : null;
-//    }
-//
-//    public void setDataRemessaEncerramento(Date dataRemessaEncerramento) {
-//        this.dataRemessaEncerramento = dataRemessaEncerramento != null ? new Date(dataRemessaEncerramento.getTime()) : null;
-//    }
-//
-//    public List<Pagamento> getPagamentos() {
-//        return pagamentos;
-//    }
-//
-//    public void setPagamentos(List<Pagamento> pagamentos) {
-//        this.pagamentos = pagamentos;
-//    }
+    /**
+     * @param motivoEncerramento
+     *            the motivoEncerramento to set
+     */
+    public void setMotivoEncerramento(Integer motivoEncerramento) {
+        this.motivoEncerramento = motivoEncerramento;
+    }
+
+    public Integer getMotivoEncerramento() {
+        return this.motivoEncerramento;
+    }
+
+    /**
+     * Obter data de Apuração.
+     * @return
+     */
+    public Date getDataApuracao() {
+        return dataApuracao != null ? new Date(dataApuracao.getTime()) : null;
+    }
+
+    /**
+     * Setar data de Apuração.
+     *
+     * @param dataApuracao
+     */
+    public void setDataApuracao(Date dataApuracao) {
+        this.dataApuracao = dataApuracao != null ? new Date(dataDistribuicao.getTime()) : null;
+    }
+
+    public Date getDataRemessaEncerramento() {
+        return dataRemessaEncerramento != null ? new Date(dataRemessaEncerramento.getTime()) : null;
+    }
+
+    public void setDataRemessaEncerramento(Date dataRemessaEncerramento) {
+        this.dataRemessaEncerramento = dataRemessaEncerramento != null ? new Date(dataRemessaEncerramento.getTime()) : null;
+    }
+
+    public List<Pagamento> getPagamentos() {
+        return pagamentos;
+    }
+
+    public void setPagamentos(List<Pagamento> pagamentos) {
+        this.pagamentos = pagamentos;
+    }
 
 }

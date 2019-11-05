@@ -10,15 +10,15 @@ public class RegraDistribuicao extends Regra {
         super(TipoRegraEnum.REGRA_DISTRIBUICAO);
     }
 
-    @Override
-    public Boolean avaliaRegra(ContratoDistribuicaoModel contratoDistribuicao, AmbienteDistribuicaoContrato ambienteDistribuicao) {
-        if (contratoDistribuicao.recuperaRegraEnquadrada(TipoRegraEnum.REGRA_RESTRICAO).size() > 0) {
-            return Boolean.FALSE;
-        }
-        contratoDistribuicao.setDataDistribuicao(DateUtil.getDataAtual());
-        contratoDistribuicao.setSituacao(SituacaoContratoDistribuicaoEnum.EM_COBRANCA);
-        return super.avaliaRegra(contratoDistribuicao, ambienteDistribuicao);
-    }
+//    @Override
+//    public Boolean avaliaRegra(ContratoDistribuicaoModel contratoDistribuicao, AmbienteDistribuicaoContrato ambienteDistribuicao) {
+//        if (contratoDistribuicao.recuperaRegraEnquadrada(TipoRegraEnum.REGRA_RESTRICAO).size() > 0) {
+//            return Boolean.FALSE;
+//        }
+//        contratoDistribuicao.setDataDistribuicao(DateUtil.getDataAtual());
+//        contratoDistribuicao.setSituacao(SituacaoContratoDistribuicaoEnum.EM_COBRANCA);
+//        return super.avaliaRegra(contratoDistribuicao, ambienteDistribuicao);
+//    }
 
 
 

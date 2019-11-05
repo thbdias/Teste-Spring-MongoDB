@@ -1,5 +1,6 @@
 package io.codementor.gtommee.rest_tutorial.controllers;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.JsonObject;
 import io.codementor.gtommee.rest_tutorial.models.*;
 import io.codementor.gtommee.rest_tutorial.repositories.ContratoDistribuicaoRepository;
@@ -31,28 +32,16 @@ public class ContratoDistribuicaoController {
         try (FileReader reader = new FileReader("C:\\Users\\balbinth\\Documents\\cont1.json"))
         {
             JsonElement jsonElement = JsonParser.parseReader(reader);
-//            System.out.println("****************************INICIO ARQUIVO************************************");
-//            System.out.println("jsonElement: " + jsonElement);
-//            System.out.println("jsonElement: " + jsonElement);
-//            System.out.println("*****************************FIM ARQUIVO***********************************");
-
-//            JsonArray companys = jsonElement.getAsJsonArray();
-//            System.out.println("\n");
-//            System.out.println(companys);
-//            System.out.println("\n");
-
-//            companys.forEach(item -> {
-//                contratoDistribuicaoRepository.save(parseCompanyObject(item.getAsJsonObject()));
-//////                System.out.println(company);
-//            });
-//            return "Json gravado no MongoDB";
-
             JsonObject controtoObject = jsonElement.getAsJsonObject();
-//            System.out.println("\n JSON OBJECT LIDO");
-//            System.out.println(companys);
-//            System.out.println("\n FIM JSON OBJECT LIDO");
+//            parseContratoObject(controtoObject);
 
-            parseContratoObject(controtoObject);
+            try {
+                contratoDistribuicaoRepository.save(parseContratoObject(controtoObject));
+//                contratoDistribuicaoRepository.save(parseContratoObject2(controtoObject));
+//                teste(controtoObject);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
 
             return "+ teste object from json +";
         } catch (FileNotFoundException e) {
@@ -64,127 +53,68 @@ public class ContratoDistribuicaoController {
         }
     }
 
-    private void parseContratoObject(JsonObject contratoJson)
+    private ContratoDistribuicaoModel parseContratoObject2(JsonObject contratoJson) throws IOException
     {
-//        System.out.println("\n:>>" + companyJson);
+        String companyJsonString = contratoJson.toString();
+        ObjectMapper objectMapper = new ObjectMapper();
+        ContratoDistribuicaoModel contratoDistribuicaoModel = objectMapper.readValue(companyJsonString, ContratoDistribuicaoModel.class);
+        return contratoDistribuicaoModel;
+    }
 
-//        Map<String, Object> additionalProperties = null;
+    //teste para retirar elemento do json
+    private void teste(JsonObject contratoJson) throws IOException
+    {
+        System.out.println("\n+++++++++++++++++++++++++++++++++++++inicio");
+        JsonObject clone = contratoJson.deepCopy();
+        clone.remove("contrato");
+        System.out.println("original              : >>>>");
+        System.out.println(contratoJson.toString());
+        System.out.println("clone sem contrato    : >>>>");
+        System.out.println(clone.toString());
+        clone.remove("nome");
+        System.out.println("clone sem nome        : >>>>");
+        System.out.println(clone.toString());
+        System.out.println("+++++++++++++++++++++++++++++++++++++fim");
+    }
+
+    private ContratoDistribuicaoModel parseContratoObject(JsonObject contratoJson) throws IOException
+    {
+        //clone com atributos restantes que serão gravados no contrato atribuicao
+        JsonObject clone = contratoJson.deepCopy();
 
         ContratoCobrancaTerceirizada contratoCobrancaTerceirizada = new ContratoCobrancaTerceirizada();
         contratoCobrancaTerceirizada.setNumeroContrato(contratoJson.getAsJsonPrimitive("contrato").toString());
+        clone.remove("contrato");
         contratoCobrancaTerceirizada.setDiasAtraso(contratoJson.getAsJsonPrimitive("diasAtraso").getAsInt());
+        clone.remove("diasAtraso");
         contratoCobrancaTerceirizada.setValorDivida(contratoJson.getAsJsonPrimitive("vlrDiv").toString());
+        clone.remove("vlrDiv");
         contratoCobrancaTerceirizada.setValorDividaAtualizada(contratoJson.getAsJsonPrimitive("garAtu").toString());
-
-        Integer situacao = null;
+        clone.remove("garAtu");
 
         Convenio convenio = new Convenio();
         convenio.setNumeroContrato(contratoJson.getAsJsonPrimitive("contrato").toString());
+        clone.remove("contrato");
 
         ClienteCobrancaTerceirizada clienteCobrancaTerceirizada = new ClienteCobrancaTerceirizada();
         clienteCobrancaTerceirizada.setNome(contratoJson.getAsJsonPrimitive("nome").toString());
+        clone.remove("nome");
         clienteCobrancaTerceirizada.setCredor(contratoJson.getAsJsonPrimitive("credor").getAsInt());
+        clone.remove("credor");
         clienteCobrancaTerceirizada.setAdministrador(contratoJson.getAsJsonPrimitive("adm").getAsInt());
+        clone.remove("adm");
 
-        Date dataDistribuicao =  null;
-        List<ContratoDistribuicaoRegra> contratoDistribuicaoRegras =  null;
-        List<Pagamento> pagamentos =  null;
-        Date dataTerminoPermancencia =  null;
-        Date dataEncerramento =  null;
-        Date dataRemessaEncerramento =  null;
-        String usuarioResponsavel =  null;
-        Integer motivoEncerramento =  null;
-        Date dataIncorporacao =  null;
-        Date dataApuracao =  null;
-        String descricaoEncerramento =  null;
-        List<Integer> filtroSituacao =  null;
-        Date dataIncio =  null;
-        Date dataFim =  null;
-        Map<TipoRegraEnum, List<ContratoDistribuicaoRegra>> mapaContratoDistribuicaoRegraPorTipo = null;
+        //colocando no contrato distribuição os atributos restantes que não foram para nenhuma instância
+        String companyJsonString = clone.toString();
+        ObjectMapper objectMapper = new ObjectMapper();
+        ContratoDistribuicaoModel contratoDistribuicaoModel = objectMapper.readValue(companyJsonString, ContratoDistribuicaoModel.class);
 
-        ContratoDistribuicaoModel contratoDistribuicaoModel =
-                new ContratoDistribuicaoModel(
-                                                new ObjectId(),
-//                                                additionalProperties,
-                                                contratoCobrancaTerceirizada,
-                                                situacao,
-                                                convenio,
-                                                clienteCobrancaTerceirizada,
-                                                dataDistribuicao,
-                                                contratoDistribuicaoRegras,
-                                                pagamentos,
-                                                dataTerminoPermancencia,
-                                                dataEncerramento,
-                                                dataRemessaEncerramento,
-                                                usuarioResponsavel,
-                                                motivoEncerramento,
-                                                dataIncorporacao,
-                                                dataApuracao,
-                                                descricaoEncerramento,
-                                                filtroSituacao,
-                                                dataIncio,
-                                                dataFim,
-                                                mapaContratoDistribuicaoRegraPorTipo
-                                            ) {
-            @Override
-            public Serializable getId() {
-                return null;
-            }
-        };
+        contratoDistribuicaoModel.setContratoCobrancaTerceirizada(contratoCobrancaTerceirizada);
+        contratoDistribuicaoModel.setConvenio(convenio);
+        contratoDistribuicaoModel.setClienteCobrancaTerceirizada(clienteCobrancaTerceirizada);
 
-        //teste
-        contratoDistribuicaoRepository.save(contratoDistribuicaoModel);
-        imprimir(contratoDistribuicaoModel);
-
-        //criando contato
-//        Contact contact = new Contact();
-//        JsonObject contactJson = companyJson.getAsJsonObject("contact");
-//        contact.setAddress(contactJson.getAsJsonPrimitive("address").toString());
-//        contact.setPhone(contactJson.getAsJsonPrimitive("phone").toString());
-//        System.out.println("end: " + contact.getAddress() + " --- phone: " + contact.getPhone() + " --- class: " + contact.getClass()); //TRATAR AQUI
-
-        //criando produtos
-//        List<Product> productList = new LinkedList<>();
-//        JsonArray productsJsonArray = companyJson.getAsJsonArray("products");
-//        productsJsonArray.forEach(productItemJsonfromArray -> {
-//            Product product = new Product();
-//            JsonObject jsonObjectItem = productItemJsonfromArray.getAsJsonObject();
-//            product.setCode(jsonObjectItem.getAsJsonPrimitive("code").toString());
-//            product.setName(jsonObjectItem.getAsJsonPrimitive("name").toString());
-//            product.setDetails(jsonObjectItem.getAsJsonPrimitive("details").toString());
-//            productList.add(product);
-//        });
-//        System.out.println(productList.get(0).getCode() + "----");
-//        System.out.println(productList.get(1).getCode() + "++++");
-//        System.out.println("---------------");
-//
-//        Company company = new Company();
-//        company.set_id(ObjectId.get());
-//        company.setName(companyJson.getAsJsonPrimitive("name").toString());
-//        System.out.println(company);
-//        company.setContact(contact);
-//        System.out.println("\n" + company);
-//        company.setProducts(productList);
-
-//        System.out.println("company id: " + company.get_id());
-
-//        return company;
-//        System.out.println("------------------\nresultado: ");
-//        System.out.println("company id: " + company.get_id());
-//        System.out.println("company name: " + company.getName());
-//        System.out.println("company-contact phone: " + company.getContact().getPhone());
-//        System.out.println("company-product 1 name: " + company.getProducts().get(0).getName());
-//        System.out.println("company-product 2 name: " + company.getProducts().get(1).getName());
-//        System.out.println("------------------\n");
+        return contratoDistribuicaoModel;
     }
 
-    private void imprimir(ContratoDistribuicaoModel contratoDistribuicaoModel){
-        System.out.println("\ncontrato salvo");
-        System.out.println("\ninicio contrato");
-        System.out.println("id => " + contratoDistribuicaoModel.get_id());
-        System.out.println("convenio => " + contratoDistribuicaoModel.getConvenio());
-        System.out.println("contratoDistribuicaoRegras => " + contratoDistribuicaoModel.getContratoDistribuicaoRegras());
-        System.out.println("fim contrato");
-    }
 
 }

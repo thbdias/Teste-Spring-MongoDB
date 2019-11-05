@@ -1,5 +1,7 @@
 package io.codementor.gtommee.rest_tutorial.models;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -11,6 +13,7 @@ public class ContratoCobrancaTerceirizada extends EntidadeCobrancaTerceirizada {
 
     private ClienteCobrancaTerceirizada clienteCobrancaTerceirizada;
     private ContratoDistribuicaoModel contratoDistribuicao;
+    @JsonProperty("contrato") //chave dentro do json
     private String numeroContrato;
     private Integer diasAtraso;
     private String valorDivida;
@@ -581,12 +584,12 @@ public class ContratoCobrancaTerceirizada extends EntidadeCobrancaTerceirizada {
      * Retorna a data final para cobrança quando não existir data de permanencia.
      * @return
      */
-    public Date getDataFinalCobranca() {
-        if (getContratoDistribuicao().getConvenio().getPermanencia() == null) {
-            return null;
-        }
-        return DateUtil.adicionaDias(getDataInclusao(),
-                Integer.valueOf(getContratoDistribuicao().getConvenio().getPermanencia().intValue()));
-    }
+//    public Date getDataFinalCobranca() {
+//        if (getContratoDistribuicao().getConvenio().getPermanencia() == null) {
+//            return null;
+//        }
+//        return DateUtil.adicionaDias(getDataInclusao(),
+//                Integer.valueOf(getContratoDistribuicao().getConvenio().getPermanencia().intValue()));
+//    }
 
 }
