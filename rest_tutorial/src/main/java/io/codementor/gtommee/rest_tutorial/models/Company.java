@@ -2,6 +2,7 @@ package io.codementor.gtommee.rest_tutorial.models;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
@@ -20,19 +21,15 @@ public class Company {
 //    private int id;
     @Id
     public ObjectId _id;
+    @JsonProperty("name") //chave dentro do json
     private String name;
+    @JsonProperty("products") //chave dentro do json
     private List<Product> products;
+    @JsonProperty("contact")  //chave dentro do json
     private Contact contact;
     @Valid
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
-//    public void setId(int id){
-//        this.id = id;
-//    }
-//
-//    public int getId(){
-//        return this.id;
-//    }
 
     // ObjectId needs to be converted to string
     public String get_id() { return _id.toHexString(); }

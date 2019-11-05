@@ -1,5 +1,7 @@
 package io.codementor.gtommee.rest_tutorial.controllers;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -73,7 +75,7 @@ public class CompanyController {
     public String createCompany() {
 
 //        JSONParser jsonParser = new JSONParser();
-        try (FileReader reader = new FileReader("C:\\Users\\balbinth\\Documents\\companys_2.json"))
+        try (FileReader reader = new FileReader("C:\\Users\\balbinth\\Documents\\companys_3.json"))
         {
             JsonElement jsonElement = JsonParser.parseReader(reader);
 //            System.out.println("jsonElement: " + jsonElement);
@@ -89,7 +91,12 @@ public class CompanyController {
 //
             companys.forEach(item -> {
 //                repository.save(parseCompanyObject(item.getAsJsonObject()));
-                repository.save(parseCompanyObject(item.getAsJsonObject()));
+//                repository.save(parseCompanyObject(item.getAsJsonObject()));
+                try {
+                    repository.save(parseCompanyObject2(item.getAsJsonObject()));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
 ////                System.out.println(company);
             });
 
@@ -251,6 +258,63 @@ public class CompanyController {
 //        //Get employee website name
 //        String website = (String) employeeObject.get("website");
 //        System.out.println(website);
+    }
+
+
+    /*
+     * companyJson => cada companhia
+    * */
+    private Company parseCompanyObject2(JsonObject companyJson) throws IOException {
+//        System.out.println("\n:>>" + companyJson);
+
+        String companyJsonString = companyJson.toString();
+//        System.out.println("companyJsonString:>>> " + companyJsonString);
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        Company company = objectMapper.readValue(companyJsonString, Company.class);
+
+        //criando contato
+//        Contact contact = new Contact();
+//        JsonObject contactJson = companyJson.getAsJsonObject("contact");
+//        contact.setAddress(contactJson.getAsJsonPrimitive("address").toString());
+//        contact.setPhone(contactJson.getAsJsonPrimitive("phone").toString());
+//        System.out.println("end: " + contact.getAddress() + " --- phone: " + contact.getPhone() + " --- class: " + contact.getClass()); //TRATAR AQUI
+
+        //criando produtos
+//        List<Product> productList = new LinkedList<>();
+//        JsonArray productsJsonArray = companyJson.getAsJsonArray("products");
+//        productsJsonArray.forEach(productItemJsonfromArray -> {
+//            Product product = new Product();
+//            JsonObject jsonObjectItem = productItemJsonfromArray.getAsJsonObject();
+//            product.setCode(jsonObjectItem.getAsJsonPrimitive("code").toString());
+//            product.setName(jsonObjectItem.getAsJsonPrimitive("name").toString());
+//            product.setDetails(jsonObjectItem.getAsJsonPrimitive("details").toString());
+//            productList.add(product);
+//        });
+//        System.out.println(productList.get(0).getCode() + "----");
+//        System.out.println(productList.get(1).getCode() + "++++");
+//        System.out.println("---------------");
+//
+//        Company company = new Company();
+//        company.set_id(ObjectId.get());
+//        company.setName(companyJson.getAsJsonPrimitive("name").toString());
+////        System.out.println(company);
+//        company.setContact(contact);
+////        System.out.println("\n" + company);
+//        company.setProducts(productList);
+
+//        System.out.println("company id: " + company.get_id());
+
+        return company;
+//        System.out.println("------------------\nresultado: ");
+//        System.out.println("company id: " + company.get_id());
+//        System.out.println("company name: " + company.getName());
+//        System.out.println("company-contact phone: " + company.getContact().getPhone());
+//        System.out.println("company-product 1 name: " + company.getProducts().get(0).getName());
+//        System.out.println("company-product 2 name: " + company.getProducts().get(1).getName());
+//        System.out.println("------------------\n");
+
+
     }
 
 }
