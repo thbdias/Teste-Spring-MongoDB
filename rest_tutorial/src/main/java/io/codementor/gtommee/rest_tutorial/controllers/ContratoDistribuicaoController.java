@@ -25,24 +25,23 @@ public class ContratoDistribuicaoController {
     @Autowired
     private ContratoDistribuicaoRepository contratoDistribuicaoRepository;
 
-
     @RequestMapping(value = "/object_from_json", method = RequestMethod.GET)
     public String createCompany() {
-
         try (FileReader reader = new FileReader("C:\\Users\\balbinth\\Documents\\cont3.json"))
         {
             JsonElement jsonElement = JsonParser.parseReader(reader);
             JsonArray contratoArray = jsonElement.getAsJsonArray();
-//            JsonObject controtoObject = jsonElement.getAsJsonObject();
 
             contratoArray.forEach(itemContratoArray -> {
-                try {
-                    contratoDistribuicaoRepository.save(parseContratoObject(itemContratoArray.getAsJsonObject()));
-    //                contratoDistribuicaoRepository.save(parseContratoObject2(controtoObject));
-    //                teste(controtoObject);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+//                try {
+//                    contratoDistribuicaoRepository.save(
+//                            parseContratoObject(
+                                    refatorarContratoJson(itemContratoArray);
+//                            )
+//                    );
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
             });
 
             return "+ teste object from json +";
@@ -63,22 +62,7 @@ public class ContratoDistribuicaoController {
         return contratoDistribuicaoModel;
     }
 
-    //teste para retirar elemento do json
-    private void teste(JsonObject contratoJson) throws IOException
-    {
-        System.out.println("\n+++++++++++++++++++++++++++++++++++++inicio");
-        JsonObject clone = contratoJson.deepCopy();
-        clone.remove("contrato");
-        System.out.println("original              : >>>>");
-        System.out.println(contratoJson.toString());
-        System.out.println("clone sem contrato    : >>>>");
-        System.out.println(clone.toString());
-        clone.remove("nome");
-        System.out.println("clone sem nome        : >>>>");
-        System.out.println(clone.toString());
-        System.out.println("+++++++++++++++++++++++++++++++++++++fim");
-    }
-
+    /**tratar aqui*/
     private ContratoDistribuicaoModel parseContratoObject(JsonObject contratoJson) throws IOException
     {
         //clone com atributos restantes que serão gravados no contrato atribuicao
@@ -118,5 +102,50 @@ public class ContratoDistribuicaoController {
         return contratoDistribuicaoModel;
     }
 
+
+    /**
+     * function que refatora o contrato vindo da alta em formato json
+     * */
+    private JsonObject refatorarContratoJson(JsonElement contratoJsonElement){
+        JsonObject refatoredContrato = new JsonObject();
+        JsonObject newContratoCopy = contratoJsonElement.getAsJsonObject().deepCopy();
+
+        //ses
+        System.out.println("\ncontrato xxxx");
+        JsonArray arraySituacaoEspecial = contratoJsonElement.getAsJsonObject().getAsJsonArray("ses");
+        JsonArray newArraySituacaoEspecial = arraySituacaoEspecial.deepCopy();
+        arraySituacaoEspecial.forEach(itemSes -> {
+
+
+//            if (!(isCodigoSesValido(itemSes))){
+                isCodigoSesValido(itemSes);
+//                newArraySituacaoEspecial.remove(itemSes);
+//            }
+
+
+        });
+
+//        JsonArray arrayCoobrigados = contratoJsonElement.getAsJsonObject().getAsJsonArray("coobrigados");
+
+        refatoredContrato.add("contrato", contratoJsonElement);
+
+//        System.out.println("\n\n>>contratoJsonElement>> : " + contratoJsonElement);
+
+        return refatoredContrato;
+    }
+
+
+//    private boolean isCodigoSesValido(JsonElement jsonElement){
+    private boolean isCodigoSesValido(JsonElement jsonElement){
+        boolean resp = false;
+
+        if ((jsonElement.isJsonObject())) {
+            String codigo = jsonElement.getAsJsonObject().get("codigo").getAsString();
+            Integer codNumber = Integer.parseInt(codigo);
+            resp = (codNumber > 0) ? true : false;
+        }
+
+        return resp;
+    }
 
 }
