@@ -26,3 +26,32 @@ Ideal
 Corrente "SIACI"
 
 { "contrato": { "numeroContrato": 123456789012, "codigoAdminitrador": 102, "codigoCredor": 1102, "ses":[{"codigo":63},{"codigo":103},{"codigo":204}], "coobrigados": [{ "TipPesC": 1, "nomeC": "Fulano", "cpfC":27850803191 }], "dadosAdicionais": { "qtdeDiasAtraso": 35} }}
+
+{
+   "contrato":{
+      "numeroContrato":123456789012,
+      "codigoAdminitrador":102,
+      "codigoCredor":1102,
+      "ses":[
+         {
+            "codigo":63
+         },
+         {
+            "codigo":103
+         },
+         {
+            "codigo":204
+         }
+      ],
+      "coobrigados":[
+         {
+            "TipPesC":1,
+            "nomeC":"Fulano",
+            "cpfC":27850803191
+         }
+      ],
+      "dadosAdicionais":{
+         "qtdeDiasAtraso":35
+      }
+   }
+}
