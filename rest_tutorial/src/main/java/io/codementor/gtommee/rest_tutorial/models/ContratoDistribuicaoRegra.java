@@ -46,14 +46,14 @@ public class ContratoDistribuicaoRegra extends EntidadeCobrancaTerceirizada {
      * @param contratoDistribuicao
      *            the contratoDistribuicao to set
      */
-    public void atribuiContratoDistribuicaoRegraPersistindo(ContratoDistribuicaoModel contratoDistribuicao) {
-        if (this.contratoDistribuicao == null || !this.contratoDistribuicao.equals(contratoDistribuicao)) {
-            this.contratoDistribuicao = contratoDistribuicao;
-            if (this.contratoDistribuicao != null) {
-                this.contratoDistribuicao.adicionaContratoDistribuicaoRegra(this);
-            }
-        }
-    }
+//    public void atribuiContratoDistribuicaoRegraPersistindo(ContratoDistribuicaoModel contratoDistribuicao) {
+//        if (this.contratoDistribuicao == null || !this.contratoDistribuicao.equals(contratoDistribuicao)) {
+//            this.contratoDistribuicao = contratoDistribuicao;
+//            if (this.contratoDistribuicao != null) {
+//                this.contratoDistribuicao.adicionaContratoDistribuicaoRegra(this);
+//            }
+//        }
+//    }
 
     /**
      *

@@ -16,6 +16,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -27,22 +28,25 @@ public class ContratoDistribuicaoController {
 
     @RequestMapping(value = "/object_from_json", method = RequestMethod.GET)
     public String createCompany() {
-        try (FileReader reader = new FileReader("C:\\Users\\balbinth\\Documents\\cont3.json"))
-        {
+        try (FileReader reader = new FileReader("C:\\Users\\balbinth\\Documents\\cont3.json")) {
             JsonElement jsonElement = JsonParser.parseReader(reader);
             JsonArray contratoArray = jsonElement.getAsJsonArray();
 
-            contratoArray.forEach(itemContratoArray -> {
-//                try {
-//                    contratoDistribuicaoRepository.save(
-//                            parseContratoObject(
-                                    refatorarContratoJson(itemContratoArray);
-//                            )
-//                    );
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                }
-            });
+            ContratoDistribuicaoModel contratoDistribuicaoModel = new ContratoDistribuicaoModel();
+            Contratos contratos = new Contratos();
+            List<Contrato> listContrato = new LinkedList<>();
+
+            for (JsonElement itemContratoArray : jsonElement.getAsJsonArray()){
+                    listContrato.add(
+                            parseContratoObject(
+                                    refatorarContratoJson(itemContratoArray)
+                            )
+                    );
+            }
+
+            contratos.setListContrato(listContrato);
+            contratoDistribuicaoModel.setContratos(contratos);
+            contratoDistribuicaoRepository.save(contratoDistribuicaoModel);
 
             return "+ teste object from json +";
         } catch (FileNotFoundException e) {
@@ -62,44 +66,16 @@ public class ContratoDistribuicaoController {
         return contratoDistribuicaoModel;
     }
 
-    /**tratar aqui*/
-    private ContratoDistribuicaoModel parseContratoObject(JsonObject contratoJson) throws IOException
-    {
+
+    private Contrato parseContratoObject(JsonObject contratoJson) throws IOException{
         //clone com atributos restantes que serão gravados no contrato atribuicao
         JsonObject clone = contratoJson.deepCopy();
 
-        ContratoCobrancaTerceirizada contratoCobrancaTerceirizada = new ContratoCobrancaTerceirizada();
-        contratoCobrancaTerceirizada.setNumeroContrato(contratoJson.getAsJsonPrimitive("contrato").toString());
-        clone.remove("contrato");
-        contratoCobrancaTerceirizada.setDiasAtraso(contratoJson.getAsJsonPrimitive("diasAtraso").getAsInt());
-        clone.remove("diasAtraso");
-        contratoCobrancaTerceirizada.setValorDivida(contratoJson.getAsJsonPrimitive("vlrDiv").toString());
-        clone.remove("vlrDiv");
-        contratoCobrancaTerceirizada.setValorDividaAtualizada(contratoJson.getAsJsonPrimitive("garAtu").toString());
-        clone.remove("garAtu");
-
-        Convenio convenio = new Convenio();
-        convenio.setNumeroContrato(contratoJson.getAsJsonPrimitive("contrato").toString());
-        clone.remove("contrato");
-
-        ClienteCobrancaTerceirizada clienteCobrancaTerceirizada = new ClienteCobrancaTerceirizada();
-        clienteCobrancaTerceirizada.setNome(contratoJson.getAsJsonPrimitive("nome").toString());
-        clone.remove("nome");
-        clienteCobrancaTerceirizada.setCredor(contratoJson.getAsJsonPrimitive("credor").getAsInt());
-        clone.remove("credor");
-        clienteCobrancaTerceirizada.setAdministrador(contratoJson.getAsJsonPrimitive("adm").getAsInt());
-        clone.remove("adm");
-
-        //colocando no contrato distribuição os atributos restantes que não foram para nenhuma instância
         String companyJsonString = clone.toString();
         ObjectMapper objectMapper = new ObjectMapper();
-        ContratoDistribuicaoModel contratoDistribuicaoModel = objectMapper.readValue(companyJsonString, ContratoDistribuicaoModel.class);
+        Contrato contrato = objectMapper.readValue(companyJsonString, Contrato.class);
 
-        contratoDistribuicaoModel.setContratoCobrancaTerceirizada(contratoCobrancaTerceirizada);
-        contratoDistribuicaoModel.setConvenio(convenio);
-        contratoDistribuicaoModel.setClienteCobrancaTerceirizada(clienteCobrancaTerceirizada);
-
-        return contratoDistribuicaoModel;
+        return contrato;
     }
 
 
@@ -107,45 +83,61 @@ public class ContratoDistribuicaoController {
      * function que refatora o contrato vindo da alta em formato json
      * */
     private JsonObject refatorarContratoJson(JsonElement contratoJsonElement){
-        JsonObject refatoredContrato = new JsonObject();
-        JsonObject newContratoCopy = contratoJsonElement.getAsJsonObject().deepCopy();
-
         //ses
-        System.out.println("\ncontrato xxxx");
+        JsonElement newSes = tratarRefatoracaoSes(contratoJsonElement);
+        contratoJsonElement.getAsJsonObject().remove("ses");
+        contratoJsonElement.getAsJsonObject().add("ses", newSes);
+
+        //coobrigados
+        JsonElement newCoobrigados = tratarRefatoracaoCoobrigados(contratoJsonElement);
+        contratoJsonElement.getAsJsonObject().remove("coobrigados");
+        contratoJsonElement.getAsJsonObject().add("coobrigados", newCoobrigados);
+
+        return contratoJsonElement.getAsJsonObject();
+    }
+
+
+    private JsonElement tratarRefatoracaoSes(JsonElement contratoJsonElement){
+        JsonElement newArraySituacaoEspecial = new JsonArray();
         JsonArray arraySituacaoEspecial = contratoJsonElement.getAsJsonObject().getAsJsonArray("ses");
-        JsonArray newArraySituacaoEspecial = arraySituacaoEspecial.deepCopy();
-        arraySituacaoEspecial.forEach(itemSes -> {
-
-
-//            if (!(isCodigoSesValido(itemSes))){
-                isCodigoSesValido(itemSes);
-//                newArraySituacaoEspecial.remove(itemSes);
-//            }
-
-
-        });
-
-//        JsonArray arrayCoobrigados = contratoJsonElement.getAsJsonObject().getAsJsonArray("coobrigados");
-
-        refatoredContrato.add("contrato", contratoJsonElement);
-
-//        System.out.println("\n\n>>contratoJsonElement>> : " + contratoJsonElement);
-
-        return refatoredContrato;
-    }
-
-
-//    private boolean isCodigoSesValido(JsonElement jsonElement){
-    private boolean isCodigoSesValido(JsonElement jsonElement){
-        boolean resp = false;
-
-        if ((jsonElement.isJsonObject())) {
-            String codigo = jsonElement.getAsJsonObject().get("codigo").getAsString();
-            Integer codNumber = Integer.parseInt(codigo);
-            resp = (codNumber > 0) ? true : false;
+        for (JsonElement itemSes : arraySituacaoEspecial){
+            //itemSes não pode ser null
+            if (itemSes.isJsonObject()){
+                if (getIntegerCodigoSes(itemSes) > 0) {
+                    JsonElement newJsonElementSituacaoEspecial = new JsonObject();
+                    newJsonElementSituacaoEspecial.getAsJsonObject().addProperty("codigo", getIntegerCodigoSes(itemSes));
+                    newArraySituacaoEspecial.getAsJsonArray().add(newJsonElementSituacaoEspecial);
+                }
+            }
         }
-
-        return resp;
+        return newArraySituacaoEspecial;
     }
+
+
+    private JsonElement tratarRefatoracaoCoobrigados(JsonElement contratoJsonElement){
+        JsonArray arrayCoobrigados = contratoJsonElement.getAsJsonObject().getAsJsonArray("coobrigados");
+        JsonElement newArrayCoobrigados = arrayCoobrigados.deepCopy();
+        for (JsonElement itemCoobrigado : arrayCoobrigados){
+            //itemSes não pode ser null
+            if (!(itemCoobrigado.isJsonObject())){
+                newArrayCoobrigados.getAsJsonArray().remove(itemCoobrigado);
+            }
+            else{
+                //TipPesC não pode ser <= 0
+                if (!(itemCoobrigado.getAsJsonObject().getAsJsonPrimitive("TipPesC").getAsInt() > 0)) {
+                    newArrayCoobrigados.getAsJsonArray().remove(itemCoobrigado);
+                }
+            }
+        }
+        return newArrayCoobrigados;
+    }
+
+
+    private Integer getIntegerCodigoSes(JsonElement jsonElement){
+        return Integer.parseInt(
+                jsonElement.getAsJsonObject().get("codigo").getAsString()
+        );
+    }
+
 
 }
