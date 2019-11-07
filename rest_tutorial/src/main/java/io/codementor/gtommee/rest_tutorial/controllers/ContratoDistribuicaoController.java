@@ -28,7 +28,7 @@ public class ContratoDistribuicaoController {
 
     @RequestMapping(value = "/object_from_json", method = RequestMethod.GET)
     public String createCompany() {
-        try (FileReader reader = new FileReader("C:\\Users\\balbinth\\Documents\\cont3.json")) {
+        try (FileReader reader = new FileReader("C:\\Users\\balbinth\\Documents\\cont4.json")) {
             JsonElement jsonElement = JsonParser.parseReader(reader);
             JsonArray contratoArray = jsonElement.getAsJsonArray();
 
