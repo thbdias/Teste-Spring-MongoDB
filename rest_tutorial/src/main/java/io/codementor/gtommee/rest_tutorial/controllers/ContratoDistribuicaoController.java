@@ -30,27 +30,25 @@ public class ContratoDistribuicaoController {
     public String createCompany() {
         try (FileReader reader = new FileReader("C:\\Users\\balbinth\\Documents\\cont4.json")) {
             JsonElement jsonElement = JsonParser.parseReader(reader);
-            JsonArray contratoArray = jsonElement.getAsJsonArray();
 
-            ContratoDistribuicaoModel contratoDistribuicaoModel = new ContratoDistribuicaoModel();
+            ContratoDistribuicaoModel contratoDistribuicaoModel;
             Contratos contratos = new Contratos();
-            List<Contrato> listContrato = new LinkedList<>();
+            Contrato contrato;
 
             for (JsonElement itemContratoArray : jsonElement.getAsJsonArray()){
-                    listContrato.add(
-                            parseContratoObject(
-                                    refatorarContratoJson(itemContratoArray)
-                            )
-                    );
+                contratoDistribuicaoModel = new ContratoDistribuicaoModel();
+                contrato = new Contrato();
+                contrato = parseContratoObject(
+                                refatorarContratoJson(itemContratoArray)
+                            );
+                contratos.addContrato(contrato);
+                contratoDistribuicaoModel.setContrato(contrato);
+                contratoDistribuicaoRepository.save(contratoDistribuicaoModel);
             }
-
-            contratos.setListContrato(listContrato);
-            contratoDistribuicaoModel.setContratos(contratos);
-            contratoDistribuicaoRepository.save(contratoDistribuicaoModel);
 
             return "+ teste object from json +";
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+    e.printStackTrace();
             return "erro 1";
         } catch (IOException e) {
             e.printStackTrace();

@@ -18,7 +18,7 @@ public class ContratoDistribuicaoModel {
     @Valid
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
-    private Contratos contratos;
+    private Contrato contrato;
 
 //    private Integer situacao;
 //    private ContratoCobrancaTerceirizada contratoCobrancaTerceirizada;
@@ -63,12 +63,12 @@ public class ContratoDistribuicaoModel {
         this.getAdditionalProperties().put(name, value);
     }
 
-    public void setContratos (Contratos contratos){
-        this.contratos = contratos;
+    public void setContrato (Contrato contrato){
+        this.contrato = contrato;
     }
 
-    public Contratos getContratos (){
-        return this.contratos;
+    public Contrato getContrato (){
+        return this.contrato;
     }
 
 //    /**
