@@ -29,6 +29,7 @@ public class ContratoDistribuicaoController {
     @RequestMapping(value = "/object_from_json", method = RequestMethod.GET)
     public String createCompany() {
         try (FileReader reader = new FileReader("C:\\Users\\balbinth\\Documents\\cont4.json")) {
+            long tempo_inicio = System.currentTimeMillis();
             JsonElement jsonElement = JsonParser.parseReader(reader);
 
             ContratoDistribuicaoModel contratoDistribuicaoModel;
@@ -45,10 +46,13 @@ public class ContratoDistribuicaoController {
                 contratoDistribuicaoModel.setContrato(contrato);
                 contratoDistribuicaoRepository.save(contratoDistribuicaoModel);
             }
-
-            return "+ teste object from json +";
+            long tempo_fim = System.currentTimeMillis();
+            long tempo_milisegundos = (tempo_fim - tempo_inicio);
+            long tempo_segundos = tempo_milisegundos/1000;
+            return ">>> tempo execucao em milissegundos: " + tempo_milisegundos + "\n" +
+                    ">>> tempo execucao em segundos: " + tempo_segundos;
         } catch (FileNotFoundException e) {
-    e.printStackTrace();
+            e.printStackTrace();
             return "erro 1";
         } catch (IOException e) {
             e.printStackTrace();
