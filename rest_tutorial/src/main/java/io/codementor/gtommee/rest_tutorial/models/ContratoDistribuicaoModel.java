@@ -15,8 +15,6 @@ public class ContratoDistribuicaoModel {
 
     @Id
     private ObjectId id;
-    @Valid
-    private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
     private Contrato contrato;
 
@@ -49,23 +47,10 @@ public class ContratoDistribuicaoModel {
     public void set_id(ObjectId id) { this.id = id; }
 
 
-    public void setAdditionalProperties(Map<String, Object> additionalProperties) {
-        this.additionalProperties = additionalProperties;
-    }
-
-    @JsonAnyGetter
-    public Map<String, Object> getAdditionalProperties() {
-        return this.additionalProperties;
-    }
-
-    @JsonAnySetter
-    public void setAdditionalProperty(String name, Object value) {
-        this.getAdditionalProperties().put(name, value);
-    }
-
     public void setContrato (Contrato contrato){
         this.contrato = contrato;
     }
+
 
     public Contrato getContrato (){
         return this.contrato;

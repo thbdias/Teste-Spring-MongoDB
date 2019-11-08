@@ -18,9 +18,9 @@ public class Contrato {
     @JsonProperty("adm") //chave dentro do json
     private Integer codigoAdminitrador;
     @JsonProperty("ses") //chave dentro do json
-    private List<SituacaoEspecial> listSituacaoEspecial;
+    private List<SituacaoEspecial> situacoesEspeciais;
     @JsonProperty("coobrigados") //chave dentro do json
-    private List<Coobrigado> listCoobrigado;
+    private List<Coobrigado> coobrigados;
     @Valid
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
@@ -50,20 +50,20 @@ public class Contrato {
         return this.codigoAdminitrador;
     }
 
-    public List<SituacaoEspecial> getListSituacaoEspecial() {
-        return listSituacaoEspecial;
+    public List<SituacaoEspecial> getSituacoesEspeciais() {
+        return situacoesEspeciais;
     }
 
-    public void setListSituacaoEspecial(List<SituacaoEspecial> listSituacaoEspecial) {
-        this.listSituacaoEspecial = listSituacaoEspecial;
+    public void setSituacoesEspeciais(List<SituacaoEspecial> situacoesEspeciais) {
+        this.situacoesEspeciais = situacoesEspeciais;
     }
 
-    public List<Coobrigado> getListCoobrigado() {
-        return listCoobrigado;
+    public List<Coobrigado> getCoobrigados() {
+        return coobrigados;
     }
 
-    public void setListCoobrigado(List<Coobrigado> listCoobrigado) {
-        this.listCoobrigado = listCoobrigado;
+    public void setCoobrigados(List<Coobrigado> coobrigados) {
+        this.coobrigados = coobrigados;
     }
 
     @JsonAnyGetter

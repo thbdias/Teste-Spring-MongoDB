@@ -12,8 +12,6 @@ public class SituacaoEspecial {
 
     @JsonProperty("codigo") //chave dentro do json
     private Integer codigoSituacaoEspecial;
-    @Valid
-    private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
     public SituacaoEspecial(){}
 
@@ -25,13 +23,4 @@ public class SituacaoEspecial {
         return codigoSituacaoEspecial;
     }
 
-    @JsonAnyGetter
-    public Map<String, Object> getAdditionalProperties() {
-        return this.additionalProperties;
-    }
-
-    @JsonAnySetter
-    public void setAdditionalProperty(String name, Object value) {
-        this.additionalProperties.put(name, value);
-    }
 }
