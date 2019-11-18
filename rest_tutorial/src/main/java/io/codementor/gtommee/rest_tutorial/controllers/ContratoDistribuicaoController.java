@@ -12,6 +12,7 @@ import com.google.gson.JsonParser;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.*;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -26,10 +27,10 @@ public class ContratoDistribuicaoController {
     @RequestMapping(value = "/object_from_json", method = RequestMethod.GET)
     public String createContratoDistribuicaoModel() {
 //        try (FileReader reader = new FileReader("C:\\Users\\balbinth\\Documents\\othr\\Teste-Spring-MongoDB\\cont3.json")) {
-//        try (FileReader reader = new FileReader("C:\\Users\\balbinth\\Documents\\othr\\Teste-Spring-MongoDB\\cont3-1.json")) {
+        try (FileReader reader = new FileReader("C:\\Users\\balbinth\\Documents\\othr\\Teste-Spring-MongoDB\\cont3-1.json")) {
 //        try (FileReader reader = new FileReader("C:\\Users\\balbinth\\Documents\\othr\\Teste-Spring-MongoDB\\cont4.json")) {
 //        try (FileReader reader = new FileReader("C:\\Users\\balbinth\\Documents\\othr\\Teste-Spring-MongoDB\\cont5.json")) {
-        try (FileReader reader = new FileReader("C:\\Users\\balbinth\\Documents\\othr\\Teste-Spring-MongoDB\\cont6.json")) {
+//        try (FileReader reader = new FileReader("C:\\Users\\balbinth\\Documents\\othr\\Teste-Spring-MongoDB\\cont6.json")) {
             long tempo_inicio = System.currentTimeMillis();
             JsonElement jsonElement = JsonParser.parseReader(reader);
 
@@ -70,25 +71,31 @@ public class ContratoDistribuicaoController {
         //arquivo que será enviado para o SIGA
         FileWriter arq = new FileWriter("C:\\Users\\balbinth\\Documents\\othr\\Teste-Spring-MongoDB\\siga.txt");
         PrintWriter gravarArq = new PrintWriter(arq);
+//        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd 'at' HH:mm:ss z");
+        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+        Date date = new Date(System.currentTimeMillis());
+        //numeracao que aparecera no inicio de cada linha de cada contrato
+        int tipoInfo = 0;
 
-//        gravarArq.printf("+--Restulado--+%n");
         for (ContratoDistribuicaoModel contratoDistribuicaoModel: listContratoDistribuicaoModel){
-            gravarArq.printf("contrato: %d;", contratoDistribuicaoModel.getContrato().getNumeroContrato());
-            gravarArq.printf("codCredor: %d;", contratoDistribuicaoModel.getContrato().getCodigoCredor());
-            gravarArq.printf("codAdminitrador: %d;", contratoDistribuicaoModel.getContrato().getCodigoAdminitrador());
-            //ses
-            gravarArq.printf("ses: [");
-            gravarSituacaoEspecialTxt(arq, contratoDistribuicaoModel.getContrato().getSituacoesEspeciais());
-            gravarArq.printf("];");
+            tipoInfo = 0;
+            gravarArq.printf("%d %s%n", tipoInfo++, formatter.format(date));
+            //dados do contrato
+            gravarArq.printf("%d %s", tipoInfo++,
+                    contratoDistribuicaoModel.getContrato().getNumeroContrato() + " " + //num contrato
+                    contratoDistribuicaoModel.getContrato().getCodigoCredor() + " " +   //cod credor
+                    contratoDistribuicaoModel.getContrato().getCodigoAdminitrador()     //cod admin
+                    );
             //coobrigados
-            gravarArq.printf("coobrigados: [");
-            gravarCoobrigadoTxt(arq, contratoDistribuicaoModel.getContrato().getCoobrigados());
-            gravarArq.printf("];");
+            gravarCoobrigadoTxt(arq, contratoDistribuicaoModel.getContrato().getCoobrigados(), tipoInfo++, contratoDistribuicaoModel.getContrato().getNumeroContrato());
+            //ses
+            gravarSituacaoEspecialTxt(arq, contratoDistribuicaoModel.getContrato().getSituacoesEspeciais(), tipoInfo++, contratoDistribuicaoModel.getContrato().getNumeroContrato());
             //additional properties
-            gravarAdditionalPropertiesTxt(arq, contratoDistribuicaoModel.getContrato().getAdditionalProperties());
+            gravarArq.printf("%n");
+            gravarAdditionalPropertiesTxt(arq, contratoDistribuicaoModel.getContrato().getAdditionalProperties(), tipoInfo++, contratoDistribuicaoModel.getContrato().getNumeroContrato());
             gravarArq.printf("%n");
         }
-//        gravarArq.printf("+-------------+%n");
+        gravarArq.printf("QTDE: %d", listContratoDistribuicaoModel.size());
 
         arq.close();
         long tempo_fim = System.currentTimeMillis();
@@ -98,54 +105,56 @@ public class ContratoDistribuicaoController {
                 ">>> gerar txt (segundos): " + tempo_segundos;
     }
 
-    private void gravarAdditionalPropertiesTxt(FileWriter arq, Map<String, Object> additionalProperties) {
+    private void gravarAdditionalPropertiesTxt(FileWriter arq, Map<String, Object> additionalProperties, int tipoInfo, Long numeroContrato) {
         PrintWriter gravarArq = new PrintWriter(arq);
+        gravarArq.printf("%d ", tipoInfo);
         additionalProperties.forEach((k, v) -> {
-            gravarArq.printf("%s: %s;", k, v);
+            gravarArq.printf("\"%s\" ", v);
         });
     }
 
-    private void gravarCoobrigadoTxt(FileWriter arq, List<Coobrigado> listCoobrigado){
+    private void gravarCoobrigadoTxt(FileWriter arq, List<Coobrigado> listCoobrigado, int tipoInfo, Long numeroContrato){
         PrintWriter gravarArq = new PrintWriter(arq);
         Coobrigado coobrigado;
 
         for (int i = 0; i < listCoobrigado.size(); i++){
-            gravarArq.printf("[");
+            gravarArq.printf("%n%d ", tipoInfo);
+            gravarArq.printf("%d ",numeroContrato);
             coobrigado = new Coobrigado();
             coobrigado = listCoobrigado.get(i);
             if ( i < listCoobrigado.size() -1){
-                gravarArq.printf("tipoPessoa: %d, ", coobrigado.getTipoPessoa());
-                gravarArq.printf("nome: %s, ", coobrigado.getNome());
-                gravarArq.printf("cpf: %s, ", coobrigado.getCpf());
-                gravarArq.printf("dddResidencia: %s, ", coobrigado.getDddResidencia());
-                gravarArq.printf("telResidencia: %s, ", coobrigado.getTelResidencia());
-                gravarArq.printf("dddCelular: %s, ", coobrigado.getDddCelular());
-                gravarArq.printf("telCelular: %s, ", coobrigado.getTelCelular());
-                gravarArq.printf("dddComercial: %s, ", coobrigado.getDddComercial());
-                gravarArq.printf("telComercial: %s, ", coobrigado.getTelComercial());
-                gravarArq.printf("ramalComercial: %s", coobrigado.getRamalComercial());
-                gravarArq.printf("], ");
+                gravarArq.printf("%d ", coobrigado.getTipoPessoa());
+                gravarArq.printf("\"%s\" ", coobrigado.getNome());
+                gravarArq.printf("%s ", coobrigado.getCpf());
+                gravarArq.printf("%s ", coobrigado.getDddResidencia());
+                gravarArq.printf("%s ", coobrigado.getTelResidencia());
+                gravarArq.printf("%s ", coobrigado.getDddCelular());
+                gravarArq.printf("%s ", coobrigado.getTelCelular());
+                gravarArq.printf("%s ", coobrigado.getDddComercial());
+                gravarArq.printf("%s ", coobrigado.getTelComercial());
+                gravarArq.printf("%s", coobrigado.getRamalComercial());
             }
             else{
-                gravarArq.printf("tipoPessoa: %d, ", coobrigado.getTipoPessoa());
-                gravarArq.printf("nome: %s, ", coobrigado.getNome());
-                gravarArq.printf("cpf: %s, ", coobrigado.getCpf());
-                gravarArq.printf("dddResidencia: %s, ", coobrigado.getDddResidencia());
-                gravarArq.printf("telResidencia: %s, ", coobrigado.getTelResidencia());
-                gravarArq.printf("dddCelular: %s, ", coobrigado.getDddCelular());
-                gravarArq.printf("telCelular: %s, ", coobrigado.getTelCelular());
-                gravarArq.printf("dddComercial: %s, ", coobrigado.getDddComercial());
-                gravarArq.printf("telComercial: %s, ", coobrigado.getTelComercial());
-                gravarArq.printf("ramalComercial: %s", coobrigado.getRamalComercial());
-                gravarArq.printf("]");
+                gravarArq.printf("%d ", coobrigado.getTipoPessoa());
+                gravarArq.printf("\"%s\" ", coobrigado.getNome());
+                gravarArq.printf("%s ", coobrigado.getCpf());
+                gravarArq.printf("%s ", coobrigado.getDddResidencia());
+                gravarArq.printf("%s ", coobrigado.getTelResidencia());
+                gravarArq.printf("%s ", coobrigado.getDddCelular());
+                gravarArq.printf("%s ", coobrigado.getTelCelular());
+                gravarArq.printf("%s ", coobrigado.getDddComercial());
+                gravarArq.printf("%s ", coobrigado.getTelComercial());
+                gravarArq.printf("%s", coobrigado.getRamalComercial());
             }
         }
     }
 
-    private void gravarSituacaoEspecialTxt(FileWriter arq, List<SituacaoEspecial> listSituacaoEspecial){
+    private void gravarSituacaoEspecialTxt(FileWriter arq, List<SituacaoEspecial> listSituacaoEspecial, int tipoInfo, Long numeroContrato){
         PrintWriter gravarArq = new PrintWriter(arq);
         SituacaoEspecial situacaoEspecial;
         for (int i = 0; i < listSituacaoEspecial.size(); i++){
+            gravarArq.printf("%n%d ", tipoInfo);
+            gravarArq.printf("%d ", numeroContrato);
             situacaoEspecial = new SituacaoEspecial();
             situacaoEspecial = listSituacaoEspecial.get(i);
             if ( i < listSituacaoEspecial.size() -1){
