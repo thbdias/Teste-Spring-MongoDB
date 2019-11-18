@@ -11,10 +11,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.Serializable;
+import java.io.*;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -27,8 +24,12 @@ public class ContratoDistribuicaoController {
     private ContratoDistribuicaoRepository contratoDistribuicaoRepository;
 
     @RequestMapping(value = "/object_from_json", method = RequestMethod.GET)
-    public String createCompany() {
-        try (FileReader reader = new FileReader("C:\\Users\\balbinth\\Documents\\cont4.json")) {
+    public String createContratoDistribuicaoModel() {
+//        try (FileReader reader = new FileReader("C:\\Users\\balbinth\\Documents\\othr\\Teste-Spring-MongoDB\\cont3.json")) {
+//        try (FileReader reader = new FileReader("C:\\Users\\balbinth\\Documents\\othr\\Teste-Spring-MongoDB\\cont3-1.json")) {
+//        try (FileReader reader = new FileReader("C:\\Users\\balbinth\\Documents\\othr\\Teste-Spring-MongoDB\\cont4.json")) {
+//        try (FileReader reader = new FileReader("C:\\Users\\balbinth\\Documents\\othr\\Teste-Spring-MongoDB\\cont5.json")) {
+        try (FileReader reader = new FileReader("C:\\Users\\balbinth\\Documents\\othr\\Teste-Spring-MongoDB\\cont6.json")) {
             long tempo_inicio = System.currentTimeMillis();
             JsonElement jsonElement = JsonParser.parseReader(reader);
 
@@ -49,14 +50,110 @@ public class ContratoDistribuicaoController {
             long tempo_fim = System.currentTimeMillis();
             long tempo_milisegundos = (tempo_fim - tempo_inicio);
             long tempo_segundos = tempo_milisegundos/1000;
-            return ">>> tempo execucao em milissegundos: " + tempo_milisegundos + "\n" +
-                    ">>> tempo execucao em segundos: " + tempo_segundos;
+            return ">>> alta -> json (milissegundos): " + tempo_milisegundos + "\n" +
+                    ">>> alta -> json (segundos): " + tempo_segundos;
         } catch (FileNotFoundException e) {
             e.printStackTrace();
             return "erro 1";
         } catch (IOException e) {
             e.printStackTrace();
             return "erro 2";
+        }
+    }
+
+
+    @RequestMapping(value = "/get_txt", method = RequestMethod.GET)
+    public String getContratoDistribuicaoModelTxt() throws IOException {
+        long tempo_inicio = System.currentTimeMillis();
+        //lendo contratos model do banco mongodb
+        List<ContratoDistribuicaoModel> listContratoDistribuicaoModel = contratoDistribuicaoRepository.findAll();
+        //arquivo que será enviado para o SIGA
+        FileWriter arq = new FileWriter("C:\\Users\\balbinth\\Documents\\othr\\Teste-Spring-MongoDB\\siga.txt");
+        PrintWriter gravarArq = new PrintWriter(arq);
+
+//        gravarArq.printf("+--Restulado--+%n");
+        for (ContratoDistribuicaoModel contratoDistribuicaoModel: listContratoDistribuicaoModel){
+            gravarArq.printf("contrato: %d;", contratoDistribuicaoModel.getContrato().getNumeroContrato());
+            gravarArq.printf("codCredor: %d;", contratoDistribuicaoModel.getContrato().getCodigoCredor());
+            gravarArq.printf("codAdminitrador: %d;", contratoDistribuicaoModel.getContrato().getCodigoAdminitrador());
+            //ses
+            gravarArq.printf("ses: [");
+            gravarSituacaoEspecialTxt(arq, contratoDistribuicaoModel.getContrato().getSituacoesEspeciais());
+            gravarArq.printf("];");
+            //coobrigados
+            gravarArq.printf("coobrigados: [");
+            gravarCoobrigadoTxt(arq, contratoDistribuicaoModel.getContrato().getCoobrigados());
+            gravarArq.printf("];");
+            //additional properties
+            gravarAdditionalPropertiesTxt(arq, contratoDistribuicaoModel.getContrato().getAdditionalProperties());
+            gravarArq.printf("%n");
+        }
+//        gravarArq.printf("+-------------+%n");
+
+        arq.close();
+        long tempo_fim = System.currentTimeMillis();
+        long tempo_milisegundos = (tempo_fim - tempo_inicio);
+        long tempo_segundos = tempo_milisegundos/1000;
+        return ">>> gerar txt (milissegundos): " + tempo_milisegundos + "\n" +
+                ">>> gerar txt (segundos): " + tempo_segundos;
+    }
+
+    private void gravarAdditionalPropertiesTxt(FileWriter arq, Map<String, Object> additionalProperties) {
+        PrintWriter gravarArq = new PrintWriter(arq);
+        additionalProperties.forEach((k, v) -> {
+            gravarArq.printf("%s: %s;", k, v);
+        });
+    }
+
+    private void gravarCoobrigadoTxt(FileWriter arq, List<Coobrigado> listCoobrigado){
+        PrintWriter gravarArq = new PrintWriter(arq);
+        Coobrigado coobrigado;
+
+        for (int i = 0; i < listCoobrigado.size(); i++){
+            gravarArq.printf("[");
+            coobrigado = new Coobrigado();
+            coobrigado = listCoobrigado.get(i);
+            if ( i < listCoobrigado.size() -1){
+                gravarArq.printf("tipoPessoa: %d, ", coobrigado.getTipoPessoa());
+                gravarArq.printf("nome: %s, ", coobrigado.getNome());
+                gravarArq.printf("cpf: %s, ", coobrigado.getCpf());
+                gravarArq.printf("dddResidencia: %s, ", coobrigado.getDddResidencia());
+                gravarArq.printf("telResidencia: %s, ", coobrigado.getTelResidencia());
+                gravarArq.printf("dddCelular: %s, ", coobrigado.getDddCelular());
+                gravarArq.printf("telCelular: %s, ", coobrigado.getTelCelular());
+                gravarArq.printf("dddComercial: %s, ", coobrigado.getDddComercial());
+                gravarArq.printf("telComercial: %s, ", coobrigado.getTelComercial());
+                gravarArq.printf("ramalComercial: %s", coobrigado.getRamalComercial());
+                gravarArq.printf("], ");
+            }
+            else{
+                gravarArq.printf("tipoPessoa: %d, ", coobrigado.getTipoPessoa());
+                gravarArq.printf("nome: %s, ", coobrigado.getNome());
+                gravarArq.printf("cpf: %s, ", coobrigado.getCpf());
+                gravarArq.printf("dddResidencia: %s, ", coobrigado.getDddResidencia());
+                gravarArq.printf("telResidencia: %s, ", coobrigado.getTelResidencia());
+                gravarArq.printf("dddCelular: %s, ", coobrigado.getDddCelular());
+                gravarArq.printf("telCelular: %s, ", coobrigado.getTelCelular());
+                gravarArq.printf("dddComercial: %s, ", coobrigado.getDddComercial());
+                gravarArq.printf("telComercial: %s, ", coobrigado.getTelComercial());
+                gravarArq.printf("ramalComercial: %s", coobrigado.getRamalComercial());
+                gravarArq.printf("]");
+            }
+        }
+    }
+
+    private void gravarSituacaoEspecialTxt(FileWriter arq, List<SituacaoEspecial> listSituacaoEspecial){
+        PrintWriter gravarArq = new PrintWriter(arq);
+        SituacaoEspecial situacaoEspecial;
+        for (int i = 0; i < listSituacaoEspecial.size(); i++){
+            situacaoEspecial = new SituacaoEspecial();
+            situacaoEspecial = listSituacaoEspecial.get(i);
+            if ( i < listSituacaoEspecial.size() -1){
+                gravarArq.printf("%d, ", situacaoEspecial.getCodigoSituacaoEspecial());
+            }
+            else{
+                gravarArq.printf("%d", situacaoEspecial.getCodigoSituacaoEspecial());
+            }
         }
     }
 
@@ -68,7 +165,6 @@ public class ContratoDistribuicaoController {
         return contratoDistribuicaoModel;
     }
 
-
     private Contrato parseContratoObject(JsonObject contratoJson) throws IOException{
         //clone com atributos restantes que serão gravados no contrato atribuicao
         JsonObject clone = contratoJson.deepCopy();
@@ -79,7 +175,6 @@ public class ContratoDistribuicaoController {
 
         return contrato;
     }
-
 
     /**
      * function que refatora o contrato vindo da alta em formato json
@@ -98,7 +193,6 @@ public class ContratoDistribuicaoController {
         return contratoJsonElement.getAsJsonObject();
     }
 
-
     private JsonElement tratarRefatoracaoSes(JsonElement contratoJsonElement){
         JsonElement newArraySituacaoEspecial = new JsonArray();
         JsonArray arraySituacaoEspecial = contratoJsonElement.getAsJsonObject().getAsJsonArray("ses");
@@ -114,7 +208,6 @@ public class ContratoDistribuicaoController {
         }
         return newArraySituacaoEspecial;
     }
-
 
     private JsonElement tratarRefatoracaoCoobrigados(JsonElement contratoJsonElement){
         JsonArray arrayCoobrigados = contratoJsonElement.getAsJsonObject().getAsJsonArray("coobrigados");
@@ -133,7 +226,6 @@ public class ContratoDistribuicaoController {
         }
         return newArrayCoobrigados;
     }
-
 
     private Integer getIntegerCodigoSes(JsonElement jsonElement){
         return Integer.parseInt(
