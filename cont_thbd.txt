@@ -1,0 +1,208 @@
+{"contrato":171000000440,"nome":"MARIZA PEREIRA PINTO                ","cpf":00083600540530,"dddRes":0075,"telRes":032219015,"dddCel":0000,"telCel":000000000,"dddCom":0075,"telCom":032219015,"ramCom":0000,"codFase":000,"uno":16110,"diaVenc":01,"dtPriAber":201703,"qtdPreAtraso":004,"diasAtraso":0100,"rcr":2204,"orr":044,"lf":313,"tf":002,"tg":0425,"pmcmv":"S","grpHab":00000,"prf":5233,"credor":1140,"adm":0102,"uf":"BA","dtAss":20100601,"subContab":000448,"obra":"N","matCon":"N","pzrem":035,"abvEnd":"COM","nomEnd":"RES NOVA CONCEICAO                                ","nroEnd":00000,"cplEnd":"BL015 AP003","baiEnd":"CONCEICAO     ","cidEnd":"FEIRA DE SANTANA         ","ufEnd":"BA","cepEnd":44066030,"abvCor":"   ","nomCor":"                                                  ","nroCor":00000,"cplCor":"           ","baiCor":"              ","cidCor":"                         ","ufCor":"  ","cepCor":00000000,"TipPes":1,"VlrPreAtr":" 00000000000026,59","IdtParcPg":"S","DiasAtrUltPrePg":0016,"PercDivPg":"04,69","email":"                                                            ","vlrDiv":" 00000000000108,41","garAtu":"0000000000043916,32","ses":[{"codigo":063},{"codigo":103},{"codigo":000},{"codigo":000},{"codigo":000},{"codigo":000},{"codigo":000},{"codigo":000},{"codigo":000},{"codigo":000},],"coobrigados":[{"TipPesC":0,"nomeC":"                                    ","cpfC":00000000000000,"dddResC":0000,"telResC":000000000,"dddCelC":0000,"telCelC":000000000,"dddComC":0000,"telComC":000000000,"ramComC":0000},{"TipPesC":0,"nomeC":"                                    ","cpfC":00000000000000,"dddResC":0000,"telResC":000000000,"dddCelC":0000,"telCelC":000000000,"dddComC":0000,"telComC":000000000,"ramComC":0000},{"TipPesC":0,"nomeC":"                                    ","cpfC":00000000000000,"dddResC":0000,"telResC":000000000,"dddCelC":0000,"telCelC":000000000,"dddComC":0000,"telComC":000000000,"ramComC":0000},{"TipPesC":0,"nomeC":"                                    ","cpfC":00000000000000,"dddResC":0000,"telResC":000000000,"dddCelC":0000,"telCelC":000000000,"dddComC":0000,"telComC":000000000,"ramComC":0000},{"TipPesC":0,"nomeC":"                                    ","cpfC":00000000000000,"dddResC":0000,"telResC":000000000,"dddCelC":0000,"telCelC":000000000,"dddComC":0000,"telComC":000000000,"ramComC":0000},{"TipPesC":0,"nomeC":"                                    ","cpfC":00000000000000,"dddResC":0000,"telResC":000000000,"dddCelC":0000,"telCelC":000000000,"dddComC":0000,"telComC":000000000,"ramComC":0000},{"TipPesC":0,"nomeC":"                                    ","cpfC":00000000000000,"dddResC":0000,"telResC":000000000,"dddCelC":0000,"telCelC":000000000,"dddComC":0000,"telComC":000000000,"ramComC":0000},{"TipPesC":0,"nomeC":"                                    ","cpfC":00000000000000,"dddResC":0000,"telResC":000000000,"dddCelC":0000,"telCelC":000000000,"dddComC":0000,"telComC":000000000,"ramComC":0000},{"TipPesC":0,"nomeC":"                                    ","cpfC":00000000000000,"dddResC":0000,"telResC":000000000,"dddCelC":0000,"telCelC":000000000,"dddComC":0000,"telComC":000000000,"ramComC":0000},]}
+
+RegistroPessoaCSV
+DadosContratoEnum
+
+
+{   
+   "contrato":171000000440,	(contrato)								-> ContratoCobrancaTerceirizada / Convenio? 
+   "nome":"MARIZA PEREIRA PINTO, (nome)    							-> ClienteCobrancaTerceirizada           
+   "cpf":00083600540530, (cpf)									-> EmpresaTerceirizada
+   "dddRes":0075, (ddd resid.)										-> ?
+   "telRes":032219015, (te.residêncial)								-> ?
+   "dddCel":0000, (ddd cel.)										-> ?
+   "telCel":000000000, 												-> ?
+   "dddCom":0075, (ddd com.)										-> ?
+   "telCom":032219015, (tel.comercial)								-> ?
+   "ramCom":0000, (ramal)											-> ?
+   "codFase":000, (Fase do Processo de Execução)					-> ?
+   "uno":16110, (unidade operacional)								-> ?
+   "diaVenc":01, (Dia Vencimento)									-> ?
+   "dtPriAber":201703,												-> ?
+   "qtdPreAtraso":004,												-> ?
+   "diasAtraso":0100,												-> ContratoCobrancaTerceirizada
+   "rcr":2204,														-> ?
+   "orr":044, (origim de recurso)									-> ?				
+   "lf":313,														-> ?
+   "tf":002,														-> ?
+   "tg":0425,														-> ?
+   "pmcmv":"S",														-> ?
+   "grpHab":00000,													-> ?
+   "prf":5233,														-> ?
+   "credor":1140,													-> ClienteCobrancaTerceirizada
+   "adm":0102,														-> ClienteCobrancaTerceirizada
+   "uf":"BA",														-> ?
+   "dtAss":20100601,												-> ?
+   "subContab":000448,												-> ?
+   "obra":"N",														-> ?
+   "matCon":"N",													-> ?
+   "pzrem":035,														-> ?
+   "abvEnd":"COM",													-> EnderecoEmpresa
+   "nomEnd":"RES NOVA CONCEICAO",									-> EnderecoEmpresa
+   "nroEnd":00000,													-> EnderecoEmpresa
+   "cplEnd":"BL015 AP003",											-> EnderecoEmpresa
+   "baiEnd":"CONCEICAO     ",										-> EnderecoEmpresa
+   "cidEnd":"FEIRA DE SANTANA         ",							-> EnderecoEmpresa
+   "ufEnd":"BA",													-> EnderecoEmpresa
+   "cepEnd":44066030,												-> EnderecoEmpresa
+   "abvCor":"   ",													-> ?
+   "nomCor":" ",													-> ?	
+   "nroCor":00000,													-> ?
+   "cplCor":"           ",											-> ?
+   "baiCor":"              ",										-> ?
+   "cidCor":"                         ",							-> ?
+   "ufCor":"  ",													-> ?
+   "cepCor":00000000,												-> ?
+   "TipPes":1,														-> ?
+   "VlrPreAtr":" 00000000000026,59",								-> ?
+   "IdtParcPg":"S",													-> ?
+   "DiasAtrUltPrePg":0016,											-> ?
+   "PercDivPg":"04,69",												-> ?
+   "email":"          												-> ContatoEmpresa / EmpresaTerceirizada        -                                          ",
+   "vlrDiv":" 00000000000108,41", (Valor da Dívida em Atraso)		-> ContratoCobrancaTerceirizada
+   "garAtu":"0000000000043916,32", (Valor da Garantia Atualizada)	-> ContratoCobrancaTerceirizada
+   "ses":[
+      {
+         "codigo":063
+      },
+      {
+         "codigo":103
+      },
+      {
+         "codigo":000
+      },
+      {
+         "codigo":000
+      },
+      {
+         "codigo":000
+      },
+      {
+         "codigo":000
+      },
+      {
+         "codigo":000
+      },
+      {
+         "codigo":000
+      },
+      {
+         "codigo":000
+      },
+      {
+         "codigo":000
+      },
+
+   ],
+   "coobrigados":[												-> PosicaoContratoPersistController******
+      {
+         "TipPesC":0,
+         "nomeC":"                                    ",
+         "cpfC":00000000000000,
+         "dddResC":0000,
+         "telResC":000000000,
+         "dddCelC":0000,
+         "telCelC":000000000,
+         "dddComC":0000,
+         "telComC":000000000,
+         "ramComC":0000
+      },
+      {
+         "TipPesC":0,
+         "nomeC":"                                    ",
+         "cpfC":00000000000000,
+         "dddResC":0000,
+         "telResC":000000000,
+         "dddCelC":0000,
+         "telCelC":000000000,
+         "dddComC":0000,
+         "telComC":000000000,
+         "ramComC":0000
+      },
+      {
+         "TipPesC":0,
+         "nomeC":"                                    ",
+         "cpfC":00000000000000,
+         "dddResC":0000,
+         "telResC":000000000,
+         "dddCelC":0000,
+         "telCelC":000000000,
+         "dddComC":0000,
+         "telComC":000000000,
+         "ramComC":0000
+      },
+      {
+         "TipPesC":0,
+         "nomeC":"                                    ",
+         "cpfC":00000000000000,
+         "dddResC":0000,
+         "telResC":000000000,
+         "dddCelC":0000,
+         "telCelC":000000000,
+         "dddComC":0000,
+         "telComC":000000000,
+         "ramComC":0000
+      },
+      {
+         "TipPesC":0,
+         "nomeC":"                                    ",
+         "cpfC":00000000000000,
+         "dddResC":0000,
+         "telResC":000000000,
+         "dddCelC":0000,
+         "telCelC":000000000,
+         "dddComC":0000,
+         "telComC":000000000,
+         "ramComC":0000
+      },
+      {
+         "TipPesC":0,
+         "nomeC":"                                    ",
+         "cpfC":00000000000000,
+         "dddResC":0000,
+         "telResC":000000000,
+         "dddCelC":0000,
+         "telCelC":000000000,
+         "dddComC":0000,
+         "telComC":000000000,
+         "ramComC":0000
+      },
+      {
+         "TipPesC":0,
+         "nomeC":"                                    ",
+         "cpfC":00000000000000,
+         "dddResC":0000,
+         "telResC":000000000,
+         "dddCelC":0000,
+         "telCelC":000000000,
+         "dddComC":0000,
+         "telComC":000000000,
+         "ramComC":0000
+      },
+      {
+         "TipPesC":0,
+         "nomeC":"                                    ",
+         "cpfC":00000000000000,
+         "dddResC":0000,
+         "telResC":000000000,
+         "dddCelC":0000,
+         "telCelC":000000000,
+         "dddComC":0000,
+         "telComC":000000000,
+         "ramComC":0000
+      },
+      {
+         "TipPesC":0,
+         "nomeC":"                                    ",
+         "cpfC":00000000000000,
+         "dddResC":0000,
+         "telResC":000000000,
+         "dddCelC":0000,
+         "telCelC":000000000,
+         "dddComC":0000,
+         "telComC":000000000,
+         "ramComC":0000
+      },
+
+   ]
+}

@@ -1,0 +1,57 @@
+Contratos
+	List
+		Contrato
+			numeroContrato
+			codigoAdminitrador
+			codigoCredor
+			valorDivida
+			...
+			map dadosAdicionais <adicionalProperties>
+			List 
+				SES
+					codigo
+			List
+				Coobrigado
+					TipPesC
+					nomeC
+					cpfC
+					map dadosAdicionais <adicionalProperties>
+
+
+Ideal
+{ "contrato": { "numeroContrato": 123456789012, "codigoAdminitrador": 102, "codigoCredor": 1102, "ses": [ 63, 102, 204 ], "coobrigados": [{ "nome": "Fulano", "tipoPessoa": "F" }], "dadosAdicionais": { "qtdeDiasAtraso": 35} }}
+
+
+
+Corrente "SIACI"
+
+{ "contrato": { "numeroContrato": 123456789012, "codigoAdminitrador": 102, "codigoCredor": 1102, "ses":[{"codigo":63},{"codigo":103},{"codigo":204}], "coobrigados": [{ "TipPesC": 1, "nomeC": "Fulano", "cpfC":27850803191 }], "dadosAdicionais": { "qtdeDiasAtraso": 35} }}
+
+{
+   "contrato":{
+      "numeroContrato":123456789012,
+      "codigoAdminitrador":102,
+      "codigoCredor":1102,
+      "ses":[
+         {
+            "codigo":63
+         },
+         {
+            "codigo":103
+         },
+         {
+            "codigo":204
+         }
+      ],
+      "coobrigados":[
+         {
+            "TipPesC":1,
+            "nomeC":"Fulano",
+            "cpfC":27850803191
+         }
+      ],
+      "dadosAdicionais":{
+         "qtdeDiasAtraso":35
+      }
+   }
+}
