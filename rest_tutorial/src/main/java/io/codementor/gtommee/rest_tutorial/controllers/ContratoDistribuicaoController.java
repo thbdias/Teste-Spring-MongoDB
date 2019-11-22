@@ -68,15 +68,17 @@ public class ContratoDistribuicaoController {
         //arquivo que será enviado para o SIGA
         FileWriter arq = new FileWriter("C:\\Users\\balbinth\\Documents\\othr\\Teste-Spring-MongoDB\\siga.txt");
         PrintWriter gravarArq = new PrintWriter(arq);
-//        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd 'at' HH:mm:ss z");
-        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+        // SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd 'at' HH:mm:ss z");
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd");
         Date date = new Date(System.currentTimeMillis());
         //numeracao que aparecera no inicio de cada linha de cada contrato
         int tipoInfo = 0;
 
+        //iterando lista de contratos vindo do banco mongoDB
         for (ContratoDistribuicaoModel contratoDistribuicaoModel: listContratoDistribuicaoModel){
             tipoInfo = 0;
-            gravarArq.printf("%d %s%n", tipoInfo++, formatter.format(date));
+            gravarArq.printf("%s%n", "H");  //gravando tipo registro
+            gravarArq.printf("%s%n", formatter.format(date)); //gravando data
             //dados do contrato
             gravarArq.printf("%d %s", tipoInfo++,
                     contratoDistribuicaoModel.getContrato().getNumeroContrato() + " " + //num contrato
