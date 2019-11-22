@@ -15,11 +15,9 @@ public class Contratos {
         this.contratos = contratos;
     }
 
-
     public List<Contrato> getContratos (){
         return this.contratos;
     }
-
 
     public void addContrato(Contrato contrato){
         contratos.add(contrato);

@@ -4,17 +4,14 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.JsonObject;
 import io.codementor.gtommee.rest_tutorial.models.*;
 import io.codementor.gtommee.rest_tutorial.repositories.ContratoDistribuicaoRepository;
-import org.bson.types.ObjectId;
 import org.springframework.web.bind.annotation.*;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -166,14 +163,6 @@ public class ContratoDistribuicaoController {
         }
     }
 
-    private ContratoDistribuicaoModel parseContratoObject2(JsonObject contratoJson) throws IOException
-    {
-        String companyJsonString = contratoJson.toString();
-        ObjectMapper objectMapper = new ObjectMapper();
-        ContratoDistribuicaoModel contratoDistribuicaoModel = objectMapper.readValue(companyJsonString, ContratoDistribuicaoModel.class);
-        return contratoDistribuicaoModel;
-    }
-
     private Contrato parseContratoObject(JsonObject contratoJson) throws IOException{
         //clone com atributos restantes que serão gravados no contrato atribuicao
         JsonObject clone = contratoJson.deepCopy();
@@ -241,6 +230,4 @@ public class ContratoDistribuicaoController {
                 jsonElement.getAsJsonObject().get("codigo").getAsString()
         );
     }
-
-
 }
