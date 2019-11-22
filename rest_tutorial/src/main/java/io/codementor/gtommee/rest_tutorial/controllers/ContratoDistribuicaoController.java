@@ -77,7 +77,7 @@ public class ContratoDistribuicaoController {
         //iterando lista de contratos vindo do banco mongoDB
         for (ContratoDistribuicaoModel contratoDistribuicaoModel: listContratoDistribuicaoModel){
             tipoInfo = 0;
-            gravarArq.printf("%s%n", "H");  //gravando tipo registro
+            gravarArq.printf("%s", "H");  //gravando tipo registro
             gravarArq.printf("%s%n", formatter.format(date)); //gravando data
             //dados do contrato
             gravarArq.printf("%d %s", tipoInfo++,
