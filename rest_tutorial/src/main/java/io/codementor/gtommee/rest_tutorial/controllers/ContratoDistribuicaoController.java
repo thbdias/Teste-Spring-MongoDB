@@ -20,6 +20,8 @@ import java.util.Map;
 public class ContratoDistribuicaoController {
     @Autowired
     private ContratoDistribuicaoRepository contratoDistribuicaoRepository;
+    //tamanho máximo de posições do número de contrato
+    private static final int TAM_NUMERO_CONTRATO = 12;
 
     @RequestMapping(value = "/object_from_json", method = RequestMethod.GET)
     public String createContratoDistribuicaoModel() {
@@ -88,7 +90,7 @@ public class ContratoDistribuicaoController {
             //coobrigados
             gravarCoobrigadoTxt(arq, contratoDistribuicaoModel.getContrato().getCoobrigados(), tipoInfo++, contratoDistribuicaoModel.getContrato().getNumeroContrato());
             //ses
-            gravarSituacaoEspecialTxt(arq, contratoDistribuicaoModel.getContrato().getSituacoesEspeciais(), tipoInfo++, contratoDistribuicaoModel.getContrato().getNumeroContrato());
+            gravarSituacaoEspecialTxt(arq, contratoDistribuicaoModel.getContrato().getSituacoesEspeciais(), contratoDistribuicaoModel.getContrato().getNumeroContrato());
             //additional properties
             gravarArq.printf("%n");
             gravarAdditionalPropertiesTxt(arq, contratoDistribuicaoModel.getContrato().getAdditionalProperties(), tipoInfo++, contratoDistribuicaoModel.getContrato().getNumeroContrato());
@@ -148,12 +150,12 @@ public class ContratoDistribuicaoController {
         }
     }
 
-    private void gravarSituacaoEspecialTxt(FileWriter arq, List<SituacaoEspecial> listSituacaoEspecial, int tipoInfo, Long numeroContrato){
+    private void gravarSituacaoEspecialTxt(FileWriter arq, List<SituacaoEspecial> listSituacaoEspecial, Long numeroContrato){
         PrintWriter gravarArq = new PrintWriter(arq);
         SituacaoEspecial situacaoEspecial;
         for (int i = 0; i < listSituacaoEspecial.size(); i++){
-            gravarArq.printf("%n%d ", tipoInfo);
-            gravarArq.printf("%d ", numeroContrato);
+            gravarArq.printf("%n%s", "S");  //gravando tipo registro
+            gravarArq.printf(" %s ", getNumeroContratoString(numeroContrato));
             situacaoEspecial = new SituacaoEspecial();
             situacaoEspecial = listSituacaoEspecial.get(i);
             if ( i < listSituacaoEspecial.size() -1){
@@ -231,5 +233,20 @@ public class ContratoDistribuicaoController {
         return Integer.parseInt(
                 jsonElement.getAsJsonObject().get("codigo").getAsString()
         );
+    }
+
+    private String getNumeroContratoString(Long numeroContrato){
+        String newNumeroContrato = "";
+
+        if ((numeroContrato + "").length() < TAM_NUMERO_CONTRATO){
+            for (int i = 0; i < (TAM_NUMERO_CONTRATO - (numeroContrato + "").length()); i++){
+                newNumeroContrato += "0";
+            }
+            newNumeroContrato += numeroContrato + "";
+        }
+        else{
+            newNumeroContrato += numeroContrato + "";
+        }
+        return newNumeroContrato;
     }
 }
