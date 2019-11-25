@@ -17,6 +17,8 @@ public class Contrato {
     private Integer codigoCredor;
     @JsonProperty("adm") //chave dentro do json
     private Integer codigoAdminitrador;
+    @JsonProperty("mutuario") //chave dentro do json
+    private Mutuario mutuario;
     @JsonProperty("ses") //chave dentro do json
     private List<SituacaoEspecial> situacoesEspeciais;
     @JsonProperty("coobrigados") //chave dentro do json
@@ -48,6 +50,14 @@ public class Contrato {
 
     public Integer getCodigoAdminitrador(){
         return this.codigoAdminitrador;
+    }
+
+    public Mutuario getMutuario() {
+        return mutuario;
+    }
+
+    public void setMutuario(Mutuario mutuario) {
+        this.mutuario = mutuario;
     }
 
     public List<SituacaoEspecial> getSituacoesEspeciais() {

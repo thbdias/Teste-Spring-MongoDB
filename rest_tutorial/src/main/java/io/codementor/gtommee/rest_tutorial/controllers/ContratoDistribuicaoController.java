@@ -175,7 +175,10 @@ public class ContratoDistribuicaoController {
         contratoJsonElement.getAsJsonObject().remove("coobrigados");
         contratoJsonElement.getAsJsonObject().add("coobrigados", newCoobrigados);
 
-        return contratoJsonElement.getAsJsonObject();
+        //mutuario
+        JsonElement newContratoJsonElement = tratarRefatoracaoMutuario(contratoJsonElement);
+
+        return newContratoJsonElement.getAsJsonObject();
     }
 
     private JsonElement tratarRefatoracaoSes(JsonElement contratoJsonElement){
@@ -210,6 +213,18 @@ public class ContratoDistribuicaoController {
             }
         }
         return newArrayCoobrigados;
+    }
+
+    private JsonElement tratarRefatoracaoMutuario (JsonElement contratoJsonElement){
+        JsonElement newJsonMutuario = new JsonObject();
+        JsonElement newContratoJsonElement = contratoJsonElement.deepCopy();
+
+        newJsonMutuario.getAsJsonObject().add("nome", newContratoJsonElement.getAsJsonObject().getAsJsonPrimitive("nome"));
+
+        newContratoJsonElement.getAsJsonObject().remove("nome");
+        newContratoJsonElement.getAsJsonObject().add("mutuario", newJsonMutuario);
+
+        return  newContratoJsonElement;
     }
 
     private Integer getIntegerCodigoSes(JsonElement jsonElement){
