@@ -176,9 +176,9 @@ public class ContratoDistribuicaoController {
         contratoJsonElement.getAsJsonObject().add("coobrigados", newCoobrigados);
 
         //mutuario
-        JsonElement newContratoJsonElement = tratarRefatoracaoMutuario(contratoJsonElement);
+        contratoJsonElement = tratarRefatoracaoMutuario(contratoJsonElement);
 
-        return newContratoJsonElement.getAsJsonObject();
+        return contratoJsonElement.getAsJsonObject();
     }
 
     private JsonElement tratarRefatoracaoSes(JsonElement contratoJsonElement){
