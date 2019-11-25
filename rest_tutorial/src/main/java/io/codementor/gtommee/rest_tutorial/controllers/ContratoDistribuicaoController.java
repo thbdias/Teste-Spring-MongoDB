@@ -25,6 +25,7 @@ public class ContratoDistribuicaoController {
     private static final int TAM_SES = 3; //tamanho máximo de caracteres de uma situacao especial
     private static final int QUANT_MAX_SES = 10; //quantidade máxima de situações especiais que devem conter no layout SIGA
     private static final int QUANT_MAX_NOME_COOBRIGADO = 36; //quantidade máxima de situações especiais que devem conter no layout SIGA
+    private static final int TAM_CPF_COOBRIGADO = 14; //tamanho máximo de caracteres do cpf de um coobrigado que deve conter no layout SIGA
 
     @RequestMapping(value = "/object_from_json", method = RequestMethod.GET)
     public String createContratoDistribuicaoModel() {
@@ -124,14 +125,14 @@ public class ContratoDistribuicaoController {
             gravarArq.printf("%n%s", "C");  //gravando tipo registro
             gravarArq.printf("%s", getNumeroContratoFormatado(numeroContrato));
             gravarArq.printf("%s", getNomeCoobrigadoFormatado(listCoobrigado.get(i).getNome())); //ok
-            gravarArq.printf("%s ", listCoobrigado.get(i).getCpf());
-            gravarArq.printf("%s ", listCoobrigado.get(i).getDddResidencia());
-            gravarArq.printf("%s ", listCoobrigado.get(i).getTelResidencia());
-            gravarArq.printf("%s ", listCoobrigado.get(i).getDddCelular());
-            gravarArq.printf("%s ", listCoobrigado.get(i).getTelCelular());
-            gravarArq.printf("%s ", listCoobrigado.get(i).getDddComercial());
-            gravarArq.printf("%s ", listCoobrigado.get(i).getTelComercial());
-            gravarArq.printf("%s", listCoobrigado.get(i).getRamalComercial());
+            gravarArq.printf("%s ", getCpfCoobrigadoFormatado(listCoobrigado.get(i).getCpf())); //ok
+            gravarArq.printf("%s ", listCoobrigado.get(i).getDddResidencia()); //?
+            gravarArq.printf("%s ", listCoobrigado.get(i).getTelResidencia()); //?
+            gravarArq.printf("%s ", listCoobrigado.get(i).getDddCelular()); //?
+            gravarArq.printf("%s ", listCoobrigado.get(i).getTelCelular()); //?
+            gravarArq.printf("%s ", listCoobrigado.get(i).getDddComercial()); //?
+            gravarArq.printf("%s ", listCoobrigado.get(i).getTelComercial()); //?
+            gravarArq.printf("%s", listCoobrigado.get(i).getRamalComercial()); //?
         }
     }
 
@@ -264,5 +265,21 @@ public class ContratoDistribuicaoController {
         }
 
         return newNome;
+    }
+
+    private String getCpfCoobrigadoFormatado(String cpfCoobrigado){
+        String newCpf = "";
+
+        if (cpfCoobrigado.length() == TAM_CPF_COOBRIGADO){
+            newCpf = cpfCoobrigado;
+        }
+        else if (cpfCoobrigado.length() < TAM_CPF_COOBRIGADO){
+            for (int i = 0; i < (TAM_CPF_COOBRIGADO - cpfCoobrigado.length()); i++){
+                newCpf += "0";
+            }
+            newCpf += cpfCoobrigado;
+        }
+
+        return newCpf;
     }
 }
