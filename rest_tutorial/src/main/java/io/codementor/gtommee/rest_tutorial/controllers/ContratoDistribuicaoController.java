@@ -24,6 +24,7 @@ public class ContratoDistribuicaoController {
     private static final int TAM_NUMERO_CONTRATO = 12; //tamanho máximo de caracteres de um contrato
     private static final int TAM_SES = 3; //tamanho máximo de caracteres de uma situacao especial
     private static final int QUANT_MAX_SES = 10; //quantidade máxima de situações especiais que devem conter no layout SIGA
+    private static final int QUANT_MAX_NOME_COOBRIGADO = 36; //quantidade máxima de situações especiais que devem conter no layout SIGA
 
     @RequestMapping(value = "/object_from_json", method = RequestMethod.GET)
     public String createContratoDistribuicaoModel() {
@@ -90,7 +91,7 @@ public class ContratoDistribuicaoController {
                     contratoDistribuicaoModel.getContrato().getCodigoAdminitrador()     //cod admin
                     );
             //coobrigados
-            gravarCoobrigadoTxt(arq, contratoDistribuicaoModel.getContrato().getCoobrigados(), tipoInfo++, contratoDistribuicaoModel.getContrato().getNumeroContrato());
+            gravarCoobrigadoTxt(arq, contratoDistribuicaoModel.getContrato().getCoobrigados(), contratoDistribuicaoModel.getContrato().getNumeroContrato());
             //ses ok
             gravarSituacaoEspecialTxt(arq, contratoDistribuicaoModel.getContrato().getSituacoesEspeciais(), contratoDistribuicaoModel.getContrato().getNumeroContrato());
             //additional properties
@@ -116,46 +117,28 @@ public class ContratoDistribuicaoController {
         });
     }
 
-    private void gravarCoobrigadoTxt(FileWriter arq, List<Coobrigado> listCoobrigado, int tipoInfo, Long numeroContrato){
+    private void gravarCoobrigadoTxt(FileWriter arq, List<Coobrigado> listCoobrigado, Long numeroContrato){
         PrintWriter gravarArq = new PrintWriter(arq);
-        Coobrigado coobrigado;
 
         for (int i = 0; i < listCoobrigado.size(); i++){
-            gravarArq.printf("%n%d ", tipoInfo);
-            gravarArq.printf("%d ",numeroContrato);
-            coobrigado = new Coobrigado();
-            coobrigado = listCoobrigado.get(i);
-            if ( i < listCoobrigado.size() -1){
-                gravarArq.printf("%d ", coobrigado.getTipoPessoa());
-                gravarArq.printf("\"%s\" ", coobrigado.getNome());
-                gravarArq.printf("%s ", coobrigado.getCpf());
-                gravarArq.printf("%s ", coobrigado.getDddResidencia());
-                gravarArq.printf("%s ", coobrigado.getTelResidencia());
-                gravarArq.printf("%s ", coobrigado.getDddCelular());
-                gravarArq.printf("%s ", coobrigado.getTelCelular());
-                gravarArq.printf("%s ", coobrigado.getDddComercial());
-                gravarArq.printf("%s ", coobrigado.getTelComercial());
-                gravarArq.printf("%s", coobrigado.getRamalComercial());
-            }
-            else{
-                gravarArq.printf("%d ", coobrigado.getTipoPessoa());
-                gravarArq.printf("\"%s\" ", coobrigado.getNome());
-                gravarArq.printf("%s ", coobrigado.getCpf());
-                gravarArq.printf("%s ", coobrigado.getDddResidencia());
-                gravarArq.printf("%s ", coobrigado.getTelResidencia());
-                gravarArq.printf("%s ", coobrigado.getDddCelular());
-                gravarArq.printf("%s ", coobrigado.getTelCelular());
-                gravarArq.printf("%s ", coobrigado.getDddComercial());
-                gravarArq.printf("%s ", coobrigado.getTelComercial());
-                gravarArq.printf("%s", coobrigado.getRamalComercial());
-            }
+            gravarArq.printf("%n%s", "C");  //gravando tipo registro
+            gravarArq.printf("%s", getNumeroContratoFormatado(numeroContrato));
+            gravarArq.printf("%s", getNomeCoobrigadoFormatado(listCoobrigado.get(i).getNome())); //ok
+            gravarArq.printf("%s ", listCoobrigado.get(i).getCpf());
+            gravarArq.printf("%s ", listCoobrigado.get(i).getDddResidencia());
+            gravarArq.printf("%s ", listCoobrigado.get(i).getTelResidencia());
+            gravarArq.printf("%s ", listCoobrigado.get(i).getDddCelular());
+            gravarArq.printf("%s ", listCoobrigado.get(i).getTelCelular());
+            gravarArq.printf("%s ", listCoobrigado.get(i).getDddComercial());
+            gravarArq.printf("%s ", listCoobrigado.get(i).getTelComercial());
+            gravarArq.printf("%s", listCoobrigado.get(i).getRamalComercial());
         }
     }
 
     private void gravarSituacaoEspecialTxt(FileWriter arq, List<SituacaoEspecial> listSituacaoEspecial, Long numeroContrato){
         PrintWriter gravarArq = new PrintWriter(arq);
         gravarArq.printf("%n%s", "S");  //gravando tipo registro
-        gravarArq.printf("%s", getNumeroContratoString(numeroContrato)); //gravando numero contrato
+        gravarArq.printf("%s", getNumeroContratoFormatado(numeroContrato)); //gravando numero contrato
         //gravando situacoes especiais existentes
         for (int i = 0; i < listSituacaoEspecial.size(); i++){
             gravarArq.printf("%s", getSesString(listSituacaoEspecial.get(i).getCodigoSituacaoEspecial()));
@@ -234,7 +217,7 @@ public class ContratoDistribuicaoController {
         );
     }
 
-    private String getNumeroContratoString(Long numeroContrato){
+    private String getNumeroContratoFormatado(Long numeroContrato){
         String newNumeroContrato = "";
 
         if ((numeroContrato + "").length() < TAM_NUMERO_CONTRATO){
@@ -262,5 +245,24 @@ public class ContratoDistribuicaoController {
             newSituacaoEspecial += situacaoEspecial + "";
         }
         return newSituacaoEspecial;
+    }
+
+    private String getNomeCoobrigadoFormatado(String nomeCoobrigado){
+        String newNome = "";
+
+        if (nomeCoobrigado.length() == QUANT_MAX_NOME_COOBRIGADO){
+            newNome = nomeCoobrigado;
+        }
+        else if (nomeCoobrigado.length() > QUANT_MAX_NOME_COOBRIGADO){
+            newNome = nomeCoobrigado.substring(0, QUANT_MAX_NOME_COOBRIGADO);
+        }
+        else {
+            newNome = nomeCoobrigado;
+            for (int i = 0; i < (QUANT_MAX_NOME_COOBRIGADO - nomeCoobrigado.length()); i++){
+                newNome += " ";
+            }
+        }
+
+        return newNome;
     }
 }
