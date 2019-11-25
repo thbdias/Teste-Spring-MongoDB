@@ -21,7 +21,9 @@ public class ContratoDistribuicaoController {
     @Autowired
     private ContratoDistribuicaoRepository contratoDistribuicaoRepository;
     //tamanho máximo de posições do número de contrato
-    private static final int TAM_NUMERO_CONTRATO = 12;
+    private static final int TAM_NUMERO_CONTRATO = 12; //tamanho máximo de caracteres de um contrato
+    private static final int TAM_SES = 3; //tamanho máximo de caracteres de uma situacao especial
+    private static final int QUANT_MAX_SES = 10; //quantidade máxima de situações especiais que devem conter no layout SIGA
 
     @RequestMapping(value = "/object_from_json", method = RequestMethod.GET)
     public String createContratoDistribuicaoModel() {
@@ -79,8 +81,8 @@ public class ContratoDistribuicaoController {
         //iterando lista de contratos vindo do banco mongoDB
         for (ContratoDistribuicaoModel contratoDistribuicaoModel: listContratoDistribuicaoModel){
             tipoInfo = 0;
-            gravarArq.printf("%s", "H");  //gravando tipo registro
-            gravarArq.printf("%s%n", formatter.format(date)); //gravando data
+            gravarArq.printf("%s", "H");  //gravando tipo registro ok
+            gravarArq.printf("%s%n", formatter.format(date)); //gravando data ok
             //dados do contrato
             gravarArq.printf("%d %s", tipoInfo++,
                     contratoDistribuicaoModel.getContrato().getNumeroContrato() + " " + //num contrato
@@ -89,7 +91,7 @@ public class ContratoDistribuicaoController {
                     );
             //coobrigados
             gravarCoobrigadoTxt(arq, contratoDistribuicaoModel.getContrato().getCoobrigados(), tipoInfo++, contratoDistribuicaoModel.getContrato().getNumeroContrato());
-            //ses
+            //ses ok
             gravarSituacaoEspecialTxt(arq, contratoDistribuicaoModel.getContrato().getSituacoesEspeciais(), contratoDistribuicaoModel.getContrato().getNumeroContrato());
             //additional properties
             gravarArq.printf("%n");
@@ -152,18 +154,15 @@ public class ContratoDistribuicaoController {
 
     private void gravarSituacaoEspecialTxt(FileWriter arq, List<SituacaoEspecial> listSituacaoEspecial, Long numeroContrato){
         PrintWriter gravarArq = new PrintWriter(arq);
-        SituacaoEspecial situacaoEspecial;
+        gravarArq.printf("%n%s", "S");  //gravando tipo registro
+        gravarArq.printf("%s", getNumeroContratoString(numeroContrato)); //gravando numero contrato
+        //gravando situacoes especiais existentes
         for (int i = 0; i < listSituacaoEspecial.size(); i++){
-            gravarArq.printf("%n%s", "S");  //gravando tipo registro
-            gravarArq.printf(" %s ", getNumeroContratoString(numeroContrato));
-            situacaoEspecial = new SituacaoEspecial();
-            situacaoEspecial = listSituacaoEspecial.get(i);
-            if ( i < listSituacaoEspecial.size() -1){
-                gravarArq.printf("%d, ", situacaoEspecial.getCodigoSituacaoEspecial());
-            }
-            else{
-                gravarArq.printf("%d", situacaoEspecial.getCodigoSituacaoEspecial());
-            }
+            gravarArq.printf("%s", getSesString(listSituacaoEspecial.get(i).getCodigoSituacaoEspecial()));
+        }
+        //gravando situacoes especiais com zero
+        for (int i = 0; i < (QUANT_MAX_SES - listSituacaoEspecial.size()); i++){
+            gravarArq.printf("%s", getSesString(0));
         }
     }
 
@@ -248,5 +247,20 @@ public class ContratoDistribuicaoController {
             newNumeroContrato += numeroContrato + "";
         }
         return newNumeroContrato;
+    }
+
+    private String getSesString(Integer situacaoEspecial){
+        String newSituacaoEspecial = "";
+
+        if ((situacaoEspecial + "").length() < TAM_SES){
+            for (int i = 0; i < (TAM_SES - (situacaoEspecial + "").length()); i++){
+                newSituacaoEspecial += "0";
+            }
+            newSituacaoEspecial += situacaoEspecial + "";
+        }
+        else{
+            newSituacaoEspecial += situacaoEspecial + "";
+        }
+        return newSituacaoEspecial;
     }
 }
