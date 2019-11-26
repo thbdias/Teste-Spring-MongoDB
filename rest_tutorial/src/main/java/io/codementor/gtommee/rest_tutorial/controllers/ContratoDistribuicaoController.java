@@ -188,6 +188,9 @@ public class ContratoDistribuicaoController {
         //mutuario
         contratoJsonElement = tratarRefatoracaoMutuario(contratoJsonElement);
 
+        //situacao contrato
+        contratoJsonElement = tratarRefatoracaoSituacaoContrato(contratoJsonElement);
+
         return contratoJsonElement.getAsJsonObject();
     }
 
@@ -252,6 +255,21 @@ public class ContratoDistribuicaoController {
         newContratoJsonElement.getAsJsonObject().remove("ramCom");
 
         newContratoJsonElement.getAsJsonObject().add("mutuario", newJsonMutuario);
+
+        return  newContratoJsonElement;
+    }
+
+    private JsonElement tratarRefatoracaoSituacaoContrato (JsonElement contratoJsonElement){
+        JsonElement newJsonSituacaoContrato = new JsonObject();
+        JsonElement newContratoJsonElement = contratoJsonElement.deepCopy();
+
+        newJsonSituacaoContrato.getAsJsonObject().add("diaVenc", newContratoJsonElement.getAsJsonObject().getAsJsonPrimitive("diaVenc"));
+        newJsonSituacaoContrato.getAsJsonObject().add("dtPriAber", newContratoJsonElement.getAsJsonObject().getAsJsonPrimitive("dtPriAber"));
+
+        newContratoJsonElement.getAsJsonObject().remove("diaVenc");
+        newContratoJsonElement.getAsJsonObject().remove("dtPriAber");
+
+        newContratoJsonElement.getAsJsonObject().add("situacaoContrato", newJsonSituacaoContrato);
 
         return  newContratoJsonElement;
     }
