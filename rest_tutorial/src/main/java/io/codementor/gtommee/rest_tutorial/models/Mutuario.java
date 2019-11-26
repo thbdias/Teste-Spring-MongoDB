@@ -21,6 +21,8 @@ public class Mutuario {
     private String dddComercial;
     @JsonProperty("telCom") //chave dentro do json
     private String telComercial;
+    @JsonProperty("ramCom") //chave dentro do json
+    private String ramComercial;
 
     public void setNome(String nome) {
         this.nome = nome;
@@ -92,5 +94,13 @@ public class Mutuario {
 
     public void setTelComercial(String telComercial) {
         this.telComercial = telComercial;
+    }
+
+    public String getRamComercial() {
+        return ramComercial;
+    }
+
+    public void setRamComercial(String ramComercial) {
+        this.ramComercial = ramComercial;
     }
 }
