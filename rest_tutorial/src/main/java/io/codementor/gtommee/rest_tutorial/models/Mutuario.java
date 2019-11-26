@@ -9,6 +9,10 @@ public class Mutuario {
     private Integer tipoPessoa;
     @JsonProperty("cpf") //chave dentro do json
     private String cpf;
+    @JsonProperty("dddRes") //chave dentro do json
+    private String dddResidencia;
+    @JsonProperty("telRes") //chave dentro do json
+    private String telResidencia;
 
     public void setNome(String nome) {
         this.nome = nome;
@@ -32,5 +36,21 @@ public class Mutuario {
 
     public void setCpf(String cpf) {
         this.cpf = cpf;
+    }
+
+    public String getDddResidencia() {
+        return dddResidencia;
+    }
+
+    public void setDddResidencia(String dddResidencia) {
+        this.dddResidencia = dddResidencia;
+    }
+
+    public String getTelResidencia() {
+        return telResidencia;
+    }
+
+    public void setTelResidencia(String telResidencia) {
+        this.telResidencia = telResidencia;
     }
 }
