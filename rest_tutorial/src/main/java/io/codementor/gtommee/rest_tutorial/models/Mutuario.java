@@ -7,6 +7,8 @@ public class Mutuario {
     private String nome;
     @JsonProperty("TipPes") //chave dentro do json
     private Integer tipoPessoa;
+    @JsonProperty("cpf") //chave dentro do json
+    private String cpf;
 
     public void setNome(String nome) {
         this.nome = nome;
@@ -22,5 +24,13 @@ public class Mutuario {
 
     public void setTipoPessoa(Integer tipoPessoa) {
         this.tipoPessoa = tipoPessoa;
+    }
+
+    public String getCpf() {
+        return cpf;
+    }
+
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
     }
 }
