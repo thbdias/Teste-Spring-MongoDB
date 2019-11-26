@@ -21,11 +21,13 @@ public class ContratoDistribuicaoController {
     @Autowired
     private ContratoDistribuicaoRepository contratoDistribuicaoRepository;
     //tamanho máximo de posições do número de contrato
-    private static final int TAM_NUMERO_CONTRATO = 12; //tamanho máximo de caracteres de um contrato
+    private static final int TAM_NUMERO_CONTRATO = 12;
     private static final int TAM_SES = 3; //tamanho máximo de caracteres de uma situacao especial
     private static final int QUANT_MAX_SES = 10; //quantidade máxima de situações especiais que devem conter no layout SIGA
-    private static final int QUANT_MAX_NOME_COOBRIGADO = 36; //quantidade máxima de situações especiais que devem conter no layout SIGA
-    private static final int TAM_CPF_COOBRIGADO = 14; //tamanho máximo de caracteres do cpf de um coobrigado que deve conter no layout SIGA
+    private static final int TAM_MAX_NOME = 36;
+    private static final int TAM_CPF = 14;
+    private static final int TAM_MAX_DDD = 4;
+    private static final int TAM_MAX_TEL = 9;
 
     @RequestMapping(value = "/object_from_json", method = RequestMethod.GET)
     public String createContratoDistribuicaoModel() {
@@ -109,7 +111,13 @@ public class ContratoDistribuicaoController {
         PrintWriter gravarArq = new PrintWriter(arq);
         gravarArq.printf("%n%s", "D");  //gravando tipo registro ok
         gravarArq.printf("%s", getNumeroContratoFormatado(contrato.getNumeroContrato()));  //gravando numero contrato ok
-        gravarArq.printf("%s", getNomeFormatado(contrato.getMutuario().getNome()));  //gravando nome mutuario ok
+        gravarArq.printf("%s", getNomeFormatado(contrato.getMutuario().getNome()));  //gravando mutuario nome ok
+        gravarArq.printf("%d", contrato.getMutuario().getTipoPessoa());  //gravando mutuario tipo pessoa ok
+        gravarArq.printf("%s", getCpfFormatado(contrato.getMutuario().getCpf()));  //gravando mutuario cpf ok
+        gravarArq.printf("%s", getDDDFormatado(contrato.getMutuario().getDddResidencia()));  //gravando mutuario ddd residencia ok
+        gravarArq.printf("%s", getTelFormatado(contrato.getMutuario().getTelResidencia()));  //gravando mutuario tel residencia ok
+        gravarArq.printf("%s", getDDDFormatado(contrato.getMutuario().getDddComercial()));  //gravando mutuario ddd comercial ok
+        gravarArq.printf("%s", getTelFormatado(contrato.getMutuario().getTelComercial()));  //gravando mutuario tel comercial ok
     }
 
     private void gravarAdditionalPropertiesTxt(FileWriter arq, Map<String, Object> additionalProperties, int tipoInfo, Long numeroContrato) {
@@ -127,7 +135,7 @@ public class ContratoDistribuicaoController {
             gravarArq.printf("%n%s", "C");  //gravando tipo registro
             gravarArq.printf("%s", getNumeroContratoFormatado(numeroContrato));
             gravarArq.printf("%s", getNomeFormatado(listCoobrigado.get(i).getNome())); //ok
-            gravarArq.printf("%s ", getCpfCoobrigadoFormatado(listCoobrigado.get(i).getCpf())); //ok
+            gravarArq.printf("%s ", getCpfFormatado(listCoobrigado.get(i).getCpf())); //ok
             gravarArq.printf("%s ", listCoobrigado.get(i).getDddResidencia()); //?
             gravarArq.printf("%s ", listCoobrigado.get(i).getTelResidencia()); //?
             gravarArq.printf("%s ", listCoobrigado.get(i).getDddCelular()); //?
@@ -284,18 +292,18 @@ public class ContratoDistribuicaoController {
         return newSituacaoEspecial;
     }
 
-    private String getNomeFormatado(String nomeCoobrigado){
+    private String getNomeFormatado(String nome){
         String newNome = "";
 
-        if (nomeCoobrigado.length() == QUANT_MAX_NOME_COOBRIGADO){
-            newNome = nomeCoobrigado;
+        if (nome.length() == TAM_MAX_NOME){
+            newNome = nome;
         }
-        else if (nomeCoobrigado.length() > QUANT_MAX_NOME_COOBRIGADO){
-            newNome = nomeCoobrigado.substring(0, QUANT_MAX_NOME_COOBRIGADO);
+        else if (nome.length() > TAM_MAX_NOME){
+            newNome = nome.substring(0, TAM_MAX_NOME);
         }
         else {
-            newNome = nomeCoobrigado;
-            for (int i = 0; i < (QUANT_MAX_NOME_COOBRIGADO - nomeCoobrigado.length()); i++){
+            newNome = nome;
+            for (int i = 0; i < (TAM_MAX_NOME - nome.length()); i++){
                 newNome += " ";
             }
         }
@@ -303,19 +311,51 @@ public class ContratoDistribuicaoController {
         return newNome;
     }
 
-    private String getCpfCoobrigadoFormatado(String cpfCoobrigado){
+    private String getCpfFormatado(String cpf){
         String newCpf = "";
 
-        if (cpfCoobrigado.length() == TAM_CPF_COOBRIGADO){
-            newCpf = cpfCoobrigado;
+        if (cpf.length() == TAM_CPF){
+            newCpf = cpf;
         }
-        else if (cpfCoobrigado.length() < TAM_CPF_COOBRIGADO){
-            for (int i = 0; i < (TAM_CPF_COOBRIGADO - cpfCoobrigado.length()); i++){
+        else if (cpf.length() < TAM_CPF){
+            for (int i = 0; i < (TAM_CPF - cpf.length()); i++){
                 newCpf += "0";
             }
-            newCpf += cpfCoobrigado;
+            newCpf += cpf;
         }
 
         return newCpf;
+    }
+
+    private String getDDDFormatado(String ddd){
+        String newDdd = "";
+
+        if (ddd.length() == TAM_MAX_DDD){
+            newDdd = ddd;
+        }
+        else if (ddd.length() < TAM_MAX_DDD){
+            for (int i = 0; i < (TAM_MAX_DDD - ddd.length()); i++){ newDdd += "0"; }
+            newDdd += ddd;
+        }
+        else{
+            for (int i = 0; i < TAM_MAX_DDD; i++){ newDdd += ddd.charAt(i); }
+        }
+        return newDdd;
+    }
+
+    private String getTelFormatado(String tel){
+        String newTel = "";
+
+        if (tel.length() == TAM_MAX_TEL){
+            newTel = tel;
+        }
+        else if (tel.length() < TAM_MAX_TEL){
+            for (int i = 0; i < (TAM_MAX_TEL - tel.length()); i++){ newTel += "0"; }
+            newTel += tel;
+        }
+        else{
+            for (int i = 0; i < TAM_MAX_TEL; i++){ newTel += tel.charAt(i); }
+        }
+        return newTel;
     }
 }
