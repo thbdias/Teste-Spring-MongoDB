@@ -13,6 +13,10 @@ public class Mutuario {
     private String dddResidencia;
     @JsonProperty("telRes") //chave dentro do json
     private String telResidencia;
+    @JsonProperty("dddCel") //chave dentro do json
+    private String dddCel;
+    @JsonProperty("telCel") //chave dentro do json
+    private String telCel;
 
     public void setNome(String nome) {
         this.nome = nome;
@@ -52,5 +56,21 @@ public class Mutuario {
 
     public void setTelResidencia(String telResidencia) {
         this.telResidencia = telResidencia;
+    }
+
+    public String getDddCel() {
+        return dddCel;
+    }
+
+    public void setDddCel(String dddCel) {
+        this.dddCel = dddCel;
+    }
+
+    public String getTelCel() {
+        return telCel;
+    }
+
+    public void setTelCel(String telCel) {
+        this.telCel = telCel;
     }
 }

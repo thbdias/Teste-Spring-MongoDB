@@ -224,12 +224,16 @@ public class ContratoDistribuicaoController {
         newJsonMutuario.getAsJsonObject().add("cpf", newContratoJsonElement.getAsJsonObject().getAsJsonPrimitive("cpf"));
         newJsonMutuario.getAsJsonObject().add("dddRes", newContratoJsonElement.getAsJsonObject().getAsJsonPrimitive("dddRes"));
         newJsonMutuario.getAsJsonObject().add("telRes", newContratoJsonElement.getAsJsonObject().getAsJsonPrimitive("telRes"));
+        newJsonMutuario.getAsJsonObject().add("dddCel", newContratoJsonElement.getAsJsonObject().getAsJsonPrimitive("dddCel"));
+        newJsonMutuario.getAsJsonObject().add("telCel", newContratoJsonElement.getAsJsonObject().getAsJsonPrimitive("telCel"));
 
         newContratoJsonElement.getAsJsonObject().remove("nome");
         newContratoJsonElement.getAsJsonObject().remove("TipPes");
         newContratoJsonElement.getAsJsonObject().remove("cpf");
         newContratoJsonElement.getAsJsonObject().remove("dddRes");
         newContratoJsonElement.getAsJsonObject().remove("telRes");
+        newContratoJsonElement.getAsJsonObject().remove("dddCel");
+        newContratoJsonElement.getAsJsonObject().remove("telCel");
 
         newContratoJsonElement.getAsJsonObject().add("mutuario", newJsonMutuario);
 
