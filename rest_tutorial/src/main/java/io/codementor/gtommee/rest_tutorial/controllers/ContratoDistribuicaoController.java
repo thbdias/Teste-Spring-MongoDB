@@ -220,8 +220,11 @@ public class ContratoDistribuicaoController {
         JsonElement newContratoJsonElement = contratoJsonElement.deepCopy();
 
         newJsonMutuario.getAsJsonObject().add("nome", newContratoJsonElement.getAsJsonObject().getAsJsonPrimitive("nome"));
+        newJsonMutuario.getAsJsonObject().add("TipPes", newContratoJsonElement.getAsJsonObject().getAsJsonPrimitive("TipPes"));
 
         newContratoJsonElement.getAsJsonObject().remove("nome");
+        newContratoJsonElement.getAsJsonObject().remove("TipPes");
+        
         newContratoJsonElement.getAsJsonObject().add("mutuario", newJsonMutuario);
 
         return  newContratoJsonElement;
