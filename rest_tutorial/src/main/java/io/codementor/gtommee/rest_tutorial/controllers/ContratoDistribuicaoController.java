@@ -110,14 +110,14 @@ public class ContratoDistribuicaoController {
     private void gravarDadosContratoTxt(FileWriter arq, Contrato contrato){
         PrintWriter gravarArq = new PrintWriter(arq);
         gravarArq.printf("%n%s", "D");  //gravando tipo registro ok
-        gravarArq.printf("%s", getNumeroContratoFormatado(contrato.getNumeroContrato()));  //gravando numero contrato ok
-        gravarArq.printf("%s", getNomeFormatado(contrato.getMutuario().getNome()));  //gravando mutuario nome ok
-        gravarArq.printf("%d", contrato.getMutuario().getTipoPessoa());  //gravando mutuario tipo pessoa ok
-        gravarArq.printf("%s", getCpfFormatado(contrato.getMutuario().getCpf()));  //gravando mutuario cpf ok
-        gravarArq.printf("%s", getDDDFormatado(contrato.getMutuario().getDddResidencia()));  //gravando mutuario ddd residencia ok
-        gravarArq.printf("%s", getTelFormatado(contrato.getMutuario().getTelResidencia()));  //gravando mutuario tel residencia ok
-        gravarArq.printf("%s", getDDDFormatado(contrato.getMutuario().getDddComercial()));  //gravando mutuario ddd comercial ok
-        gravarArq.printf("%s", getTelFormatado(contrato.getMutuario().getTelComercial()));  //gravando mutuario tel comercial ok
+        gravarArq.printf("%s", getNumeroContratoFormatado(contrato.getNumeroContrato()));
+        gravarArq.printf("%s", getNomeFormatado(contrato.getMutuario().getNome()));
+        gravarArq.printf("%d", contrato.getMutuario().getTipoPessoa());
+        gravarArq.printf("%s", getCpfFormatado(contrato.getMutuario().getCpf()));
+        gravarArq.printf("%s", getDDDFormatado(contrato.getMutuario().getDddResidencia()));
+        gravarArq.printf("%s", getTelFormatado(contrato.getMutuario().getTelResidencia()));
+        gravarArq.printf("%s", getDDDFormatado(contrato.getMutuario().getDddComercial()));
+        gravarArq.printf("%s", getTelFormatado(contrato.getMutuario().getTelComercial()));
     }
 
     private void gravarAdditionalPropertiesTxt(FileWriter arq, Map<String, Object> additionalProperties, int tipoInfo, Long numeroContrato) {

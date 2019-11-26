@@ -17,6 +17,8 @@ public class Contrato {
     private Integer codigoCredor;
     @JsonProperty("adm") //chave dentro do json
     private Integer codigoAdminitrador;
+    @JsonProperty("situacaoContrato") //chave dentro do json
+    private SituacaoContrato situacaoContrato;
     @JsonProperty("mutuario") //chave dentro do json
     private Mutuario mutuario;
     @JsonProperty("ses") //chave dentro do json
@@ -84,5 +86,13 @@ public class Contrato {
     @JsonAnySetter
     public void setAdditionalProperty(String name, Object value) {
         this.additionalProperties.put(name, value);
+    }
+
+    public SituacaoContrato getSituacaoContrato() {
+        return situacaoContrato;
+    }
+
+    public void setSituacaoContrato(SituacaoContrato situacaoContrato) {
+        this.situacaoContrato = situacaoContrato;
     }
 }
