@@ -109,6 +109,7 @@ public class ContratoDistribuicaoController {
         PrintWriter gravarArq = new PrintWriter(arq);
         gravarArq.printf("%n%s", "D");  //gravando tipo registro ok
         gravarArq.printf("%s", getNumeroContratoFormatado(contrato.getNumeroContrato()));  //gravando numero contrato ok
+        gravarArq.printf("%s", getNomeFormatado(contrato.getMutuario().getNome()));  //gravando nome mutuario ok
     }
 
     private void gravarAdditionalPropertiesTxt(FileWriter arq, Map<String, Object> additionalProperties, int tipoInfo, Long numeroContrato) {
@@ -125,7 +126,7 @@ public class ContratoDistribuicaoController {
         for (int i = 0; i < listCoobrigado.size(); i++){
             gravarArq.printf("%n%s", "C");  //gravando tipo registro
             gravarArq.printf("%s", getNumeroContratoFormatado(numeroContrato));
-            gravarArq.printf("%s", getNomeCoobrigadoFormatado(listCoobrigado.get(i).getNome())); //ok
+            gravarArq.printf("%s", getNomeFormatado(listCoobrigado.get(i).getNome())); //ok
             gravarArq.printf("%s ", getCpfCoobrigadoFormatado(listCoobrigado.get(i).getCpf())); //ok
             gravarArq.printf("%s ", listCoobrigado.get(i).getDddResidencia()); //?
             gravarArq.printf("%s ", listCoobrigado.get(i).getTelResidencia()); //?
@@ -283,7 +284,7 @@ public class ContratoDistribuicaoController {
         return newSituacaoEspecial;
     }
 
-    private String getNomeCoobrigadoFormatado(String nomeCoobrigado){
+    private String getNomeFormatado(String nomeCoobrigado){
         String newNome = "";
 
         if (nomeCoobrigado.length() == QUANT_MAX_NOME_COOBRIGADO){
