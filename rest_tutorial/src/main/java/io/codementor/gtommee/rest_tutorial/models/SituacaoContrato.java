@@ -7,8 +7,10 @@ public class SituacaoContrato {
     private int diaVencimento;
     @JsonProperty("dtPriAber") //chave dentro do json
     private String dataPrimeiraPrestacaoAberta; //yyyyMM
-    @JsonProperty("qtdPreAtraso")
+    @JsonProperty("qtdPreAtraso") //chave dentro do json
     private int quantPrestAtraso;
+    @JsonProperty("diasAtraso") //chave dentro do json
+    private int diasAtraso;
 
     public int getDiaVencimento() {
         return diaVencimento;
@@ -32,5 +34,13 @@ public class SituacaoContrato {
 
     public void setQuantPrestAtraso(int quantPrestAtraso) {
         this.quantPrestAtraso = quantPrestAtraso;
+    }
+
+    public int getDiasAtraso() {
+        return diasAtraso;
+    }
+
+    public void setDiasAtraso(int diasAtraso) {
+        this.diasAtraso = diasAtraso;
     }
 }
