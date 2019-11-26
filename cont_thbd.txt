@@ -6,8 +6,8 @@ DadosContratoEnum
 
 {   
    "contrato":171000000440,	(contrato)								-> ContratoCobrancaTerceirizada / Convenio? 
-   "nome":"MARIZA PEREIRA PINTO, (nome)    							-> ClienteCobrancaTerceirizada           
-   "cpf":00083600540530, (cpf)									-> EmpresaTerceirizada
+   "nome":"MARIZA PEREIRA PINTO, (nome)    							->            
+   "cpf":00083600540530, (cpf)										-> 
    "dddRes":0075, (ddd resid.)										-> ?
    "telRes":032219015, (te.residêncial)								-> ?
    "dddCel":0000, (ddd cel.)										-> ?

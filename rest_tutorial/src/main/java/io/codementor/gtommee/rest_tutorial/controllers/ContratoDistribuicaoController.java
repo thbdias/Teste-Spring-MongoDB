@@ -65,7 +65,6 @@ public class ContratoDistribuicaoController {
         }
     }
 
-
     @RequestMapping(value = "/get_txt", method = RequestMethod.GET)
     public String getContratoDistribuicaoModelTxt() throws IOException {
         long tempo_inicio = System.currentTimeMillis();
@@ -84,14 +83,10 @@ public class ContratoDistribuicaoController {
         for (ContratoDistribuicaoModel contratoDistribuicaoModel: listContratoDistribuicaoModel){
             tipoInfo = 0;
             gravarArq.printf("%s", "H");  //gravando tipo registro ok
-            gravarArq.printf("%s%n", formatter.format(date)); //gravando data ok
-            //dados do contrato
-            gravarArq.printf("%d %s", tipoInfo++,
-                    contratoDistribuicaoModel.getContrato().getNumeroContrato() + " " + //num contrato
-                    contratoDistribuicaoModel.getContrato().getCodigoCredor() + " " +   //cod credor
-                    contratoDistribuicaoModel.getContrato().getCodigoAdminitrador()     //cod admin
-                    );
-            //coobrigados
+            gravarArq.printf("%s", formatter.format(date)); //gravando data ok
+            //dados do contrato ?????
+            gravarDadosContratoTxt(arq, contratoDistribuicaoModel.getContrato());
+            //coobrigados ?????
             gravarCoobrigadoTxt(arq, contratoDistribuicaoModel.getContrato().getCoobrigados(), contratoDistribuicaoModel.getContrato().getNumeroContrato());
             //ses ok
             gravarSituacaoEspecialTxt(arq, contratoDistribuicaoModel.getContrato().getSituacoesEspeciais(), contratoDistribuicaoModel.getContrato().getNumeroContrato());
@@ -108,6 +103,12 @@ public class ContratoDistribuicaoController {
         long tempo_segundos = tempo_milisegundos/1000;
         return ">>> gerar txt (milissegundos): " + tempo_milisegundos + "\n" +
                 ">>> gerar txt (segundos): " + tempo_segundos;
+    }
+
+    private void gravarDadosContratoTxt(FileWriter arq, Contrato contrato){
+        PrintWriter gravarArq = new PrintWriter(arq);
+        gravarArq.printf("%n%s", "D");  //gravando tipo registro ok
+        gravarArq.printf("%s", getNumeroContratoFormatado(contrato.getNumeroContrato()));  //gravando numero contrato ok
     }
 
     private void gravarAdditionalPropertiesTxt(FileWriter arq, Map<String, Object> additionalProperties, int tipoInfo, Long numeroContrato) {
