@@ -28,6 +28,8 @@ public class ContratoDistribuicaoController {
     private static final int TAM_CPF = 14;
     private static final int TAM_MAX_DDD = 4;
     private static final int TAM_MAX_TEL = 9;
+    private static final int TAM_MAX_CODIGO_FASE = 20;
+
 
     @RequestMapping(value = "/object_from_json", method = RequestMethod.GET)
     public String createContratoDistribuicaoModel() {
@@ -109,7 +111,7 @@ public class ContratoDistribuicaoController {
 
     private void gravarDadosContratoTxt(FileWriter arq, Contrato contrato){
         PrintWriter gravarArq = new PrintWriter(arq);
-        gravarArq.printf("%n%s", "D");  //gravando tipo registro ok
+        gravarArq.printf("%n%s", "D");
         gravarArq.printf("%s", getNumeroContratoFormatado(contrato.getNumeroContrato()));
         gravarArq.printf("%s", getNomeFormatado(contrato.getMutuario().getNome()));
         gravarArq.printf("%d", contrato.getMutuario().getTipoPessoa());
@@ -118,6 +120,26 @@ public class ContratoDistribuicaoController {
         gravarArq.printf("%s", getTelFormatado(contrato.getMutuario().getTelResidencia()));
         gravarArq.printf("%s", getDDDFormatado(contrato.getMutuario().getDddComercial()));
         gravarArq.printf("%s", getTelFormatado(contrato.getMutuario().getTelComercial()));
+        gravarArq.printf("%s", getCodigoFaseFormatado(contrato.getAdditionalProperties()));
+    }
+
+    private String getCodigoFaseFormatado(Map<String, Object> additionalProperties) {
+        String codigoFase = additionalProperties.get("codFase").toString();
+        String newCodigoFase = "";
+
+        if (codigoFase.length() == TAM_MAX_CODIGO_FASE){ newCodigoFase = codigoFase; }
+        else if (codigoFase.length() < TAM_MAX_CODIGO_FASE){
+            for (int i = 0; i < (TAM_MAX_CODIGO_FASE - codigoFase.length()); i++){
+                newCodigoFase += "0";
+            }
+            newCodigoFase += codigoFase;
+        }
+        else{
+            for (int i = 0; i < TAM_MAX_CODIGO_FASE; i++){
+                newCodigoFase += codigoFase.charAt(i);
+            }
+        }
+        return newCodigoFase;
     }
 
     private void gravarAdditionalPropertiesTxt(FileWriter arq, Map<String, Object> additionalProperties, int tipoInfo, Long numeroContrato) {
