@@ -11,6 +11,9 @@ public class SituacaoContrato {
     private int quantPrestAtraso;
     @JsonProperty("diasAtraso") //chave dentro do json
     private int diasAtraso;
+    @JsonProperty("VlrPreAtr") //chave dentro do json
+    private String valorUltimaPrestacaoAtraso;
+
 
     public int getDiaVencimento() {
         return diaVencimento;
@@ -42,5 +45,13 @@ public class SituacaoContrato {
 
     public void setDiasAtraso(int diasAtraso) {
         this.diasAtraso = diasAtraso;
+    }
+
+    public String getValorUltimaPrestacaoAtraso() {
+        return valorUltimaPrestacaoAtraso;
+    }
+
+    public void setValorUltimaPrestacaoAtraso(String valorUltimaPrestacaoAtraso) {
+        this.valorUltimaPrestacaoAtraso = valorUltimaPrestacaoAtraso;
     }
 }
