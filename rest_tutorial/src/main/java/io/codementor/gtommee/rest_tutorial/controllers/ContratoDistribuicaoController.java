@@ -332,12 +332,14 @@ public class ContratoDistribuicaoController {
         newJsonSituacaoContrato.getAsJsonObject().add("qtdPreAtraso", newContratoJsonElement.getAsJsonObject().getAsJsonPrimitive("qtdPreAtraso"));
         newJsonSituacaoContrato.getAsJsonObject().add("diasAtraso", newContratoJsonElement.getAsJsonObject().getAsJsonPrimitive("diasAtraso"));
         newJsonSituacaoContrato.getAsJsonObject().add("VlrPreAtr", newContratoJsonElement.getAsJsonObject().getAsJsonPrimitive("VlrPreAtr"));
+        newJsonSituacaoContrato.getAsJsonObject().add("DiasAtrUltPrePg", newContratoJsonElement.getAsJsonObject().getAsJsonPrimitive("DiasAtrUltPrePg"));
 
         newContratoJsonElement.getAsJsonObject().remove("diaVenc");
         newContratoJsonElement.getAsJsonObject().remove("dtPriAber");
         newContratoJsonElement.getAsJsonObject().remove("qtdPreAtraso");
         newContratoJsonElement.getAsJsonObject().remove("diasAtraso");
         newContratoJsonElement.getAsJsonObject().remove("VlrPreAtr");
+        newContratoJsonElement.getAsJsonObject().remove("DiasAtrUltPrePg");
 
         newContratoJsonElement.getAsJsonObject().add("situacaoContrato", newJsonSituacaoContrato);
 
