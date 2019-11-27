@@ -30,6 +30,7 @@ public class ContratoDistribuicaoController {
     private static final int TAM_MAX_TEL = 9;
     private static final int TAM_MAX_CODIGO_FASE = 20;
     private static final int TAM_MAX_UNIDADE_OPERACIONAL = 5;
+    private static final int TAM_MAX_DIA_VENCIMENTO = 2;
 
 
     @RequestMapping(value = "/object_from_json", method = RequestMethod.GET)
@@ -123,6 +124,25 @@ public class ContratoDistribuicaoController {
         gravarArq.printf("%s", getTelFormatado(contrato.getMutuario().getTelComercial()));
         gravarArq.printf("%s", getCodigoFaseFormatado(contrato.getAdditionalProperties()));
         gravarArq.printf("%s", getUnidadeOperacionalFormatado(contrato.getAdditionalProperties()));
+        gravarArq.printf("%s", getDiaVencimentoFormatado(contrato.getSituacaoContrato().getDiaVencimento()));
+    }
+
+    private String getDiaVencimentoFormatado(int diaVencimento) {
+        String newDiaVencimento = "";
+
+        if ((diaVencimento + "").length() == TAM_MAX_DIA_VENCIMENTO){ newDiaVencimento = diaVencimento + ""; }
+        else if ((diaVencimento + "").length() < TAM_MAX_DIA_VENCIMENTO){
+            for (int i = 0; i < (TAM_MAX_DIA_VENCIMENTO - (diaVencimento + "").length()); i++){
+                newDiaVencimento += "0";
+            }
+            newDiaVencimento += (diaVencimento + "");
+        }
+        else{
+            for (int i = 0; i < TAM_MAX_DIA_VENCIMENTO; i++){
+                newDiaVencimento += (diaVencimento + "").charAt(i);
+            }
+        }
+        return newDiaVencimento;
     }
 
     private String getCodigoFaseFormatado(Map<String, Object> additionalProperties) {
