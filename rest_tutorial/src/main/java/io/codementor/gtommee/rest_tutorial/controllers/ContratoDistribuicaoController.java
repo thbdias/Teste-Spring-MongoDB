@@ -29,6 +29,7 @@ public class ContratoDistribuicaoController {
     private static final int TAM_MAX_DDD = 4;
     private static final int TAM_MAX_TEL = 9;
     private static final int TAM_MAX_CODIGO_FASE = 20;
+    private static final int TAM_MAX_UNIDADE_OPERACIONAL = 5;
 
 
     @RequestMapping(value = "/object_from_json", method = RequestMethod.GET)
@@ -121,6 +122,7 @@ public class ContratoDistribuicaoController {
         gravarArq.printf("%s", getDDDFormatado(contrato.getMutuario().getDddComercial()));
         gravarArq.printf("%s", getTelFormatado(contrato.getMutuario().getTelComercial()));
         gravarArq.printf("%s", getCodigoFaseFormatado(contrato.getAdditionalProperties()));
+        gravarArq.printf("%s", getUnidadeOperacionalFormatado(contrato.getAdditionalProperties()));
     }
 
     private String getCodigoFaseFormatado(Map<String, Object> additionalProperties) {
@@ -140,6 +142,25 @@ public class ContratoDistribuicaoController {
             }
         }
         return newCodigoFase;
+    }
+
+    private String getUnidadeOperacionalFormatado(Map<String, Object> additionalProperties) {
+        String unidadeOperacional = additionalProperties.get("uno").toString();
+        String newUnidadeOperacional = "";
+
+        if (unidadeOperacional.length() == TAM_MAX_UNIDADE_OPERACIONAL){ newUnidadeOperacional = unidadeOperacional; }
+        else if (unidadeOperacional.length() < TAM_MAX_UNIDADE_OPERACIONAL){
+            for (int i = 0; i < (TAM_MAX_UNIDADE_OPERACIONAL - unidadeOperacional.length()); i++){
+                newUnidadeOperacional += "0";
+            }
+            newUnidadeOperacional += unidadeOperacional;
+        }
+        else{
+            for (int i = 0; i < TAM_MAX_UNIDADE_OPERACIONAL; i++){
+                newUnidadeOperacional += unidadeOperacional.charAt(i);
+            }
+        }
+        return newUnidadeOperacional;
     }
 
     private void gravarAdditionalPropertiesTxt(FileWriter arq, Map<String, Object> additionalProperties, int tipoInfo, Long numeroContrato) {
