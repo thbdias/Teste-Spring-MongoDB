@@ -242,6 +242,7 @@ public class ContratoDistribuicaoController {
         newJsonMutuario.getAsJsonObject().add("dddCom", newContratoJsonElement.getAsJsonObject().getAsJsonPrimitive("dddCom"));
         newJsonMutuario.getAsJsonObject().add("telCom", newContratoJsonElement.getAsJsonObject().getAsJsonPrimitive("telCom"));
         newJsonMutuario.getAsJsonObject().add("ramCom", newContratoJsonElement.getAsJsonObject().getAsJsonPrimitive("ramCom"));
+        newJsonMutuario.getAsJsonObject().add("email", newContratoJsonElement.getAsJsonObject().getAsJsonPrimitive("email"));
 
         newContratoJsonElement.getAsJsonObject().remove("nome");
         newContratoJsonElement.getAsJsonObject().remove("TipPes");
@@ -253,6 +254,7 @@ public class ContratoDistribuicaoController {
         newContratoJsonElement.getAsJsonObject().remove("dddCom");
         newContratoJsonElement.getAsJsonObject().remove("telCom");
         newContratoJsonElement.getAsJsonObject().remove("ramCom");
+        newContratoJsonElement.getAsJsonObject().remove("email");
 
         //mutuario endereco
         newContratoJsonElement = tratarRefatoracaoMutuarioEndereco(newContratoJsonElement);

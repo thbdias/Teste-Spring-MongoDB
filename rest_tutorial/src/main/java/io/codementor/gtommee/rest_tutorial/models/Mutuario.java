@@ -23,9 +23,11 @@ public class Mutuario {
     private String telComercial;
     @JsonProperty("ramCom") //chave dentro do json
     private String ramComercial;
-    @JsonProperty("endereco")
+    @JsonProperty("email") //chave dentro do json
+    private String email;
+    @JsonProperty("endereco") //chave dentro do json
     private Endereco endereco;
-    @JsonProperty("endCorresp")
+    @JsonProperty("endCorresp") //chave dentro do json
     private EnderecoCorrespondencia enderecoCorrespondencia;
 
     public void setNome(String nome) {
@@ -106,6 +108,14 @@ public class Mutuario {
 
     public void setRamComercial(String ramComercial) {
         this.ramComercial = ramComercial;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public Endereco getEndereco() {
