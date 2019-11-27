@@ -31,6 +31,7 @@ public class ContratoDistribuicaoController {
     private static final int TAM_MAX_CODIGO_FASE = 20;
     private static final int TAM_MAX_UNIDADE_OPERACIONAL = 5;
     private static final int TAM_MAX_DIA_VENCIMENTO = 2;
+    private static final int TAM_MAX_DATA_PRIM_PREST_ABERTA = 6;
 
 
     @RequestMapping(value = "/object_from_json", method = RequestMethod.GET)
@@ -125,6 +126,20 @@ public class ContratoDistribuicaoController {
         gravarArq.printf("%s", getCodigoFaseFormatado(contrato.getAdditionalProperties()));
         gravarArq.printf("%s", getUnidadeOperacionalFormatado(contrato.getAdditionalProperties()));
         gravarArq.printf("%s", getDiaVencimentoFormatado(contrato.getSituacaoContrato().getDiaVencimento()));
+        gravarArq.printf("%s", getDataPrimPrestAbertaFormatada(contrato.getSituacaoContrato().getDataPrimeiraPrestacaoAberta()));
+    }
+
+    private Object getDataPrimPrestAbertaFormatada(String dataPrimeiraPrestacaoAberta) {
+        String newDataPrimeiraPrestacaoAberta = "      "; //tamanho de 6 espacos em branco
+        String mes = "";
+        String ano = "";
+
+        if (dataPrimeiraPrestacaoAberta.length() == TAM_MAX_DATA_PRIM_PREST_ABERTA){
+            mes = dataPrimeiraPrestacaoAberta.substring(4, 6);
+            ano = dataPrimeiraPrestacaoAberta.substring(0, 4);
+            newDataPrimeiraPrestacaoAberta = mes + ano;
+        }
+        return newDataPrimeiraPrestacaoAberta;
     }
 
     private String getDiaVencimentoFormatado(int diaVencimento) {
