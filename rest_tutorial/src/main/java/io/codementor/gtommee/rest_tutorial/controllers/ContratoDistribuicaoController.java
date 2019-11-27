@@ -259,6 +259,11 @@ public class ContratoDistribuicaoController {
         newJsonMutuario.getAsJsonObject().add("endereco", newContratoJsonElement.getAsJsonObject().getAsJsonObject("endereco"));
         newContratoJsonElement.getAsJsonObject().remove("endereco");
 
+        //mutuario endereco correspondencia
+        newContratoJsonElement = tratarRefatoracaoMutuarioEnderecoCorrespondencia(newContratoJsonElement);
+        newJsonMutuario.getAsJsonObject().add("endCorresp", newContratoJsonElement.getAsJsonObject().getAsJsonObject("endCorresp"));
+        newContratoJsonElement.getAsJsonObject().remove("endCorresp");
+
         newContratoJsonElement.getAsJsonObject().add("mutuario", newJsonMutuario);
 
         return  newContratoJsonElement;
@@ -287,6 +292,33 @@ public class ContratoDistribuicaoController {
         newContratoJsonElement.getAsJsonObject().remove("cepEnd");
 
         newContratoJsonElement.getAsJsonObject().add("endereco", newJsonMutuarioEndereco);
+
+        return  newContratoJsonElement;
+    }
+
+    private JsonElement tratarRefatoracaoMutuarioEnderecoCorrespondencia (JsonElement contratoJsonElement){
+        JsonElement newJsonMutuarioEndereco = new JsonObject();
+        JsonElement newContratoJsonElement = contratoJsonElement.deepCopy();
+
+        newJsonMutuarioEndereco.getAsJsonObject().add("abvCor", newContratoJsonElement.getAsJsonObject().getAsJsonPrimitive("abvCor"));
+        newJsonMutuarioEndereco.getAsJsonObject().add("nomCor", newContratoJsonElement.getAsJsonObject().getAsJsonPrimitive("nomCor"));
+        newJsonMutuarioEndereco.getAsJsonObject().add("nroCor", newContratoJsonElement.getAsJsonObject().getAsJsonPrimitive("nroCor"));
+        newJsonMutuarioEndereco.getAsJsonObject().add("cplCor", newContratoJsonElement.getAsJsonObject().getAsJsonPrimitive("cplCor"));
+        newJsonMutuarioEndereco.getAsJsonObject().add("baiCor", newContratoJsonElement.getAsJsonObject().getAsJsonPrimitive("baiCor"));
+        newJsonMutuarioEndereco.getAsJsonObject().add("cidCor", newContratoJsonElement.getAsJsonObject().getAsJsonPrimitive("cidCor"));
+        newJsonMutuarioEndereco.getAsJsonObject().add("ufCor", newContratoJsonElement.getAsJsonObject().getAsJsonPrimitive("ufCor"));
+        newJsonMutuarioEndereco.getAsJsonObject().add("cepCor", newContratoJsonElement.getAsJsonObject().getAsJsonPrimitive("cepCor"));
+
+        newContratoJsonElement.getAsJsonObject().remove("abvCor");
+        newContratoJsonElement.getAsJsonObject().remove("nomCor");
+        newContratoJsonElement.getAsJsonObject().remove("nroCor");
+        newContratoJsonElement.getAsJsonObject().remove("cplCor");
+        newContratoJsonElement.getAsJsonObject().remove("baiCor");
+        newContratoJsonElement.getAsJsonObject().remove("cidCor");
+        newContratoJsonElement.getAsJsonObject().remove("ufCor");
+        newContratoJsonElement.getAsJsonObject().remove("cepCor");
+
+        newContratoJsonElement.getAsJsonObject().add("endCorresp", newJsonMutuarioEndereco);
 
         return  newContratoJsonElement;
     }

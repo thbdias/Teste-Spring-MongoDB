@@ -25,6 +25,8 @@ public class Mutuario {
     private String ramComercial;
     @JsonProperty("endereco")
     private Endereco endereco;
+    @JsonProperty("endCorresp")
+    private EnderecoCorrespondencia enderecoCorrespondencia;
 
     public void setNome(String nome) {
         this.nome = nome;
@@ -112,5 +114,13 @@ public class Mutuario {
 
     public void setEndereco(Endereco endereco) {
         this.endereco = endereco;
+    }
+
+    public EnderecoCorrespondencia getEnderecoCorrespondencia() {
+        return enderecoCorrespondencia;
+    }
+
+    public void setEnderecoCorrespondencia(EnderecoCorrespondencia enderecoCorrespondencia) {
+        this.enderecoCorrespondencia = enderecoCorrespondencia;
     }
 }
