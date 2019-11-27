@@ -254,7 +254,39 @@ public class ContratoDistribuicaoController {
         newContratoJsonElement.getAsJsonObject().remove("telCom");
         newContratoJsonElement.getAsJsonObject().remove("ramCom");
 
+        //mutuario endereco
+        newContratoJsonElement = tratarRefatoracaoMutuarioEndereco(newContratoJsonElement);
+        newJsonMutuario.getAsJsonObject().add("endereco", newContratoJsonElement.getAsJsonObject().getAsJsonObject("endereco"));
+        newContratoJsonElement.getAsJsonObject().remove("endereco");
+
         newContratoJsonElement.getAsJsonObject().add("mutuario", newJsonMutuario);
+
+        return  newContratoJsonElement;
+    }
+
+    private JsonElement tratarRefatoracaoMutuarioEndereco (JsonElement contratoJsonElement){
+        JsonElement newJsonMutuarioEndereco = new JsonObject();
+        JsonElement newContratoJsonElement = contratoJsonElement.deepCopy();
+
+        newJsonMutuarioEndereco.getAsJsonObject().add("abvEnd", newContratoJsonElement.getAsJsonObject().getAsJsonPrimitive("abvEnd"));
+        newJsonMutuarioEndereco.getAsJsonObject().add("nomEnd", newContratoJsonElement.getAsJsonObject().getAsJsonPrimitive("nomEnd"));
+        newJsonMutuarioEndereco.getAsJsonObject().add("nroEnd", newContratoJsonElement.getAsJsonObject().getAsJsonPrimitive("nroEnd"));
+        newJsonMutuarioEndereco.getAsJsonObject().add("cplEnd", newContratoJsonElement.getAsJsonObject().getAsJsonPrimitive("cplEnd"));
+        newJsonMutuarioEndereco.getAsJsonObject().add("baiEnd", newContratoJsonElement.getAsJsonObject().getAsJsonPrimitive("baiEnd"));
+        newJsonMutuarioEndereco.getAsJsonObject().add("cidEnd", newContratoJsonElement.getAsJsonObject().getAsJsonPrimitive("cidEnd"));
+        newJsonMutuarioEndereco.getAsJsonObject().add("ufEnd", newContratoJsonElement.getAsJsonObject().getAsJsonPrimitive("ufEnd"));
+        newJsonMutuarioEndereco.getAsJsonObject().add("cepEnd", newContratoJsonElement.getAsJsonObject().getAsJsonPrimitive("cepEnd"));
+
+        newContratoJsonElement.getAsJsonObject().remove("abvEnd");
+        newContratoJsonElement.getAsJsonObject().remove("nomEnd");
+        newContratoJsonElement.getAsJsonObject().remove("nroEnd");
+        newContratoJsonElement.getAsJsonObject().remove("cplEnd");
+        newContratoJsonElement.getAsJsonObject().remove("baiEnd");
+        newContratoJsonElement.getAsJsonObject().remove("cidEnd");
+        newContratoJsonElement.getAsJsonObject().remove("ufEnd");
+        newContratoJsonElement.getAsJsonObject().remove("cepEnd");
+
+        newContratoJsonElement.getAsJsonObject().add("endereco", newJsonMutuarioEndereco);
 
         return  newContratoJsonElement;
     }
