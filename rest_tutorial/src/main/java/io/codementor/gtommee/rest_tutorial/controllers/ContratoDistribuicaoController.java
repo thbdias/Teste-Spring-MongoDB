@@ -34,6 +34,10 @@ public class ContratoDistribuicaoController {
     private static final int TAM_MAX_DATA_PRIM_PREST_ABERTA = 6;
     private static final int TAM_MAX_VALOR_PREST_ATRASO_INT = 14; //parte inteira
     private static final int TAM_MAX_VALOR_PREST_ATRASO_DEC = 2; //parte decimal
+    private static final int TAM_MAX_DIAS_ATRASO = 3;
+    private static final int TAM_MAX_QUANT_PREST_ATRASO = 3;
+    private static final int TAM_MAX_VALOR_DIVIDA_ATRASO_INT = 14; //parte inteira
+    private static final int TAM_MAX_VALOR_DIVIDA_ATRASO_DEC = 2; //parte decimal
 
 
     @RequestMapping(value = "/object_from_json", method = RequestMethod.GET)
@@ -130,6 +134,84 @@ public class ContratoDistribuicaoController {
         gravarArq.printf("%s", getDiaVencimentoFormatado(contrato.getSituacaoContrato().getDiaVencimento()));
         gravarArq.printf("%s", getDataPrimPrestAbertaFormatada(contrato.getSituacaoContrato().getDataPrimeiraPrestacaoAberta()));
         gravarArq.printf("%s", getValorPrestAtrasoFormatado(contrato.getSituacaoContrato().getValorUltimaPrestacaoAtraso() + ""));
+        gravarArq.printf("%s", getDiasAtrasoFormatado(contrato.getSituacaoContrato().getDiasAtraso() + ""));
+        gravarArq.printf("%s", getQuantPrestAtrasoFormatado(contrato.getSituacaoContrato().getQuantPrestAtraso() + ""));
+        gravarArq.printf("%s", getValorDividaAtrasoFormatado(contrato.getSituacaoContrato().getValorDividaEmAtraso() + ""));
+    }
+
+    private String getValorDividaAtrasoFormatado(String valorDividaAtraso) {
+        String newValorDividaAtraso = "";
+        String [] arrayValores = valorDividaAtraso.split("\\.");
+        String parteInt = arrayValores[0];
+        String parteDec = arrayValores[1];
+
+        //tratar parte inteira
+        if (parteInt.length() == TAM_MAX_VALOR_DIVIDA_ATRASO_INT){ newValorDividaAtraso += parteInt; }
+        else if (parteInt.length() < TAM_MAX_VALOR_DIVIDA_ATRASO_INT){
+            for (int i = 0; i < (TAM_MAX_VALOR_DIVIDA_ATRASO_INT - parteInt.length()); i++){
+                newValorDividaAtraso += "0";
+            }
+            newValorDividaAtraso += parteInt;
+        }
+        else {
+            for (int i = 0; i < TAM_MAX_VALOR_DIVIDA_ATRASO_INT; i++){
+                newValorDividaAtraso += parteInt.charAt(i);
+            }
+        }
+
+        //tratar parte decimal
+        if (parteDec.length() == TAM_MAX_VALOR_DIVIDA_ATRASO_DEC){ newValorDividaAtraso += "," + parteDec; }
+        else if (parteDec.length() < TAM_MAX_VALOR_DIVIDA_ATRASO_DEC){
+            newValorDividaAtraso += ",";
+            for (int i = 0; i < (TAM_MAX_VALOR_DIVIDA_ATRASO_DEC - parteDec.length()); i++){
+                newValorDividaAtraso += "0";
+            }
+            newValorDividaAtraso += parteDec;
+        }
+        else {
+            newValorDividaAtraso += ",";
+            for (int i = 0; i < TAM_MAX_VALOR_DIVIDA_ATRASO_DEC; i++){
+                newValorDividaAtraso += parteDec.charAt(i);
+            }
+        }
+
+        return newValorDividaAtraso;
+    }
+
+    private String getQuantPrestAtrasoFormatado(String quantPrestAtraso) {
+        String newQuantPrestAtraso = "";
+
+        if ((quantPrestAtraso + "").length() == TAM_MAX_QUANT_PREST_ATRASO){ newQuantPrestAtraso = quantPrestAtraso; }
+        else if ((quantPrestAtraso + "").length() < TAM_MAX_QUANT_PREST_ATRASO){
+            for (int i = 0; i < (TAM_MAX_QUANT_PREST_ATRASO - (quantPrestAtraso + "").length()); i++){
+                newQuantPrestAtraso += "0";
+            }
+            newQuantPrestAtraso += quantPrestAtraso;
+        }
+        else {
+            for (int i = ((quantPrestAtraso + "").length() - TAM_MAX_QUANT_PREST_ATRASO); i < (quantPrestAtraso + "").length(); i++){
+                newQuantPrestAtraso += quantPrestAtraso.charAt(i);
+            }
+        }
+        return newQuantPrestAtraso;
+    }
+
+    private String getDiasAtrasoFormatado(String diasAtraso) {
+        String newDiasAtraso = "";
+
+        if ((diasAtraso + "").length() == TAM_MAX_DIAS_ATRASO){ newDiasAtraso = diasAtraso; }
+        else if ((diasAtraso + "").length() < TAM_MAX_DIAS_ATRASO){
+            for (int i = 0; i < (TAM_MAX_DIAS_ATRASO - (diasAtraso + "").length()); i++){
+                newDiasAtraso += "0";
+            }
+            newDiasAtraso += diasAtraso;
+        }
+        else {
+            for (int i = ((diasAtraso + "").length() - TAM_MAX_DIAS_ATRASO); i < (diasAtraso + "").length(); i++){
+                newDiasAtraso += diasAtraso.charAt(i);
+            }
+        }
+        return newDiasAtraso;
     }
 
     private String getValorPrestAtrasoFormatado(String valorUltimaPrestacaoAtraso) {
@@ -455,7 +537,6 @@ public class ContratoDistribuicaoController {
         newJsonSituacaoContrato.getAsJsonObject().add("diasAtraso", newContratoJsonElement.getAsJsonObject().getAsJsonPrimitive("diasAtraso"));
         newJsonSituacaoContrato.getAsJsonObject().add("DiasAtrUltPrePg", newContratoJsonElement.getAsJsonObject().getAsJsonPrimitive("DiasAtrUltPrePg"));
         newJsonSituacaoContrato.getAsJsonObject().add("PercDivPg", newContratoJsonElement.getAsJsonObject().getAsJsonPrimitive("PercDivPg"));
-        newJsonSituacaoContrato.getAsJsonObject().add("vlrDiv", newContratoJsonElement.getAsJsonObject().getAsJsonPrimitive("vlrDiv"));
         newJsonSituacaoContrato.getAsJsonObject().add("garAtu", newContratoJsonElement.getAsJsonObject().getAsJsonPrimitive("garAtu"));
 
         //tratando valorUltimaPrestacaoAtraso
@@ -463,6 +544,12 @@ public class ContratoDistribuicaoController {
         Integer parteInteira = Integer.parseInt(removeAspas(removeEspacosBrancos(partesNumber[0])));
         Integer parteDecimal = Integer.parseInt(removeAspas(removeEspacosBrancos(partesNumber[1])));
         newJsonSituacaoContrato.getAsJsonObject().addProperty("VlrPreAtr", Double.parseDouble(parteInteira + "." + parteDecimal));
+
+        //tratando valorDividaAtraso
+        partesNumber = newContratoJsonElement.getAsJsonObject().getAsJsonPrimitive("vlrDiv").toString().split(",");
+        parteInteira = Integer.parseInt(removeAspas(removeEspacosBrancos(partesNumber[0])));
+        parteDecimal = Integer.parseInt(removeAspas(removeEspacosBrancos(partesNumber[1])));
+        newJsonSituacaoContrato.getAsJsonObject().addProperty("vlrDiv", Double.parseDouble(parteInteira + "." + parteDecimal));
 
         newContratoJsonElement.getAsJsonObject().remove("diaVenc");
         newContratoJsonElement.getAsJsonObject().remove("dtPriAber");
