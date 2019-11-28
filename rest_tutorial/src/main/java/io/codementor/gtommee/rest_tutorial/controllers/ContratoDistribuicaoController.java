@@ -39,6 +39,7 @@ public class ContratoDistribuicaoController {
     private static final int TAM_MAX_VALOR_DIVIDA_ATRASO_INT = 14; //parte inteira
     private static final int TAM_MAX_VALOR_DIVIDA_ATRASO_DEC = 2; //parte decimal
     private static final int TAM_MAX_REGENCIA_CRITICA = 4;
+    private static final int TAM_MAX_ORIGEM_RECURSO = 3;
 
 
     @RequestMapping(value = "/object_from_json", method = RequestMethod.GET)
@@ -138,7 +139,24 @@ public class ContratoDistribuicaoController {
         gravarArq.printf("%s", getDiasAtrasoFormatado(contrato.getSituacaoContrato().getDiasAtraso() + ""));
         gravarArq.printf("%s", getQuantPrestAtrasoFormatado(contrato.getSituacaoContrato().getQuantPrestAtraso() + ""));
         gravarArq.printf("%s", getValorDividaAtrasoFormatado(contrato.getSituacaoContrato().getValorDividaEmAtraso() + ""));
-        gravarArq.printf("+%s+", getRegenciaCriticaFormatada(contrato.getAdditionalProperties()));
+        gravarArq.printf("%s", getRegenciaCriticaFormatada(contrato.getAdditionalProperties()));
+        gravarArq.printf("%s", getOrigemRecursoFormatado(contrato.getAdditionalProperties()));
+    }
+
+    private String getOrigemRecursoFormatado(Map<String, Object> additionalProperties) {
+        String newOrigemRecurso = "";
+        String origemRecurso = additionalProperties.get("orr").toString();
+
+        if (origemRecurso.length() == TAM_MAX_ORIGEM_RECURSO){ newOrigemRecurso = origemRecurso; }
+        else if (origemRecurso.length() < TAM_MAX_ORIGEM_RECURSO){
+            for (int i = 0; i < (TAM_MAX_ORIGEM_RECURSO - origemRecurso.length()); i++){
+                newOrigemRecurso += "0";
+            }
+            newOrigemRecurso += origemRecurso;
+        }
+        else{ newOrigemRecurso = "   "; }
+
+        return newOrigemRecurso;
     }
 
     private String getRegenciaCriticaFormatada(Map<String, Object> additionalProperties) {
