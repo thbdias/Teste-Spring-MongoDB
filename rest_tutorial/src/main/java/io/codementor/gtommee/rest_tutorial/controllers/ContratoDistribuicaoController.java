@@ -44,6 +44,7 @@ public class ContratoDistribuicaoController {
     private static final int TAM_MAX_TIPO_FINANCIAMENTO = 3;
     private static final int TAM_MAX_TIPO_GARANTIA = 4;
     private static final int TAM_MAX_INDICADOR_PMCMV = 1;
+    private static final int TAM_MAX_GRUPO_HABITACIONAL = 5;
 
 
     @RequestMapping(value = "/object_from_json", method = RequestMethod.GET)
@@ -149,6 +150,23 @@ public class ContratoDistribuicaoController {
         gravarArq.printf("%s", getTipoFinanciamentoFormatada(contrato.getAdditionalProperties()));
         gravarArq.printf("%s", getTipoGarantiaFormatada(contrato.getAdditionalProperties()));
         gravarArq.printf("%s", getIndicadorPMCMVFormatado(contrato.getAdditionalProperties()));
+        gravarArq.printf("%s", getGrupoHabitacionalFormatado(contrato.getAdditionalProperties()));
+    }
+
+    private String getGrupoHabitacionalFormatado(Map<String, Object> additionalProperties) {
+        String newGrupoHabitacional = "";
+        String grupoHabitacional = additionalProperties.get("grpHab").toString();
+
+        if (grupoHabitacional.length() == TAM_MAX_GRUPO_HABITACIONAL){ newGrupoHabitacional = grupoHabitacional; }
+        else if (grupoHabitacional.length() < TAM_MAX_GRUPO_HABITACIONAL){
+            for (int i = 0; i < (TAM_MAX_GRUPO_HABITACIONAL - grupoHabitacional.length()); i++){
+                newGrupoHabitacional += "0";
+            }
+            newGrupoHabitacional += grupoHabitacional;
+        }
+        else{ newGrupoHabitacional = "     "; }
+
+        return newGrupoHabitacional;
     }
 
     private String getIndicadorPMCMVFormatado(Map<String, Object> additionalProperties) {
