@@ -38,6 +38,7 @@ public class ContratoDistribuicaoController {
     private static final int TAM_MAX_QUANT_PREST_ATRASO = 3;
     private static final int TAM_MAX_VALOR_DIVIDA_ATRASO_INT = 14; //parte inteira
     private static final int TAM_MAX_VALOR_DIVIDA_ATRASO_DEC = 2; //parte decimal
+    private static final int TAM_MAX_REGENCIA_CRITICA = 4;
 
 
     @RequestMapping(value = "/object_from_json", method = RequestMethod.GET)
@@ -137,6 +138,23 @@ public class ContratoDistribuicaoController {
         gravarArq.printf("%s", getDiasAtrasoFormatado(contrato.getSituacaoContrato().getDiasAtraso() + ""));
         gravarArq.printf("%s", getQuantPrestAtrasoFormatado(contrato.getSituacaoContrato().getQuantPrestAtraso() + ""));
         gravarArq.printf("%s", getValorDividaAtrasoFormatado(contrato.getSituacaoContrato().getValorDividaEmAtraso() + ""));
+        gravarArq.printf("+%s+", getRegenciaCriticaFormatada(contrato.getAdditionalProperties()));
+    }
+
+    private String getRegenciaCriticaFormatada(Map<String, Object> additionalProperties) {
+        String newRegenciaCritica = "";
+        String regenciaCritica = additionalProperties.get("rcr").toString();
+
+        if (regenciaCritica.length() == TAM_MAX_REGENCIA_CRITICA){ newRegenciaCritica = regenciaCritica; }
+        else if (regenciaCritica.length() < TAM_MAX_REGENCIA_CRITICA){
+            for (int i = 0; i < (TAM_MAX_REGENCIA_CRITICA - regenciaCritica.length()); i++){
+                newRegenciaCritica += "0";
+            }
+            newRegenciaCritica += regenciaCritica;
+        }
+        else{ newRegenciaCritica = "    "; }
+
+        return newRegenciaCritica;
     }
 
     private String getValorDividaAtrasoFormatado(String valorDividaAtraso) {
