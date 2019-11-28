@@ -43,6 +43,7 @@ public class ContratoDistribuicaoController {
     private static final int TAM_MAX_LINHA_FINANCIAMENTO = 3;
     private static final int TAM_MAX_TIPO_FINANCIAMENTO = 3;
     private static final int TAM_MAX_TIPO_GARANTIA = 4;
+    private static final int TAM_MAX_INDICADOR_PMCMV = 1;
 
 
     @RequestMapping(value = "/object_from_json", method = RequestMethod.GET)
@@ -147,6 +148,17 @@ public class ContratoDistribuicaoController {
         gravarArq.printf("%s", getLinhaFinanciamentoFormatada(contrato.getAdditionalProperties()));
         gravarArq.printf("%s", getTipoFinanciamentoFormatada(contrato.getAdditionalProperties()));
         gravarArq.printf("%s", getTipoGarantiaFormatada(contrato.getAdditionalProperties()));
+        gravarArq.printf("%s", getIndicadorPMCMVFormatado(contrato.getAdditionalProperties()));
+    }
+
+    private String getIndicadorPMCMVFormatado(Map<String, Object> additionalProperties) {
+        String newIndicador = "";
+        String indicador = additionalProperties.get("pmcmv").toString();
+        indicador = removeEspacosBrancos(indicador);
+
+        newIndicador = (indicador.length() == TAM_MAX_INDICADOR_PMCMV) ? indicador : " ";
+
+        return newIndicador;
     }
 
     private String getTipoGarantiaFormatada(Map<String, Object> additionalProperties) {
