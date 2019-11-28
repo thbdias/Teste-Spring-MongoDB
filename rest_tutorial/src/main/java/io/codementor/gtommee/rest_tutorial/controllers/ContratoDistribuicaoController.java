@@ -40,6 +40,7 @@ public class ContratoDistribuicaoController {
     private static final int TAM_MAX_VALOR_DIVIDA_ATRASO_DEC = 2; //parte decimal
     private static final int TAM_MAX_REGENCIA_CRITICA = 4;
     private static final int TAM_MAX_ORIGEM_RECURSO = 3;
+    private static final int TAM_MAX_LINHA_FINANCIAMENTO = 3;
 
 
     @RequestMapping(value = "/object_from_json", method = RequestMethod.GET)
@@ -141,6 +142,23 @@ public class ContratoDistribuicaoController {
         gravarArq.printf("%s", getValorDividaAtrasoFormatado(contrato.getSituacaoContrato().getValorDividaEmAtraso() + ""));
         gravarArq.printf("%s", getRegenciaCriticaFormatada(contrato.getAdditionalProperties()));
         gravarArq.printf("%s", getOrigemRecursoFormatado(contrato.getAdditionalProperties()));
+        gravarArq.printf("%s", getLinhaFinanciamentoFormatada(contrato.getAdditionalProperties()));
+    }
+
+    private String getLinhaFinanciamentoFormatada(Map<String, Object> additionalProperties) {
+        String newLinhaFinanciamento = "";
+        String linhaFinanciamento = additionalProperties.get("lf").toString();
+
+        if (linhaFinanciamento.length() == TAM_MAX_LINHA_FINANCIAMENTO){ newLinhaFinanciamento = linhaFinanciamento; }
+        else if (linhaFinanciamento.length() < TAM_MAX_LINHA_FINANCIAMENTO){
+            for (int i = 0; i < (TAM_MAX_LINHA_FINANCIAMENTO - linhaFinanciamento.length()); i++){
+                newLinhaFinanciamento += "0";
+            }
+            newLinhaFinanciamento += linhaFinanciamento;
+        }
+        else{ newLinhaFinanciamento = "   "; }
+
+        return newLinhaFinanciamento;
     }
 
     private String getOrigemRecursoFormatado(Map<String, Object> additionalProperties) {
