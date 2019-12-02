@@ -48,6 +48,7 @@ public class ContratoDistribuicaoController {
     private static final int TAM_MAX_PRODUTO_FINANCEIRO = 4;
     private static final int TAM_MAX_CODIGO_CREDOR = 4;
     private static final int TAM_MAX_CODIGO_ADMINISTRADOR = 4;
+    private static final int TAM_MAX_UF_CONTRATO = 2;
 
 
     @RequestMapping(value = "/object_from_json", method = RequestMethod.GET)
@@ -157,6 +158,17 @@ public class ContratoDistribuicaoController {
         gravarArq.printf("%s", getProdutoFinanceiroFormatado(contrato.getAdditionalProperties()));
         gravarArq.printf("%s", getCredorFormatado(contrato.getCodigoCredor() + ""));
         gravarArq.printf("%s", getCodigoAdministradorFormatado(contrato.getCodigoAdminitrador() + ""));
+        gravarArq.printf("%s", getUfContratoFormatado(contrato.getAdditionalProperties()));
+    }
+
+    private String getUfContratoFormatado(Map<String, Object> additionalProperties) {
+        String newUf = "";
+        String uf = additionalProperties.get("uf").toString();
+        uf = removeEspacosBrancos(uf);
+
+        newUf = (uf.length() == TAM_MAX_UF_CONTRATO) ? uf : "  ";
+
+        return newUf;
     }
 
     private String getCodigoAdministradorFormatado(String codigoAdministrador) {
