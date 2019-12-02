@@ -728,6 +728,7 @@ public class ContratoDistribuicaoController {
     private void gravarAcaoCobrancaTxt(FileWriter arq, String acaoCobranca, Long numeroContrato) {
         PrintWriter gravarArq = new PrintWriter(arq);
         gravarArq.printf("%n%s", "A");
+        gravarArq.printf("%s", getNumeroContratoFormatado(numeroContrato));
     }
 
     private void gravarCoobrigadoTxt(FileWriter arq, List<Coobrigado> listCoobrigado, Long numeroContrato){
