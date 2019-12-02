@@ -46,6 +46,7 @@ public class ContratoDistribuicaoController {
     private static final int TAM_MAX_INDICADOR_PMCMV = 1;
     private static final int TAM_MAX_GRUPO_HABITACIONAL = 5;
     private static final int TAM_MAX_PRODUTO_FINANCEIRO = 4;
+    private static final int TAM_MAX_CODIGO_CREDOR = 4;
 
 
     @RequestMapping(value = "/object_from_json", method = RequestMethod.GET)
@@ -153,6 +154,22 @@ public class ContratoDistribuicaoController {
         gravarArq.printf("%s", getIndicadorPMCMVFormatado(contrato.getAdditionalProperties()));
         gravarArq.printf("%s", getGrupoHabitacionalFormatado(contrato.getAdditionalProperties()));
         gravarArq.printf("%s", getProdutoFinanceiroFormatado(contrato.getAdditionalProperties()));
+        gravarArq.printf("%s", getCredorFormatado(contrato.getCodigoCredor() + ""));
+    }
+
+    private String getCredorFormatado(String codigoCredor) {
+        String newCodigoCredor = "";
+
+        if (codigoCredor.length() == TAM_MAX_CODIGO_CREDOR){ newCodigoCredor = codigoCredor; }
+        else if (codigoCredor.length() < TAM_MAX_CODIGO_CREDOR){
+            for (int i = 0; i < (TAM_MAX_CODIGO_CREDOR - codigoCredor.length()); i++){
+                newCodigoCredor += "0";
+            }
+            newCodigoCredor += codigoCredor;
+        }
+        else{ newCodigoCredor = "    "; }
+
+        return newCodigoCredor;
     }
 
     private String getProdutoFinanceiroFormatado(Map<String, Object> additionalProperties) {
