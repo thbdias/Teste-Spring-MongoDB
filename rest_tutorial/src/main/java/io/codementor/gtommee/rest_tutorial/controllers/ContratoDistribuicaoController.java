@@ -52,6 +52,7 @@ public class ContratoDistribuicaoController {
     private static final int TAM_MAX_SUBTITULO_CONTABIL = 6;
     private static final int TAM_MAX_INDICADOR_OBRA = 1;
     private static final int TAM_MAX_INDICADOR_MATERIAL_CONSTRUCAO = 1;
+    private static final int TAM_MAX_PRAZO_REMANESCENTE = 3;
 
 
     @RequestMapping(value = "/object_from_json", method = RequestMethod.GET)
@@ -166,6 +167,23 @@ public class ContratoDistribuicaoController {
         gravarArq.printf("%s", getSubTituloContabilFormatado(contrato.getAdditionalProperties()));
         gravarArq.printf("%s", getIndicadorObraFormatado(contrato.getAdditionalProperties()));
         gravarArq.printf("%s", getIndicadorMaterialConstrucaoFormatado(contrato.getAdditionalProperties()));
+        gravarArq.printf("%s", getIndicadorPrazoRemanescenteFormatado(contrato.getAdditionalProperties()));
+    }
+
+    private String getIndicadorPrazoRemanescenteFormatado(Map<String, Object> additionalProperties) {
+        String newPrazoRemanescente = "";
+        String prazoRemanescente = additionalProperties.get("pzrem").toString();
+
+        if (prazoRemanescente.length() == TAM_MAX_PRAZO_REMANESCENTE){ newPrazoRemanescente = prazoRemanescente; }
+        else if (prazoRemanescente.length() < TAM_MAX_PRAZO_REMANESCENTE){
+            for (int i = 0; i < (TAM_MAX_PRAZO_REMANESCENTE - prazoRemanescente.length()); i++){
+                newPrazoRemanescente += "0";
+            }
+            newPrazoRemanescente += prazoRemanescente;
+        }
+        else{ newPrazoRemanescente = "      "; }
+
+        return newPrazoRemanescente;
     }
 
     private String getIndicadorMaterialConstrucaoFormatado(Map<String, Object> additionalProperties) {
