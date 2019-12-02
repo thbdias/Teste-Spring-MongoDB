@@ -60,6 +60,7 @@ public class ContratoDistribuicaoController {
     private static final int TAM_MAX_COMPLEMENTO_ENDERECO = 11;
     private static final int TAM_MAX_BAIRRO = 14;
     private static final int TAM_MAX_CIDADE = 25;
+    private static final int TAM_MAX_UF_MUTUARIO = 2;
 
 
     @RequestMapping(value = "/object_from_json", method = RequestMethod.GET)
@@ -181,6 +182,11 @@ public class ContratoDistribuicaoController {
         gravarArq.printf("%s", getComplementoEnderecoFormatado(contrato.getMutuario().getEndereco().getComplemento()));
         gravarArq.printf("%s", getBairroFormatado(contrato.getMutuario().getEndereco().getBairro()));
         gravarArq.printf("%s", getCidadeFormatada(contrato.getMutuario().getEndereco().getCidade()));
+        gravarArq.printf("%s", getUfMutuarioFormatada(contrato.getMutuario().getEndereco().getUf()));
+    }
+
+    private String getUfMutuarioFormatada(String uf) {
+        return ((uf.length() == TAM_MAX_UF_MUTUARIO) ? uf : "  ");
     }
 
     private String getCidadeFormatada(String cidade) {
