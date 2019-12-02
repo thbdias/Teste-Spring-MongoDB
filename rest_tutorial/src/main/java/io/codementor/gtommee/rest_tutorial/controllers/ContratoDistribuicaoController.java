@@ -53,6 +53,7 @@ public class ContratoDistribuicaoController {
     private static final int TAM_MAX_INDICADOR_OBRA = 1;
     private static final int TAM_MAX_INDICADOR_MATERIAL_CONSTRUCAO = 1;
     private static final int TAM_MAX_PRAZO_REMANESCENTE = 3;
+    private static final int TAM_MAX_TIPO_ENDERECO = 3;
 
 
     @RequestMapping(value = "/object_from_json", method = RequestMethod.GET)
@@ -168,6 +169,22 @@ public class ContratoDistribuicaoController {
         gravarArq.printf("%s", getIndicadorObraFormatado(contrato.getAdditionalProperties()));
         gravarArq.printf("%s", getIndicadorMaterialConstrucaoFormatado(contrato.getAdditionalProperties()));
         gravarArq.printf("%s", getIndicadorPrazoRemanescenteFormatado(contrato.getAdditionalProperties()));
+        gravarArq.printf("%s", getTipoEnderecoFormatado(contrato.getMutuario().getEndereco().getAbreviacao()));
+    }
+
+    private String getTipoEnderecoFormatado(String abreviacao) {
+        String newAbreviacao = "";
+
+        if (abreviacao.length() == TAM_MAX_TIPO_ENDERECO){ newAbreviacao = abreviacao; }
+        else if (abreviacao.length() < TAM_MAX_TIPO_ENDERECO){
+            newAbreviacao = abreviacao;
+            for (int i = 0; i < (TAM_MAX_TIPO_ENDERECO - abreviacao.length()); i++){
+                newAbreviacao += " ";
+            }
+        }
+        else{ newAbreviacao = "   "; }
+
+        return newAbreviacao;
     }
 
     private String getIndicadorPrazoRemanescenteFormatado(Map<String, Object> additionalProperties) {
