@@ -71,26 +71,21 @@ public class ContratoDistribuicaoController {
         // SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd 'at' HH:mm:ss z");
         SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd");
         Date date = new Date(System.currentTimeMillis());
-        //numeracao que aparecera no inicio de cada linha de cada contrato
-        int tipoInfo = 0;
 
         //iterando lista de contratos vindo do banco mongoDB
         for (ContratoDistribuicaoModel contratoDistribuicaoModel: listContratoDistribuicaoModel){
-            tipoInfo = 0;
             gravarArq.printf("%s", "H");  //gravando tipo registro ok
             gravarArq.printf("%s", formatter.format(date)); //gravando data ok
             //dados do contrato ?????
             gravarDadosContratoTxt(arq, contratoDistribuicaoModel.getContrato());
-            //coobrigados ?????
+            //coobrigados ok
             gravarCoobrigadoTxt(arq, contratoDistribuicaoModel.getContrato().getCoobrigados(), contratoDistribuicaoModel.getContrato().getNumeroContrato());
             //ses ok
             gravarSituacaoEspecialTxt(arq, contratoDistribuicaoModel.getContrato().getSituacoesEspeciais(), contratoDistribuicaoModel.getContrato().getNumeroContrato());
-            //additional properties
-            gravarArq.printf("%n");
-            gravarAdditionalPropertiesTxt(arq, contratoDistribuicaoModel.getContrato().getAdditionalProperties(), tipoInfo++, contratoDistribuicaoModel.getContrato().getNumeroContrato());
+            //acao cobranca ???
+            gravarAcaoCobrancaTxt(arq, contratoDistribuicaoModel.getContrato().getAcoesCobranca() + "", contratoDistribuicaoModel.getContrato().getNumeroContrato());
             gravarArq.printf("%n");
         }
-        gravarArq.printf("QTDE: %d", listContratoDistribuicaoModel.size());
 
         arq.close();
         long tempo_fim = System.currentTimeMillis();
@@ -730,12 +725,9 @@ public class ContratoDistribuicaoController {
         return newUnidadeOperacional;
     }
 
-    private void gravarAdditionalPropertiesTxt(FileWriter arq, Map<String, Object> additionalProperties, int tipoInfo, Long numeroContrato) {
+    private void gravarAcaoCobrancaTxt(FileWriter arq, String acaoCobranca, Long numeroContrato) {
         PrintWriter gravarArq = new PrintWriter(arq);
-        gravarArq.printf("%d ", tipoInfo);
-        additionalProperties.forEach((k, v) -> {
-            gravarArq.printf("\"%s\" ", v);
-        });
+        gravarArq.printf("%n%s", "A");
     }
 
     private void gravarCoobrigadoTxt(FileWriter arq, List<Coobrigado> listCoobrigado, Long numeroContrato){
