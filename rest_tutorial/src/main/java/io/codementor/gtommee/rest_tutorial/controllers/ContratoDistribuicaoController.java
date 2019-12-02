@@ -794,6 +794,9 @@ public class ContratoDistribuicaoController {
         contratoJsonElement.getAsJsonObject().remove("coobrigados");
         contratoJsonElement.getAsJsonObject().add("coobrigados", newCoobrigados);
 
+        //acao cobranca (iniciando vazio)
+        contratoJsonElement.getAsJsonObject().add("acoesCobranca", new JsonArray());
+
         //mutuario
         contratoJsonElement = tratarRefatoracaoMutuario(contratoJsonElement);
 

@@ -27,6 +27,8 @@ public class Contrato {
     private List<SituacaoEspecial> situacoesEspeciais;
     @JsonProperty("coobrigados") //chave dentro do json
     private List<Coobrigado> coobrigados;
+    @JsonProperty("acoesCobranca")
+    private List<AcaoCobranca> acoesCobranca;
     @Valid
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
@@ -104,5 +106,13 @@ public class Contrato {
 
     public void setSituacaoContrato(SituacaoContrato situacaoContrato) {
         this.situacaoContrato = situacaoContrato;
+    }
+
+    public List<AcaoCobranca> getAcoesCobranca() {
+        return acoesCobranca;
+    }
+
+    public void setAcoesCobranca(List<AcaoCobranca> acoesCobranca) {
+        this.acoesCobranca = acoesCobranca;
     }
 }
