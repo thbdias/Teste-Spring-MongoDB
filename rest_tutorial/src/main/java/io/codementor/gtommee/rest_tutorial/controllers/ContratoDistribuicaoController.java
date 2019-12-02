@@ -59,6 +59,7 @@ public class ContratoDistribuicaoController {
     private static final int TAM_MAX_NUMERO_ENDERECO = 5;
     private static final int TAM_MAX_COMPLEMENTO_ENDERECO = 11;
     private static final int TAM_MAX_BAIRRO = 14;
+    private static final int TAM_MAX_CIDADE = 25;
 
 
     @RequestMapping(value = "/object_from_json", method = RequestMethod.GET)
@@ -179,6 +180,23 @@ public class ContratoDistribuicaoController {
         gravarArq.printf("%s", getNumeroEnderecoFormatado(contrato.getMutuario().getEndereco().getNumero()));
         gravarArq.printf("%s", getComplementoEnderecoFormatado(contrato.getMutuario().getEndereco().getComplemento()));
         gravarArq.printf("%s", getBairroFormatado(contrato.getMutuario().getEndereco().getBairro()));
+        gravarArq.printf("%s", getCidadeFormatada(contrato.getMutuario().getEndereco().getCidade()));
+    }
+
+    private String getCidadeFormatada(String cidade) {
+        String newCidade = "";
+
+        if (cidade.length() == TAM_MAX_CIDADE){ newCidade = cidade; }
+        else if (cidade.length() < TAM_MAX_CIDADE){
+            newCidade = cidade;
+            for (int i = 0; i < (TAM_MAX_CIDADE - cidade.length()); i++){
+                newCidade += " ";
+            }
+        }
+        //adicionando TAM_MAX_CIDADE de espacos em branco
+        else{ newCidade = String.join("", Collections.nCopies(TAM_MAX_CIDADE, " ")); }
+
+        return newCidade;
     }
 
     private String getBairroFormatado(String bairro) {
