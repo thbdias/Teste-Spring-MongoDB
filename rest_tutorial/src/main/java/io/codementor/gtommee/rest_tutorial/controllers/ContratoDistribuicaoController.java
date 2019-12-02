@@ -63,6 +63,8 @@ public class ContratoDistribuicaoController {
     private static final int TAM_MAX_UF_MUTUARIO = 2;
     private static final int TAM_MAX_CEP = 8;
     private static final int TAM_MAX_EMAIL = 60;
+    private static final int TAM_MAX_VALOR_GARANTIA_INT = 16; //parte inteira
+    private static final int TAM_MAX_VALOR_GARANTIA_DEC = 2; //parte decimal
 
 
     @RequestMapping(value = "/object_from_json", method = RequestMethod.GET)
@@ -187,6 +189,46 @@ public class ContratoDistribuicaoController {
         gravarArq.printf("%s", getUfMutuarioFormatada(contrato.getMutuario().getEndereco().getUf()));
         gravarArq.printf("%s", getCepFormatado(contrato.getMutuario().getEndereco().getCep() + ""));
         gravarArq.printf("%s", getEmailFormatado(contrato.getMutuario().getEmail()));
+        gravarArq.printf("%s", getValorGarantiaAtualizadaFormatada(contrato.getSituacaoContrato().getValorGarantiaAtualizada() + ""));
+    }
+
+    private String getValorGarantiaAtualizadaFormatada(String valorGarantiaAtualizada) {
+        String newValorGarantiaAtualizada = "";
+        String [] arrayValores = valorGarantiaAtualizada.split("\\.");
+        String parteInt = arrayValores[0];
+        String parteDec = arrayValores[1];
+
+        //tratar parte inteira
+        if (parteInt.length() == TAM_MAX_VALOR_GARANTIA_INT){ newValorGarantiaAtualizada += parteInt; }
+        else if (parteInt.length() < TAM_MAX_VALOR_GARANTIA_INT){
+            for (int i = 0; i < (TAM_MAX_VALOR_GARANTIA_INT - parteInt.length()); i++){
+                newValorGarantiaAtualizada += "0";
+            }
+            newValorGarantiaAtualizada += parteInt;
+        }
+        else {
+            for (int i = 0; i < TAM_MAX_VALOR_GARANTIA_INT; i++){
+                newValorGarantiaAtualizada += parteInt.charAt(i);
+            }
+        }
+
+        //tratar parte decimal
+        if (parteDec.length() == TAM_MAX_VALOR_GARANTIA_DEC){ newValorGarantiaAtualizada += "," + parteDec; }
+        else if (parteDec.length() < TAM_MAX_VALOR_GARANTIA_DEC){
+            newValorGarantiaAtualizada += ",";
+            for (int i = 0; i < (TAM_MAX_VALOR_GARANTIA_DEC - parteDec.length()); i++){
+                newValorGarantiaAtualizada += "0";
+            }
+            newValorGarantiaAtualizada += parteDec;
+        }
+        else {
+            newValorGarantiaAtualizada += ",";
+            for (int i = 0; i < TAM_MAX_VALOR_GARANTIA_DEC; i++){
+                newValorGarantiaAtualizada += parteDec.charAt(i);
+            }
+        }
+
+        return newValorGarantiaAtualizada;
     }
 
     private String getEmailFormatado(String email) {
@@ -948,7 +990,6 @@ public class ContratoDistribuicaoController {
         newJsonSituacaoContrato.getAsJsonObject().add("diasAtraso", newContratoJsonElement.getAsJsonObject().getAsJsonPrimitive("diasAtraso"));
         newJsonSituacaoContrato.getAsJsonObject().add("DiasAtrUltPrePg", newContratoJsonElement.getAsJsonObject().getAsJsonPrimitive("DiasAtrUltPrePg"));
         newJsonSituacaoContrato.getAsJsonObject().add("PercDivPg", newContratoJsonElement.getAsJsonObject().getAsJsonPrimitive("PercDivPg"));
-        newJsonSituacaoContrato.getAsJsonObject().add("garAtu", newContratoJsonElement.getAsJsonObject().getAsJsonPrimitive("garAtu"));
 
         //tratando valorUltimaPrestacaoAtraso
         String [] partesNumber = newContratoJsonElement.getAsJsonObject().getAsJsonPrimitive("VlrPreAtr").toString().split(",");
@@ -961,6 +1002,12 @@ public class ContratoDistribuicaoController {
         parteInteira = Integer.parseInt(removeAspas(removeEspacosBrancos(partesNumber[0])));
         parteDecimal = Integer.parseInt(removeAspas(removeEspacosBrancos(partesNumber[1])));
         newJsonSituacaoContrato.getAsJsonObject().addProperty("vlrDiv", Double.parseDouble(parteInteira + "." + parteDecimal));
+
+        //tratando valorGarantiaAtualizada
+        partesNumber = newContratoJsonElement.getAsJsonObject().getAsJsonPrimitive("garAtu").toString().split(",");
+        parteInteira = Integer.parseInt(removeAspas(removeEspacosBrancos(partesNumber[0])));
+        parteDecimal = Integer.parseInt(removeAspas(removeEspacosBrancos(partesNumber[1])));
+        newJsonSituacaoContrato.getAsJsonObject().addProperty("garAtu", Double.parseDouble(parteInteira + "." + parteDecimal));
 
         newContratoJsonElement.getAsJsonObject().remove("diaVenc");
         newContratoJsonElement.getAsJsonObject().remove("dtPriAber");

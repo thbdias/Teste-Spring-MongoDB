@@ -20,7 +20,7 @@ public class SituacaoContrato {
     @JsonProperty("vlrDiv") //chave dentro do json
     private Double valorDividaEmAtraso;
     @JsonProperty("garAtu") //chave dentro do json
-    private String valorGarantiaAtualizada;
+    private Double valorGarantiaAtualizada;
 
 
     public int getDiaVencimento() {
@@ -87,11 +87,11 @@ public class SituacaoContrato {
         this.valorDividaEmAtraso = valorDividaEmAtraso;
     }
 
-    public String getValorGarantiaAtualizada() {
+    public Double getValorGarantiaAtualizada() {
         return valorGarantiaAtualizada;
     }
 
-    public void setValorGarantiaAtualizada(String valorGarantiaAtualizada) {
+    public void setValorGarantiaAtualizada(Double valorGarantiaAtualizada) {
         this.valorGarantiaAtualizada = valorGarantiaAtualizada;
     }
 }
