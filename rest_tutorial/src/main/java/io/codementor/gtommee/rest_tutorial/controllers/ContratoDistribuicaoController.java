@@ -61,6 +61,7 @@ public class ContratoDistribuicaoController {
     private static final int TAM_MAX_BAIRRO = 14;
     private static final int TAM_MAX_CIDADE = 25;
     private static final int TAM_MAX_UF_MUTUARIO = 2;
+    private static final int TAM_MAX_CEP = 8;
 
 
     @RequestMapping(value = "/object_from_json", method = RequestMethod.GET)
@@ -183,6 +184,23 @@ public class ContratoDistribuicaoController {
         gravarArq.printf("%s", getBairroFormatado(contrato.getMutuario().getEndereco().getBairro()));
         gravarArq.printf("%s", getCidadeFormatada(contrato.getMutuario().getEndereco().getCidade()));
         gravarArq.printf("%s", getUfMutuarioFormatada(contrato.getMutuario().getEndereco().getUf()));
+        gravarArq.printf("%s", getCepFormatado(contrato.getMutuario().getEndereco().getCep() + ""));
+    }
+
+    private String getCepFormatado(String cep) {
+        String newCep = "";
+
+        if (cep.length() == TAM_MAX_CEP){ newCep = cep; }
+        else if (cep.length() < TAM_MAX_CEP){
+            for (int i = 0; i < (TAM_MAX_CEP - cep.length()); i++){
+                newCep += "0";
+            }
+            newCep = cep;
+        }
+        //adicionando TAM_MAX_CEP de espacos em branco
+        else{ newCep = String.join("", Collections.nCopies(TAM_MAX_CEP, "0")); }
+
+        return newCep;
     }
 
     private String getUfMutuarioFormatada(String uf) {
