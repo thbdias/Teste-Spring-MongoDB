@@ -63,8 +63,8 @@ public class ContratoDistribuicaoController {
     private static final int TAM_MAX_UF_MUTUARIO = 2;
     private static final int TAM_MAX_CEP = 8;
     private static final int TAM_MAX_EMAIL = 60;
-    private static final int TAM_MAX_VALOR_GARANTIA_INT = 16; //parte inteira
-    private static final int TAM_MAX_VALOR_GARANTIA_DEC = 2; //parte decimal
+//    private static final int TAM_MAX_VALOR_GARANTIA_INT = 16; //parte inteira
+//    private static final int TAM_MAX_VALOR_GARANTIA_DEC = 2; //parte decimal
 
 
     @RequestMapping(value = "/object_from_json", method = RequestMethod.GET)
@@ -199,31 +199,31 @@ public class ContratoDistribuicaoController {
         String parteDec = arrayValores[1];
 
         //tratar parte inteira
-        if (parteInt.length() == TAM_MAX_VALOR_GARANTIA_INT){ newValorGarantiaAtualizada += parteInt; }
-        else if (parteInt.length() < TAM_MAX_VALOR_GARANTIA_INT){
-            for (int i = 0; i < (TAM_MAX_VALOR_GARANTIA_INT - parteInt.length()); i++){
+        if (parteInt.length() == EnumLayoutSiga.TAM_MAX_VALOR_GARANTIA_INT.getValor()){ newValorGarantiaAtualizada += parteInt; }
+        else if (parteInt.length() < EnumLayoutSiga.TAM_MAX_VALOR_GARANTIA_INT.getValor()){
+            for (int i = 0; i < (EnumLayoutSiga.TAM_MAX_VALOR_GARANTIA_INT.getValor() - parteInt.length()); i++){
                 newValorGarantiaAtualizada += "0";
             }
             newValorGarantiaAtualizada += parteInt;
         }
         else {
-            for (int i = 0; i < TAM_MAX_VALOR_GARANTIA_INT; i++){
+            for (int i = 0; i < EnumLayoutSiga.TAM_MAX_VALOR_GARANTIA_INT.getValor(); i++){
                 newValorGarantiaAtualizada += parteInt.charAt(i);
             }
         }
 
         //tratar parte decimal
-        if (parteDec.length() == TAM_MAX_VALOR_GARANTIA_DEC){ newValorGarantiaAtualizada += "," + parteDec; }
-        else if (parteDec.length() < TAM_MAX_VALOR_GARANTIA_DEC){
+        if (parteDec.length() == EnumLayoutSiga.TAM_MAX_VALOR_GARANTIA_DEC.getValor()){ newValorGarantiaAtualizada += "," + parteDec; }
+        else if (parteDec.length() < EnumLayoutSiga.TAM_MAX_VALOR_GARANTIA_DEC.getValor()){
             newValorGarantiaAtualizada += ",";
-            for (int i = 0; i < (TAM_MAX_VALOR_GARANTIA_DEC - parteDec.length()); i++){
+            for (int i = 0; i < (EnumLayoutSiga.TAM_MAX_VALOR_GARANTIA_DEC.getValor() - parteDec.length()); i++){
                 newValorGarantiaAtualizada += "0";
             }
             newValorGarantiaAtualizada += parteDec;
         }
         else {
             newValorGarantiaAtualizada += ",";
-            for (int i = 0; i < TAM_MAX_VALOR_GARANTIA_DEC; i++){
+            for (int i = 0; i < EnumLayoutSiga.TAM_MAX_VALOR_GARANTIA_DEC.getValor(); i++){
                 newValorGarantiaAtualizada += parteDec.charAt(i);
             }
         }
