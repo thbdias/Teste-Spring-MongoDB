@@ -11,6 +11,7 @@ import com.google.gson.JsonParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import java.io.*;
 import java.text.SimpleDateFormat;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -54,6 +55,7 @@ public class ContratoDistribuicaoController {
     private static final int TAM_MAX_INDICADOR_MATERIAL_CONSTRUCAO = 1;
     private static final int TAM_MAX_PRAZO_REMANESCENTE = 3;
     private static final int TAM_MAX_TIPO_ENDERECO = 3;
+    private static final int TAM_MAX_NOME_ENDERECO = 50;
 
 
     @RequestMapping(value = "/object_from_json", method = RequestMethod.GET)
@@ -170,6 +172,23 @@ public class ContratoDistribuicaoController {
         gravarArq.printf("%s", getIndicadorMaterialConstrucaoFormatado(contrato.getAdditionalProperties()));
         gravarArq.printf("%s", getIndicadorPrazoRemanescenteFormatado(contrato.getAdditionalProperties()));
         gravarArq.printf("%s", getTipoEnderecoFormatado(contrato.getMutuario().getEndereco().getAbreviacao()));
+        gravarArq.printf("%s", getNomeEnderecoFormatado(contrato.getMutuario().getEndereco().getLogradouro()));
+    }
+
+    private String getNomeEnderecoFormatado(String nomeEndereco) {
+        String newNomeEndereco = "";
+
+        if (nomeEndereco.length() == TAM_MAX_NOME_ENDERECO){ newNomeEndereco = nomeEndereco; }
+        else if (nomeEndereco.length() < TAM_MAX_NOME_ENDERECO){
+            newNomeEndereco = nomeEndereco;
+            for (int i = 0; i < (TAM_MAX_NOME_ENDERECO - nomeEndereco.length()); i++){
+                newNomeEndereco += " ";
+            }
+        }
+        //adicionando TAM_MAX_NOME_ENDERECO de espacos em branco
+        else{ newNomeEndereco = String.join("", Collections.nCopies(TAM_MAX_NOME_ENDERECO, " ")); }
+
+        return newNomeEndereco;
     }
 
     private String getTipoEnderecoFormatado(String abreviacao) {
