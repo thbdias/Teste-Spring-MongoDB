@@ -56,6 +56,7 @@ public class ContratoDistribuicaoController {
     private static final int TAM_MAX_PRAZO_REMANESCENTE = 3;
     private static final int TAM_MAX_TIPO_ENDERECO = 3;
     private static final int TAM_MAX_NOME_ENDERECO = 50;
+    private static final int TAM_MAX_NUMERO_ENDERECO = 5;
 
 
     @RequestMapping(value = "/object_from_json", method = RequestMethod.GET)
@@ -173,6 +174,23 @@ public class ContratoDistribuicaoController {
         gravarArq.printf("%s", getIndicadorPrazoRemanescenteFormatado(contrato.getAdditionalProperties()));
         gravarArq.printf("%s", getTipoEnderecoFormatado(contrato.getMutuario().getEndereco().getAbreviacao()));
         gravarArq.printf("%s", getNomeEnderecoFormatado(contrato.getMutuario().getEndereco().getLogradouro()));
+        gravarArq.printf("%s", getNumeroEnderecoFormatado(contrato.getMutuario().getEndereco().getNumero()));
+    }
+
+    private String getNumeroEnderecoFormatado(String numeroEndereco) {
+        String newNumeroEndereco = "";
+
+        if (numeroEndereco.length() == TAM_MAX_NUMERO_ENDERECO){ newNumeroEndereco = numeroEndereco; }
+        else if (numeroEndereco.length() < TAM_MAX_NUMERO_ENDERECO){
+            for (int i = 0; i < (TAM_MAX_NUMERO_ENDERECO - numeroEndereco.length()); i++){
+                newNumeroEndereco += "0";
+            }
+            newNumeroEndereco = numeroEndereco;
+        }
+        //adicionando TAM_MAX_NUMERO_ENDERECO de espacos em branco
+        else{ newNumeroEndereco = String.join("", Collections.nCopies(TAM_MAX_NUMERO_ENDERECO, "0")); }
+
+        return newNumeroEndereco;
     }
 
     private String getNomeEnderecoFormatado(String nomeEndereco) {
