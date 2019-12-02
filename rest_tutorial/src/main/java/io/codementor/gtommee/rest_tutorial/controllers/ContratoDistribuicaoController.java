@@ -49,6 +49,7 @@ public class ContratoDistribuicaoController {
     private static final int TAM_MAX_CODIGO_CREDOR = 4;
     private static final int TAM_MAX_CODIGO_ADMINISTRADOR = 4;
     private static final int TAM_MAX_UF_CONTRATO = 2;
+    private static final int TAM_MAX_SUBTITULO_CONTABIL = 6;
 
 
     @RequestMapping(value = "/object_from_json", method = RequestMethod.GET)
@@ -160,6 +161,23 @@ public class ContratoDistribuicaoController {
         gravarArq.printf("%s", getCodigoAdministradorFormatado(contrato.getCodigoAdminitrador() + ""));
         gravarArq.printf("%s", getUfContratoFormatado(contrato.getAdditionalProperties()));
         gravarArq.printf("%s", getDataAssinaturaFormatada(contrato.getDataAssinatura()));
+        gravarArq.printf("%s", getSubTituloContabilFormatado(contrato.getAdditionalProperties()));
+    }
+
+    private String getSubTituloContabilFormatado(Map<String, Object> additionalProperties) {
+        String newSubtituloContabil = "";
+        String subtituloContabil = additionalProperties.get("subContab").toString();
+
+        if (subtituloContabil.length() == TAM_MAX_SUBTITULO_CONTABIL){ newSubtituloContabil = subtituloContabil; }
+        else if (subtituloContabil.length() < TAM_MAX_SUBTITULO_CONTABIL){
+            for (int i = 0; i < (TAM_MAX_SUBTITULO_CONTABIL - subtituloContabil.length()); i++){
+                newSubtituloContabil += "0";
+            }
+            newSubtituloContabil += subtituloContabil;
+        }
+        else{ newSubtituloContabil = "      "; }
+
+        return newSubtituloContabil;
     }
 
     private String getDataAssinaturaFormatada(String dataAssinatura) {
