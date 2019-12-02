@@ -21,51 +21,6 @@ import java.util.Map;
 public class ContratoDistribuicaoController {
     @Autowired
     private ContratoDistribuicaoRepository contratoDistribuicaoRepository;
-    //tamanho máximo de posições do número de contrato
-    private static final int TAM_NUMERO_CONTRATO = 12;
-    private static final int TAM_SES = 3; //tamanho máximo de caracteres de uma situacao especial
-    private static final int QUANT_MAX_SES = 10; //quantidade máxima de situações especiais que devem conter no layout SIGA
-    private static final int TAM_MAX_NOME = 36;
-    private static final int TAM_CPF = 14;
-    private static final int TAM_MAX_DDD = 4;
-    private static final int TAM_MAX_TEL = 9;
-    private static final int TAM_MAX_CODIGO_FASE = 20;
-    private static final int TAM_MAX_UNIDADE_OPERACIONAL = 5;
-    private static final int TAM_MAX_DIA_VENCIMENTO = 2;
-    private static final int TAM_MAX_DATA_PRIM_PREST_ABERTA = 6;
-    private static final int TAM_MAX_VALOR_PREST_ATRASO_INT = 14; //parte inteira
-    private static final int TAM_MAX_VALOR_PREST_ATRASO_DEC = 2; //parte decimal
-    private static final int TAM_MAX_DIAS_ATRASO = 3;
-    private static final int TAM_MAX_QUANT_PREST_ATRASO = 3;
-    private static final int TAM_MAX_VALOR_DIVIDA_ATRASO_INT = 14; //parte inteira
-    private static final int TAM_MAX_VALOR_DIVIDA_ATRASO_DEC = 2; //parte decimal
-    private static final int TAM_MAX_REGENCIA_CRITICA = 4;
-    private static final int TAM_MAX_ORIGEM_RECURSO = 3;
-    private static final int TAM_MAX_LINHA_FINANCIAMENTO = 3;
-    private static final int TAM_MAX_TIPO_FINANCIAMENTO = 3;
-    private static final int TAM_MAX_TIPO_GARANTIA = 4;
-    private static final int TAM_MAX_INDICADOR_PMCMV = 1;
-    private static final int TAM_MAX_GRUPO_HABITACIONAL = 5;
-    private static final int TAM_MAX_PRODUTO_FINANCEIRO = 4;
-    private static final int TAM_MAX_CODIGO_CREDOR = 4;
-    private static final int TAM_MAX_CODIGO_ADMINISTRADOR = 4;
-    private static final int TAM_MAX_UF_CONTRATO = 2;
-    private static final int TAM_MAX_SUBTITULO_CONTABIL = 6;
-    private static final int TAM_MAX_INDICADOR_OBRA = 1;
-    private static final int TAM_MAX_INDICADOR_MATERIAL_CONSTRUCAO = 1;
-    private static final int TAM_MAX_PRAZO_REMANESCENTE = 3;
-    private static final int TAM_MAX_TIPO_ENDERECO = 3;
-    private static final int TAM_MAX_NOME_ENDERECO = 50;
-    private static final int TAM_MAX_NUMERO_ENDERECO = 5;
-    private static final int TAM_MAX_COMPLEMENTO_ENDERECO = 11;
-    private static final int TAM_MAX_BAIRRO = 14;
-    private static final int TAM_MAX_CIDADE = 25;
-    private static final int TAM_MAX_UF_MUTUARIO = 2;
-    private static final int TAM_MAX_CEP = 8;
-    private static final int TAM_MAX_EMAIL = 60;
-//    private static final int TAM_MAX_VALOR_GARANTIA_INT = 16; //parte inteira
-//    private static final int TAM_MAX_VALOR_GARANTIA_DEC = 2; //parte decimal
-
 
     @RequestMapping(value = "/object_from_json", method = RequestMethod.GET)
     public String createContratoDistribuicaoModel() {
@@ -234,15 +189,15 @@ public class ContratoDistribuicaoController {
     private String getEmailFormatado(String email) {
         String newEmail = "";
 
-        if (email.length() == TAM_MAX_EMAIL){ newEmail = email; }
-        else if (email.length() < TAM_MAX_EMAIL){
+        if (email.length() == EnumLayoutSiga.TAM_MAX_EMAIL.getValor()){ newEmail = email; }
+        else if (email.length() < EnumLayoutSiga.TAM_MAX_EMAIL.getValor()){
             newEmail = email;
-            for (int i = 0; i < (TAM_MAX_EMAIL - email.length()); i++){
+            for (int i = 0; i < (EnumLayoutSiga.TAM_MAX_EMAIL.getValor() - email.length()); i++){
                 newEmail += " ";
             }
         }
         //adicionando TAM_MAX_EMAIL de espacos em branco
-        else{ newEmail = String.join("", Collections.nCopies(TAM_MAX_EMAIL, " ")); }
+        else{ newEmail = String.join("", Collections.nCopies(EnumLayoutSiga.TAM_MAX_EMAIL.getValor(), " ")); }
 
         return newEmail;
     }
@@ -250,35 +205,35 @@ public class ContratoDistribuicaoController {
     private String getCepFormatado(String cep) {
         String newCep = "";
 
-        if (cep.length() == TAM_MAX_CEP){ newCep = cep; }
-        else if (cep.length() < TAM_MAX_CEP){
-            for (int i = 0; i < (TAM_MAX_CEP - cep.length()); i++){
+        if (cep.length() == EnumLayoutSiga.TAM_MAX_CEP.getValor()){ newCep = cep; }
+        else if (cep.length() < EnumLayoutSiga.TAM_MAX_CEP.getValor()){
+            for (int i = 0; i < (EnumLayoutSiga.TAM_MAX_CEP.getValor() - cep.length()); i++){
                 newCep += "0";
             }
             newCep = cep;
         }
         //adicionando TAM_MAX_CEP de espacos em branco
-        else{ newCep = String.join("", Collections.nCopies(TAM_MAX_CEP, "0")); }
+        else{ newCep = String.join("", Collections.nCopies(EnumLayoutSiga.TAM_MAX_CEP.getValor(), "0")); }
 
         return newCep;
     }
 
     private String getUfMutuarioFormatada(String uf) {
-        return ((uf.length() == TAM_MAX_UF_MUTUARIO) ? uf : "  ");
+        return ((uf.length() == EnumLayoutSiga.TAM_MAX_UF_MUTUARIO.getValor()) ? uf : "  ");
     }
 
     private String getCidadeFormatada(String cidade) {
         String newCidade = "";
 
-        if (cidade.length() == TAM_MAX_CIDADE){ newCidade = cidade; }
-        else if (cidade.length() < TAM_MAX_CIDADE){
+        if (cidade.length() == EnumLayoutSiga.TAM_MAX_CIDADE.getValor()){ newCidade = cidade; }
+        else if (cidade.length() < EnumLayoutSiga.TAM_MAX_CIDADE.getValor()){
             newCidade = cidade;
-            for (int i = 0; i < (TAM_MAX_CIDADE - cidade.length()); i++){
+            for (int i = 0; i < (EnumLayoutSiga.TAM_MAX_CIDADE.getValor() - cidade.length()); i++){
                 newCidade += " ";
             }
         }
         //adicionando TAM_MAX_CIDADE de espacos em branco
-        else{ newCidade = String.join("", Collections.nCopies(TAM_MAX_CIDADE, " ")); }
+        else{ newCidade = String.join("", Collections.nCopies(EnumLayoutSiga.TAM_MAX_CIDADE.getValor(), " ")); }
 
         return newCidade;
     }
@@ -286,15 +241,15 @@ public class ContratoDistribuicaoController {
     private String getBairroFormatado(String bairro) {
         String newBairro = "";
 
-        if (bairro.length() == TAM_MAX_BAIRRO){ newBairro = bairro; }
-        else if (bairro.length() < TAM_MAX_BAIRRO){
+        if (bairro.length() == EnumLayoutSiga.TAM_MAX_BAIRRO.getValor()){ newBairro = bairro; }
+        else if (bairro.length() < EnumLayoutSiga.TAM_MAX_BAIRRO.getValor()){
             newBairro = bairro;
-            for (int i = 0; i < (TAM_MAX_BAIRRO - bairro.length()); i++){
+            for (int i = 0; i < (EnumLayoutSiga.TAM_MAX_BAIRRO.getValor() - bairro.length()); i++){
                 newBairro += " ";
             }
         }
         //adicionando TAM_MAX_BAIRRO de espacos em branco
-        else{ newBairro = String.join("", Collections.nCopies(TAM_MAX_BAIRRO, " ")); }
+        else{ newBairro = String.join("", Collections.nCopies(EnumLayoutSiga.TAM_MAX_BAIRRO.getValor(), " ")); }
 
         return newBairro;
     }
@@ -302,15 +257,15 @@ public class ContratoDistribuicaoController {
     private String getComplementoEnderecoFormatado(String complementoEndereco) {
         String newComplementoEndereco = "";
 
-        if (complementoEndereco.length() == TAM_MAX_COMPLEMENTO_ENDERECO){ newComplementoEndereco = complementoEndereco; }
-        else if (complementoEndereco.length() < TAM_MAX_COMPLEMENTO_ENDERECO){
+        if (complementoEndereco.length() == EnumLayoutSiga.TAM_MAX_COMPLEMENTO_ENDERECO.getValor()){ newComplementoEndereco = complementoEndereco; }
+        else if (complementoEndereco.length() < EnumLayoutSiga.TAM_MAX_COMPLEMENTO_ENDERECO.getValor()){
             newComplementoEndereco = complementoEndereco;
-            for (int i = 0; i < (TAM_MAX_COMPLEMENTO_ENDERECO - complementoEndereco.length()); i++){
+            for (int i = 0; i < (EnumLayoutSiga.TAM_MAX_COMPLEMENTO_ENDERECO.getValor() - complementoEndereco.length()); i++){
                 newComplementoEndereco += " ";
             }
         }
         //adicionando TAM_MAX_COMPLEMENTO_ENDERECO de espacos em branco
-        else{ newComplementoEndereco = String.join("", Collections.nCopies(TAM_MAX_COMPLEMENTO_ENDERECO, " ")); }
+        else{ newComplementoEndereco = String.join("", Collections.nCopies(EnumLayoutSiga.TAM_MAX_COMPLEMENTO_ENDERECO.getValor(), " ")); }
 
         return newComplementoEndereco;
     }
@@ -318,15 +273,15 @@ public class ContratoDistribuicaoController {
     private String getNumeroEnderecoFormatado(String numeroEndereco) {
         String newNumeroEndereco = "";
 
-        if (numeroEndereco.length() == TAM_MAX_NUMERO_ENDERECO){ newNumeroEndereco = numeroEndereco; }
-        else if (numeroEndereco.length() < TAM_MAX_NUMERO_ENDERECO){
-            for (int i = 0; i < (TAM_MAX_NUMERO_ENDERECO - numeroEndereco.length()); i++){
+        if (numeroEndereco.length() == EnumLayoutSiga.TAM_MAX_NUMERO_ENDERECO.getValor()){ newNumeroEndereco = numeroEndereco; }
+        else if (numeroEndereco.length() < EnumLayoutSiga.TAM_MAX_NUMERO_ENDERECO.getValor()){
+            for (int i = 0; i < (EnumLayoutSiga.TAM_MAX_NUMERO_ENDERECO.getValor() - numeroEndereco.length()); i++){
                 newNumeroEndereco += "0";
             }
             newNumeroEndereco = numeroEndereco;
         }
         //adicionando TAM_MAX_NUMERO_ENDERECO de espacos em branco
-        else{ newNumeroEndereco = String.join("", Collections.nCopies(TAM_MAX_NUMERO_ENDERECO, "0")); }
+        else{ newNumeroEndereco = String.join("", Collections.nCopies(EnumLayoutSiga.TAM_MAX_NUMERO_ENDERECO.getValor(), "0")); }
 
         return newNumeroEndereco;
     }
@@ -334,15 +289,15 @@ public class ContratoDistribuicaoController {
     private String getNomeEnderecoFormatado(String nomeEndereco) {
         String newNomeEndereco = "";
 
-        if (nomeEndereco.length() == TAM_MAX_NOME_ENDERECO){ newNomeEndereco = nomeEndereco; }
-        else if (nomeEndereco.length() < TAM_MAX_NOME_ENDERECO){
+        if (nomeEndereco.length() == EnumLayoutSiga.TAM_MAX_NOME_ENDERECO.getValor()){ newNomeEndereco = nomeEndereco; }
+        else if (nomeEndereco.length() < EnumLayoutSiga.TAM_MAX_NOME_ENDERECO.getValor()){
             newNomeEndereco = nomeEndereco;
-            for (int i = 0; i < (TAM_MAX_NOME_ENDERECO - nomeEndereco.length()); i++){
+            for (int i = 0; i < (EnumLayoutSiga.TAM_MAX_NOME_ENDERECO.getValor() - nomeEndereco.length()); i++){
                 newNomeEndereco += " ";
             }
         }
         //adicionando TAM_MAX_NOME_ENDERECO de espacos em branco
-        else{ newNomeEndereco = String.join("", Collections.nCopies(TAM_MAX_NOME_ENDERECO, " ")); }
+        else{ newNomeEndereco = String.join("", Collections.nCopies(EnumLayoutSiga.TAM_MAX_NOME_ENDERECO.getValor(), " ")); }
 
         return newNomeEndereco;
     }
@@ -350,10 +305,10 @@ public class ContratoDistribuicaoController {
     private String getTipoEnderecoFormatado(String abreviacao) {
         String newAbreviacao = "";
 
-        if (abreviacao.length() == TAM_MAX_TIPO_ENDERECO){ newAbreviacao = abreviacao; }
-        else if (abreviacao.length() < TAM_MAX_TIPO_ENDERECO){
+        if (abreviacao.length() == EnumLayoutSiga.TAM_MAX_TIPO_ENDERECO.getValor()){ newAbreviacao = abreviacao; }
+        else if (abreviacao.length() < EnumLayoutSiga.TAM_MAX_TIPO_ENDERECO.getValor()){
             newAbreviacao = abreviacao;
-            for (int i = 0; i < (TAM_MAX_TIPO_ENDERECO - abreviacao.length()); i++){
+            for (int i = 0; i < (EnumLayoutSiga.TAM_MAX_TIPO_ENDERECO.getValor() - abreviacao.length()); i++){
                 newAbreviacao += " ";
             }
         }
@@ -366,9 +321,9 @@ public class ContratoDistribuicaoController {
         String newPrazoRemanescente = "";
         String prazoRemanescente = additionalProperties.get("pzrem").toString();
 
-        if (prazoRemanescente.length() == TAM_MAX_PRAZO_REMANESCENTE){ newPrazoRemanescente = prazoRemanescente; }
-        else if (prazoRemanescente.length() < TAM_MAX_PRAZO_REMANESCENTE){
-            for (int i = 0; i < (TAM_MAX_PRAZO_REMANESCENTE - prazoRemanescente.length()); i++){
+        if (prazoRemanescente.length() == EnumLayoutSiga.TAM_MAX_PRAZO_REMANESCENTE.getValor()){ newPrazoRemanescente = prazoRemanescente; }
+        else if (prazoRemanescente.length() < EnumLayoutSiga.TAM_MAX_PRAZO_REMANESCENTE.getValor()){
+            for (int i = 0; i < (EnumLayoutSiga.TAM_MAX_PRAZO_REMANESCENTE.getValor() - prazoRemanescente.length()); i++){
                 newPrazoRemanescente += "0";
             }
             newPrazoRemanescente += prazoRemanescente;
@@ -383,7 +338,7 @@ public class ContratoDistribuicaoController {
         indicadorMaterialConstrucao = removeAspas(indicadorMaterialConstrucao);
         indicadorMaterialConstrucao = removeEspacosBrancos(indicadorMaterialConstrucao);
 
-        return ((indicadorMaterialConstrucao.length() == TAM_MAX_INDICADOR_MATERIAL_CONSTRUCAO) ? indicadorMaterialConstrucao : " ");
+        return ((indicadorMaterialConstrucao.length() == EnumLayoutSiga.TAM_MAX_INDICADOR_MATERIAL_CONSTRUCAO.getValor()) ? indicadorMaterialConstrucao : " ");
     }
 
     private String getIndicadorObraFormatado(Map<String, Object> additionalProperties) {
@@ -391,16 +346,16 @@ public class ContratoDistribuicaoController {
         indicadorObra = removeAspas(indicadorObra);
         indicadorObra = removeEspacosBrancos(indicadorObra);
 
-        return ((indicadorObra.length() == TAM_MAX_INDICADOR_OBRA) ? indicadorObra : " ");
+        return ((indicadorObra.length() == EnumLayoutSiga.TAM_MAX_INDICADOR_OBRA.getValor()) ? indicadorObra : " ");
     }
 
     private String getSubTituloContabilFormatado(Map<String, Object> additionalProperties) {
         String newSubtituloContabil = "";
         String subtituloContabil = additionalProperties.get("subContab").toString();
 
-        if (subtituloContabil.length() == TAM_MAX_SUBTITULO_CONTABIL){ newSubtituloContabil = subtituloContabil; }
-        else if (subtituloContabil.length() < TAM_MAX_SUBTITULO_CONTABIL){
-            for (int i = 0; i < (TAM_MAX_SUBTITULO_CONTABIL - subtituloContabil.length()); i++){
+        if (subtituloContabil.length() == EnumLayoutSiga.TAM_MAX_SUBTITULO_CONTABIL.getValor()){ newSubtituloContabil = subtituloContabil; }
+        else if (subtituloContabil.length() < EnumLayoutSiga.TAM_MAX_SUBTITULO_CONTABIL.getValor()){
+            for (int i = 0; i < (EnumLayoutSiga.TAM_MAX_SUBTITULO_CONTABIL.getValor() - subtituloContabil.length()); i++){
                 newSubtituloContabil += "0";
             }
             newSubtituloContabil += subtituloContabil;
@@ -435,7 +390,7 @@ public class ContratoDistribuicaoController {
         String uf = additionalProperties.get("uf").toString();
         uf = removeEspacosBrancos(uf);
 
-        newUf = (uf.length() == TAM_MAX_UF_CONTRATO) ? uf : "  ";
+        newUf = (uf.length() == EnumLayoutSiga.TAM_MAX_UF_CONTRATO.getValor()) ? uf : "  ";
 
         return newUf;
     }
@@ -443,9 +398,9 @@ public class ContratoDistribuicaoController {
     private String getCodigoAdministradorFormatado(String codigoAdministrador) {
         String newCodigoAdministrador = "";
 
-        if (codigoAdministrador.length() == TAM_MAX_CODIGO_ADMINISTRADOR){ newCodigoAdministrador = codigoAdministrador; }
-        else if (codigoAdministrador.length() < TAM_MAX_CODIGO_ADMINISTRADOR){
-            for (int i = 0; i < (TAM_MAX_CODIGO_ADMINISTRADOR - codigoAdministrador.length()); i++){
+        if (codigoAdministrador.length() == EnumLayoutSiga.TAM_MAX_CODIGO_ADMINISTRADOR.getValor()){ newCodigoAdministrador = codigoAdministrador; }
+        else if (codigoAdministrador.length() < EnumLayoutSiga.TAM_MAX_CODIGO_ADMINISTRADOR.getValor()){
+            for (int i = 0; i < (EnumLayoutSiga.TAM_MAX_CODIGO_ADMINISTRADOR.getValor() - codigoAdministrador.length()); i++){
                 newCodigoAdministrador += "0";
             }
             newCodigoAdministrador += codigoAdministrador;
@@ -458,9 +413,9 @@ public class ContratoDistribuicaoController {
     private String getCredorFormatado(String codigoCredor) {
         String newCodigoCredor = "";
 
-        if (codigoCredor.length() == TAM_MAX_CODIGO_CREDOR){ newCodigoCredor = codigoCredor; }
-        else if (codigoCredor.length() < TAM_MAX_CODIGO_CREDOR){
-            for (int i = 0; i < (TAM_MAX_CODIGO_CREDOR - codigoCredor.length()); i++){
+        if (codigoCredor.length() == EnumLayoutSiga.TAM_MAX_CODIGO_CREDOR.getValor()){ newCodigoCredor = codigoCredor; }
+        else if (codigoCredor.length() < EnumLayoutSiga.TAM_MAX_CODIGO_CREDOR.getValor()){
+            for (int i = 0; i < (EnumLayoutSiga.TAM_MAX_CODIGO_CREDOR.getValor() - codigoCredor.length()); i++){
                 newCodigoCredor += "0";
             }
             newCodigoCredor += codigoCredor;
@@ -474,9 +429,9 @@ public class ContratoDistribuicaoController {
         String newProdutoFinanceiro = "";
         String produtoFinanceiro = additionalProperties.get("prf").toString();
 
-        if (produtoFinanceiro.length() == TAM_MAX_PRODUTO_FINANCEIRO){ newProdutoFinanceiro = produtoFinanceiro; }
-        else if (produtoFinanceiro.length() < TAM_MAX_PRODUTO_FINANCEIRO){
-            for (int i = 0; i < (TAM_MAX_PRODUTO_FINANCEIRO - produtoFinanceiro.length()); i++){
+        if (produtoFinanceiro.length() == EnumLayoutSiga.TAM_MAX_PRODUTO_FINANCEIRO.getValor()){ newProdutoFinanceiro = produtoFinanceiro; }
+        else if (produtoFinanceiro.length() < EnumLayoutSiga.TAM_MAX_PRODUTO_FINANCEIRO.getValor()){
+            for (int i = 0; i < (EnumLayoutSiga.TAM_MAX_PRODUTO_FINANCEIRO.getValor() - produtoFinanceiro.length()); i++){
                 newProdutoFinanceiro += "0";
             }
             newProdutoFinanceiro += produtoFinanceiro;
@@ -490,9 +445,9 @@ public class ContratoDistribuicaoController {
         String newGrupoHabitacional = "";
         String grupoHabitacional = additionalProperties.get("grpHab").toString();
 
-        if (grupoHabitacional.length() == TAM_MAX_GRUPO_HABITACIONAL){ newGrupoHabitacional = grupoHabitacional; }
-        else if (grupoHabitacional.length() < TAM_MAX_GRUPO_HABITACIONAL){
-            for (int i = 0; i < (TAM_MAX_GRUPO_HABITACIONAL - grupoHabitacional.length()); i++){
+        if (grupoHabitacional.length() == EnumLayoutSiga.TAM_MAX_GRUPO_HABITACIONAL.getValor()){ newGrupoHabitacional = grupoHabitacional; }
+        else if (grupoHabitacional.length() < EnumLayoutSiga.TAM_MAX_GRUPO_HABITACIONAL.getValor()){
+            for (int i = 0; i < (EnumLayoutSiga.TAM_MAX_GRUPO_HABITACIONAL.getValor() - grupoHabitacional.length()); i++){
                 newGrupoHabitacional += "0";
             }
             newGrupoHabitacional += grupoHabitacional;
@@ -507,7 +462,7 @@ public class ContratoDistribuicaoController {
         String indicador = additionalProperties.get("pmcmv").toString();
         indicador = removeEspacosBrancos(indicador);
 
-        newIndicador = (indicador.length() == TAM_MAX_INDICADOR_PMCMV) ? indicador : " ";
+        newIndicador = (indicador.length() == EnumLayoutSiga.TAM_MAX_INDICADOR_PMCMV.getValor()) ? indicador : " ";
 
         return newIndicador;
     }
@@ -516,9 +471,9 @@ public class ContratoDistribuicaoController {
         String newTipoGarantia = "";
         String tipoGarantia = additionalProperties.get("tg").toString();
 
-        if (tipoGarantia.length() == TAM_MAX_TIPO_GARANTIA){ newTipoGarantia = tipoGarantia; }
-        else if (tipoGarantia.length() < TAM_MAX_TIPO_GARANTIA){
-            for (int i = 0; i < (TAM_MAX_TIPO_GARANTIA - tipoGarantia.length()); i++){
+        if (tipoGarantia.length() == EnumLayoutSiga.TAM_MAX_TIPO_GARANTIA.getValor()){ newTipoGarantia = tipoGarantia; }
+        else if (tipoGarantia.length() < EnumLayoutSiga.TAM_MAX_TIPO_GARANTIA.getValor()){
+            for (int i = 0; i < (EnumLayoutSiga.TAM_MAX_TIPO_GARANTIA.getValor() - tipoGarantia.length()); i++){
                 newTipoGarantia += "0";
             }
             newTipoGarantia += tipoGarantia;
@@ -532,9 +487,9 @@ public class ContratoDistribuicaoController {
         String newTipoFinanciamento = "";
         String tipoFinanciamento = additionalProperties.get("tf").toString();
 
-        if (tipoFinanciamento.length() == TAM_MAX_TIPO_FINANCIAMENTO){ newTipoFinanciamento = tipoFinanciamento; }
-        else if (tipoFinanciamento.length() < TAM_MAX_TIPO_FINANCIAMENTO){
-            for (int i = 0; i < (TAM_MAX_TIPO_FINANCIAMENTO - tipoFinanciamento.length()); i++){
+        if (tipoFinanciamento.length() == EnumLayoutSiga.TAM_MAX_TIPO_FINANCIAMENTO.getValor()){ newTipoFinanciamento = tipoFinanciamento; }
+        else if (tipoFinanciamento.length() < EnumLayoutSiga.TAM_MAX_TIPO_FINANCIAMENTO.getValor()){
+            for (int i = 0; i < (EnumLayoutSiga.TAM_MAX_TIPO_FINANCIAMENTO.getValor() - tipoFinanciamento.length()); i++){
                 newTipoFinanciamento += "0";
             }
             newTipoFinanciamento += tipoFinanciamento;
@@ -548,9 +503,9 @@ public class ContratoDistribuicaoController {
         String newLinhaFinanciamento = "";
         String linhaFinanciamento = additionalProperties.get("lf").toString();
 
-        if (linhaFinanciamento.length() == TAM_MAX_LINHA_FINANCIAMENTO){ newLinhaFinanciamento = linhaFinanciamento; }
-        else if (linhaFinanciamento.length() < TAM_MAX_LINHA_FINANCIAMENTO){
-            for (int i = 0; i < (TAM_MAX_LINHA_FINANCIAMENTO - linhaFinanciamento.length()); i++){
+        if (linhaFinanciamento.length() == EnumLayoutSiga.TAM_MAX_LINHA_FINANCIAMENTO.getValor()){ newLinhaFinanciamento = linhaFinanciamento; }
+        else if (linhaFinanciamento.length() < EnumLayoutSiga.TAM_MAX_LINHA_FINANCIAMENTO.getValor()){
+            for (int i = 0; i < (EnumLayoutSiga.TAM_MAX_LINHA_FINANCIAMENTO.getValor() - linhaFinanciamento.length()); i++){
                 newLinhaFinanciamento += "0";
             }
             newLinhaFinanciamento += linhaFinanciamento;
@@ -564,9 +519,9 @@ public class ContratoDistribuicaoController {
         String newOrigemRecurso = "";
         String origemRecurso = additionalProperties.get("orr").toString();
 
-        if (origemRecurso.length() == TAM_MAX_ORIGEM_RECURSO){ newOrigemRecurso = origemRecurso; }
-        else if (origemRecurso.length() < TAM_MAX_ORIGEM_RECURSO){
-            for (int i = 0; i < (TAM_MAX_ORIGEM_RECURSO - origemRecurso.length()); i++){
+        if (origemRecurso.length() == EnumLayoutSiga.TAM_MAX_ORIGEM_RECURSO.getValor()){ newOrigemRecurso = origemRecurso; }
+        else if (origemRecurso.length() < EnumLayoutSiga.TAM_MAX_ORIGEM_RECURSO.getValor()){
+            for (int i = 0; i < (EnumLayoutSiga.TAM_MAX_ORIGEM_RECURSO.getValor() - origemRecurso.length()); i++){
                 newOrigemRecurso += "0";
             }
             newOrigemRecurso += origemRecurso;
@@ -580,9 +535,9 @@ public class ContratoDistribuicaoController {
         String newRegenciaCritica = "";
         String regenciaCritica = additionalProperties.get("rcr").toString();
 
-        if (regenciaCritica.length() == TAM_MAX_REGENCIA_CRITICA){ newRegenciaCritica = regenciaCritica; }
-        else if (regenciaCritica.length() < TAM_MAX_REGENCIA_CRITICA){
-            for (int i = 0; i < (TAM_MAX_REGENCIA_CRITICA - regenciaCritica.length()); i++){
+        if (regenciaCritica.length() == EnumLayoutSiga.TAM_MAX_REGENCIA_CRITICA.getValor()){ newRegenciaCritica = regenciaCritica; }
+        else if (regenciaCritica.length() < EnumLayoutSiga.TAM_MAX_REGENCIA_CRITICA.getValor()){
+            for (int i = 0; i < (EnumLayoutSiga.TAM_MAX_REGENCIA_CRITICA.getValor() - regenciaCritica.length()); i++){
                 newRegenciaCritica += "0";
             }
             newRegenciaCritica += regenciaCritica;
@@ -599,31 +554,31 @@ public class ContratoDistribuicaoController {
         String parteDec = arrayValores[1];
 
         //tratar parte inteira
-        if (parteInt.length() == TAM_MAX_VALOR_DIVIDA_ATRASO_INT){ newValorDividaAtraso += parteInt; }
-        else if (parteInt.length() < TAM_MAX_VALOR_DIVIDA_ATRASO_INT){
-            for (int i = 0; i < (TAM_MAX_VALOR_DIVIDA_ATRASO_INT - parteInt.length()); i++){
+        if (parteInt.length() == EnumLayoutSiga.TAM_MAX_VALOR_DIVIDA_ATRASO_INT.getValor()){ newValorDividaAtraso += parteInt; }
+        else if (parteInt.length() < EnumLayoutSiga.TAM_MAX_VALOR_DIVIDA_ATRASO_INT.getValor()){
+            for (int i = 0; i < (EnumLayoutSiga.TAM_MAX_VALOR_DIVIDA_ATRASO_INT.getValor() - parteInt.length()); i++){
                 newValorDividaAtraso += "0";
             }
             newValorDividaAtraso += parteInt;
         }
         else {
-            for (int i = 0; i < TAM_MAX_VALOR_DIVIDA_ATRASO_INT; i++){
+            for (int i = 0; i < EnumLayoutSiga.TAM_MAX_VALOR_DIVIDA_ATRASO_INT.getValor(); i++){
                 newValorDividaAtraso += parteInt.charAt(i);
             }
         }
 
         //tratar parte decimal
-        if (parteDec.length() == TAM_MAX_VALOR_DIVIDA_ATRASO_DEC){ newValorDividaAtraso += "," + parteDec; }
-        else if (parteDec.length() < TAM_MAX_VALOR_DIVIDA_ATRASO_DEC){
+        if (parteDec.length() == EnumLayoutSiga.TAM_MAX_VALOR_DIVIDA_ATRASO_DEC.getValor()){ newValorDividaAtraso += "," + parteDec; }
+        else if (parteDec.length() < EnumLayoutSiga.TAM_MAX_VALOR_DIVIDA_ATRASO_DEC.getValor()){
             newValorDividaAtraso += ",";
-            for (int i = 0; i < (TAM_MAX_VALOR_DIVIDA_ATRASO_DEC - parteDec.length()); i++){
+            for (int i = 0; i < (EnumLayoutSiga.TAM_MAX_VALOR_DIVIDA_ATRASO_DEC.getValor() - parteDec.length()); i++){
                 newValorDividaAtraso += "0";
             }
             newValorDividaAtraso += parteDec;
         }
         else {
             newValorDividaAtraso += ",";
-            for (int i = 0; i < TAM_MAX_VALOR_DIVIDA_ATRASO_DEC; i++){
+            for (int i = 0; i < EnumLayoutSiga.TAM_MAX_VALOR_DIVIDA_ATRASO_DEC.getValor(); i++){
                 newValorDividaAtraso += parteDec.charAt(i);
             }
         }
@@ -634,15 +589,15 @@ public class ContratoDistribuicaoController {
     private String getQuantPrestAtrasoFormatado(String quantPrestAtraso) {
         String newQuantPrestAtraso = "";
 
-        if ((quantPrestAtraso + "").length() == TAM_MAX_QUANT_PREST_ATRASO){ newQuantPrestAtraso = quantPrestAtraso; }
-        else if ((quantPrestAtraso + "").length() < TAM_MAX_QUANT_PREST_ATRASO){
-            for (int i = 0; i < (TAM_MAX_QUANT_PREST_ATRASO - (quantPrestAtraso + "").length()); i++){
+        if ((quantPrestAtraso + "").length() == EnumLayoutSiga.TAM_MAX_QUANT_PREST_ATRASO.getValor()){ newQuantPrestAtraso = quantPrestAtraso; }
+        else if ((quantPrestAtraso + "").length() < EnumLayoutSiga.TAM_MAX_QUANT_PREST_ATRASO.getValor()){
+            for (int i = 0; i < (EnumLayoutSiga.TAM_MAX_QUANT_PREST_ATRASO.getValor() - (quantPrestAtraso + "").length()); i++){
                 newQuantPrestAtraso += "0";
             }
             newQuantPrestAtraso += quantPrestAtraso;
         }
         else {
-            for (int i = ((quantPrestAtraso + "").length() - TAM_MAX_QUANT_PREST_ATRASO); i < (quantPrestAtraso + "").length(); i++){
+            for (int i = ((quantPrestAtraso + "").length() - EnumLayoutSiga.TAM_MAX_QUANT_PREST_ATRASO.getValor()); i < (quantPrestAtraso + "").length(); i++){
                 newQuantPrestAtraso += quantPrestAtraso.charAt(i);
             }
         }
@@ -652,15 +607,15 @@ public class ContratoDistribuicaoController {
     private String getDiasAtrasoFormatado(String diasAtraso) {
         String newDiasAtraso = "";
 
-        if ((diasAtraso + "").length() == TAM_MAX_DIAS_ATRASO){ newDiasAtraso = diasAtraso; }
-        else if ((diasAtraso + "").length() < TAM_MAX_DIAS_ATRASO){
-            for (int i = 0; i < (TAM_MAX_DIAS_ATRASO - (diasAtraso + "").length()); i++){
+        if ((diasAtraso + "").length() == EnumLayoutSiga.TAM_MAX_DIAS_ATRASO.getValor()){ newDiasAtraso = diasAtraso; }
+        else if ((diasAtraso + "").length() < EnumLayoutSiga.TAM_MAX_DIAS_ATRASO.getValor()){
+            for (int i = 0; i < (EnumLayoutSiga.TAM_MAX_DIAS_ATRASO.getValor() - (diasAtraso + "").length()); i++){
                 newDiasAtraso += "0";
             }
             newDiasAtraso += diasAtraso;
         }
         else {
-            for (int i = ((diasAtraso + "").length() - TAM_MAX_DIAS_ATRASO); i < (diasAtraso + "").length(); i++){
+            for (int i = ((diasAtraso + "").length() - EnumLayoutSiga.TAM_MAX_DIAS_ATRASO.getValor()); i < (diasAtraso + "").length(); i++){
                 newDiasAtraso += diasAtraso.charAt(i);
             }
         }
@@ -674,31 +629,31 @@ public class ContratoDistribuicaoController {
         String parteDec = arrayValores[1];
 
         //tratar parte inteira
-        if (parteInt.length() == TAM_MAX_VALOR_PREST_ATRASO_INT){ newValorUltimaPrestacaoAtraso += parteInt; }
-        else if (parteInt.length() < TAM_MAX_VALOR_PREST_ATRASO_INT){
-            for (int i = 0; i < (TAM_MAX_VALOR_PREST_ATRASO_INT - parteInt.length()); i++){
+        if (parteInt.length() == EnumLayoutSiga.TAM_MAX_VALOR_PREST_ATRASO_INT.getValor()){ newValorUltimaPrestacaoAtraso += parteInt; }
+        else if (parteInt.length() < EnumLayoutSiga.TAM_MAX_VALOR_PREST_ATRASO_INT.getValor()){
+            for (int i = 0; i < (EnumLayoutSiga.TAM_MAX_VALOR_PREST_ATRASO_INT.getValor() - parteInt.length()); i++){
                 newValorUltimaPrestacaoAtraso += "0";
             }
             newValorUltimaPrestacaoAtraso += parteInt;
         }
         else {
-            for (int i = 0; i < TAM_MAX_VALOR_PREST_ATRASO_INT; i++){
+            for (int i = 0; i < EnumLayoutSiga.TAM_MAX_VALOR_PREST_ATRASO_INT.getValor(); i++){
                 newValorUltimaPrestacaoAtraso += parteInt.charAt(i);
             }
         }
 
         //tratar parte decimal
-        if (parteDec.length() == TAM_MAX_VALOR_PREST_ATRASO_DEC){ newValorUltimaPrestacaoAtraso += "," + parteDec; }
-        else if (parteDec.length() < TAM_MAX_VALOR_PREST_ATRASO_DEC){
+        if (parteDec.length() == EnumLayoutSiga.TAM_MAX_VALOR_PREST_ATRASO_DEC.getValor()){ newValorUltimaPrestacaoAtraso += "," + parteDec; }
+        else if (parteDec.length() < EnumLayoutSiga.TAM_MAX_VALOR_PREST_ATRASO_DEC.getValor()){
             newValorUltimaPrestacaoAtraso += ",";
-            for (int i = 0; i < (TAM_MAX_VALOR_PREST_ATRASO_DEC - parteDec.length()); i++){
+            for (int i = 0; i < (EnumLayoutSiga.TAM_MAX_VALOR_PREST_ATRASO_DEC.getValor() - parteDec.length()); i++){
                 newValorUltimaPrestacaoAtraso += "0";
             }
             newValorUltimaPrestacaoAtraso += parteDec;
         }
         else {
             newValorUltimaPrestacaoAtraso += ",";
-            for (int i = 0; i < TAM_MAX_VALOR_PREST_ATRASO_DEC; i++){
+            for (int i = 0; i < EnumLayoutSiga.TAM_MAX_VALOR_PREST_ATRASO_DEC.getValor(); i++){
                 newValorUltimaPrestacaoAtraso += parteDec.charAt(i);
             }
         }
@@ -711,7 +666,7 @@ public class ContratoDistribuicaoController {
         String mes = "";
         String ano = "";
 
-        if (dataPrimeiraPrestacaoAberta.length() == TAM_MAX_DATA_PRIM_PREST_ABERTA){
+        if (dataPrimeiraPrestacaoAberta.length() == EnumLayoutSiga.TAM_MAX_DATA_PRIM_PREST_ABERTA.getValor()){
             mes = dataPrimeiraPrestacaoAberta.substring(4, 6);
             ano = dataPrimeiraPrestacaoAberta.substring(0, 4);
             newDataPrimeiraPrestacaoAberta = mes + ano;
@@ -722,15 +677,15 @@ public class ContratoDistribuicaoController {
     private String getDiaVencimentoFormatado(int diaVencimento) {
         String newDiaVencimento = "";
 
-        if ((diaVencimento + "").length() == TAM_MAX_DIA_VENCIMENTO){ newDiaVencimento = diaVencimento + ""; }
-        else if ((diaVencimento + "").length() < TAM_MAX_DIA_VENCIMENTO){
-            for (int i = 0; i < (TAM_MAX_DIA_VENCIMENTO - (diaVencimento + "").length()); i++){
+        if ((diaVencimento + "").length() == EnumLayoutSiga.TAM_MAX_DIA_VENCIMENTO.getValor()){ newDiaVencimento = diaVencimento + ""; }
+        else if ((diaVencimento + "").length() < EnumLayoutSiga.TAM_MAX_DIA_VENCIMENTO.getValor()){
+            for (int i = 0; i < (EnumLayoutSiga.TAM_MAX_DIA_VENCIMENTO.getValor() - (diaVencimento + "").length()); i++){
                 newDiaVencimento += "0";
             }
             newDiaVencimento += (diaVencimento + "");
         }
         else{
-            for (int i = 0; i < TAM_MAX_DIA_VENCIMENTO; i++){
+            for (int i = 0; i < EnumLayoutSiga.TAM_MAX_DIA_VENCIMENTO.getValor(); i++){
                 newDiaVencimento += (diaVencimento + "").charAt(i);
             }
         }
@@ -741,15 +696,15 @@ public class ContratoDistribuicaoController {
         String codigoFase = additionalProperties.get("codFase").toString();
         String newCodigoFase = "";
 
-        if (codigoFase.length() == TAM_MAX_CODIGO_FASE){ newCodigoFase = codigoFase; }
-        else if (codigoFase.length() < TAM_MAX_CODIGO_FASE){
-            for (int i = 0; i < (TAM_MAX_CODIGO_FASE - codigoFase.length()); i++){
+        if (codigoFase.length() == EnumLayoutSiga.TAM_MAX_CODIGO_FASE.getValor()){ newCodigoFase = codigoFase; }
+        else if (codigoFase.length() < EnumLayoutSiga.TAM_MAX_CODIGO_FASE.getValor()){
+            for (int i = 0; i < (EnumLayoutSiga.TAM_MAX_CODIGO_FASE.getValor() - codigoFase.length()); i++){
                 newCodigoFase += "0";
             }
             newCodigoFase += codigoFase;
         }
         else{
-            for (int i = 0; i < TAM_MAX_CODIGO_FASE; i++){
+            for (int i = 0; i < EnumLayoutSiga.TAM_MAX_CODIGO_FASE.getValor(); i++){
                 newCodigoFase += codigoFase.charAt(i);
             }
         }
@@ -760,15 +715,15 @@ public class ContratoDistribuicaoController {
         String unidadeOperacional = additionalProperties.get("uno").toString();
         String newUnidadeOperacional = "";
 
-        if (unidadeOperacional.length() == TAM_MAX_UNIDADE_OPERACIONAL){ newUnidadeOperacional = unidadeOperacional; }
-        else if (unidadeOperacional.length() < TAM_MAX_UNIDADE_OPERACIONAL){
-            for (int i = 0; i < (TAM_MAX_UNIDADE_OPERACIONAL - unidadeOperacional.length()); i++){
+        if (unidadeOperacional.length() == EnumLayoutSiga.TAM_MAX_UNIDADE_OPERACIONAL.getValor()){ newUnidadeOperacional = unidadeOperacional; }
+        else if (unidadeOperacional.length() < EnumLayoutSiga.TAM_MAX_UNIDADE_OPERACIONAL.getValor()){
+            for (int i = 0; i < (EnumLayoutSiga.TAM_MAX_UNIDADE_OPERACIONAL.getValor() - unidadeOperacional.length()); i++){
                 newUnidadeOperacional += "0";
             }
             newUnidadeOperacional += unidadeOperacional;
         }
         else{
-            for (int i = 0; i < TAM_MAX_UNIDADE_OPERACIONAL; i++){
+            for (int i = 0; i < EnumLayoutSiga.TAM_MAX_UNIDADE_OPERACIONAL.getValor(); i++){
                 newUnidadeOperacional += unidadeOperacional.charAt(i);
             }
         }
@@ -810,7 +765,7 @@ public class ContratoDistribuicaoController {
             gravarArq.printf("%s", getSesString(listSituacaoEspecial.get(i).getCodigoSituacaoEspecial()));
         }
         //gravando situacoes especiais com zero
-        for (int i = 0; i < (QUANT_MAX_SES - listSituacaoEspecial.size()); i++){
+        for (int i = 0; i < (EnumLayoutSiga.QUANT_MAX_SES.getValor() - listSituacaoEspecial.size()); i++){
             gravarArq.printf("%s", getSesString(0));
         }
     }
@@ -1053,8 +1008,8 @@ public class ContratoDistribuicaoController {
     private String getNumeroContratoFormatado(Long numeroContrato){
         String newNumeroContrato = "";
 
-        if ((numeroContrato + "").length() < TAM_NUMERO_CONTRATO){
-            for (int i = 0; i < (TAM_NUMERO_CONTRATO - (numeroContrato + "").length()); i++){
+        if ((numeroContrato + "").length() < EnumLayoutSiga.TAM_NUMERO_CONTRATO.getValor()){
+            for (int i = 0; i < (EnumLayoutSiga.TAM_NUMERO_CONTRATO.getValor() - (numeroContrato + "").length()); i++){
                 newNumeroContrato += "0";
             }
             newNumeroContrato += numeroContrato + "";
@@ -1068,8 +1023,8 @@ public class ContratoDistribuicaoController {
     private String getSesString(Integer situacaoEspecial){
         String newSituacaoEspecial = "";
 
-        if ((situacaoEspecial + "").length() < TAM_SES){
-            for (int i = 0; i < (TAM_SES - (situacaoEspecial + "").length()); i++){
+        if ((situacaoEspecial + "").length() < EnumLayoutSiga.TAM_SES.getValor()){
+            for (int i = 0; i < (EnumLayoutSiga.TAM_SES.getValor() - (situacaoEspecial + "").length()); i++){
                 newSituacaoEspecial += "0";
             }
             newSituacaoEspecial += situacaoEspecial + "";
@@ -1083,15 +1038,15 @@ public class ContratoDistribuicaoController {
     private String getNomeFormatado(String nome){
         String newNome = "";
 
-        if (nome.length() == TAM_MAX_NOME){
+        if (nome.length() == EnumLayoutSiga.TAM_MAX_NOME.getValor()){
             newNome = nome;
         }
-        else if (nome.length() > TAM_MAX_NOME){
-            newNome = nome.substring(0, TAM_MAX_NOME);
+        else if (nome.length() > EnumLayoutSiga.TAM_MAX_NOME.getValor()){
+            newNome = nome.substring(0, EnumLayoutSiga.TAM_MAX_NOME.getValor());
         }
         else {
             newNome = nome;
-            for (int i = 0; i < (TAM_MAX_NOME - nome.length()); i++){
+            for (int i = 0; i < (EnumLayoutSiga.TAM_MAX_NOME.getValor() - nome.length()); i++){
                 newNome += " ";
             }
         }
@@ -1102,11 +1057,11 @@ public class ContratoDistribuicaoController {
     private String getCpfFormatado(String cpf){
         String newCpf = "";
 
-        if (cpf.length() == TAM_CPF){
+        if (cpf.length() == EnumLayoutSiga.TAM_CPF.getValor()){
             newCpf = cpf;
         }
-        else if (cpf.length() < TAM_CPF){
-            for (int i = 0; i < (TAM_CPF - cpf.length()); i++){
+        else if (cpf.length() < EnumLayoutSiga.TAM_CPF.getValor()){
+            for (int i = 0; i < (EnumLayoutSiga.TAM_CPF.getValor() - cpf.length()); i++){
                 newCpf += "0";
             }
             newCpf += cpf;
@@ -1118,15 +1073,15 @@ public class ContratoDistribuicaoController {
     private String getDDDFormatado(String ddd){
         String newDdd = "";
 
-        if (ddd.length() == TAM_MAX_DDD){
+        if (ddd.length() == EnumLayoutSiga.TAM_MAX_DDD.getValor()){
             newDdd = ddd;
         }
-        else if (ddd.length() < TAM_MAX_DDD){
-            for (int i = 0; i < (TAM_MAX_DDD - ddd.length()); i++){ newDdd += "0"; }
+        else if (ddd.length() < EnumLayoutSiga.TAM_MAX_DDD.getValor()){
+            for (int i = 0; i < (EnumLayoutSiga.TAM_MAX_DDD.getValor() - ddd.length()); i++){ newDdd += "0"; }
             newDdd += ddd;
         }
         else{
-            for (int i = 0; i < TAM_MAX_DDD; i++){ newDdd += ddd.charAt(i); }
+            for (int i = 0; i < EnumLayoutSiga.TAM_MAX_DDD.getValor(); i++){ newDdd += ddd.charAt(i); }
         }
         return newDdd;
     }
@@ -1134,15 +1089,15 @@ public class ContratoDistribuicaoController {
     private String getTelFormatado(String tel){
         String newTel = "";
 
-        if (tel.length() == TAM_MAX_TEL){
+        if (tel.length() == EnumLayoutSiga.TAM_MAX_TEL.getValor()){
             newTel = tel;
         }
-        else if (tel.length() < TAM_MAX_TEL){
-            for (int i = 0; i < (TAM_MAX_TEL - tel.length()); i++){ newTel += "0"; }
+        else if (tel.length() < EnumLayoutSiga.TAM_MAX_TEL.getValor()){
+            for (int i = 0; i < (EnumLayoutSiga.TAM_MAX_TEL.getValor() - tel.length()); i++){ newTel += "0"; }
             newTel += tel;
         }
         else{
-            for (int i = 0; i < TAM_MAX_TEL; i++){ newTel += tel.charAt(i); }
+            for (int i = 0; i < EnumLayoutSiga.TAM_MAX_TEL.getValor(); i++){ newTel += tel.charAt(i); }
         }
         return newTel;
     }
