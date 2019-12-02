@@ -51,6 +51,7 @@ public class ContratoDistribuicaoController {
     private static final int TAM_MAX_UF_CONTRATO = 2;
     private static final int TAM_MAX_SUBTITULO_CONTABIL = 6;
     private static final int TAM_MAX_INDICADOR_OBRA = 1;
+    private static final int TAM_MAX_INDICADOR_MATERIAL_CONSTRUCAO = 1;
 
 
     @RequestMapping(value = "/object_from_json", method = RequestMethod.GET)
@@ -164,6 +165,15 @@ public class ContratoDistribuicaoController {
         gravarArq.printf("%s", getDataAssinaturaFormatada(contrato.getDataAssinatura()));
         gravarArq.printf("%s", getSubTituloContabilFormatado(contrato.getAdditionalProperties()));
         gravarArq.printf("%s", getIndicadorObraFormatado(contrato.getAdditionalProperties()));
+        gravarArq.printf("%s", getIndicadorMaterialConstrucaoFormatado(contrato.getAdditionalProperties()));
+    }
+
+    private String getIndicadorMaterialConstrucaoFormatado(Map<String, Object> additionalProperties) {
+        String indicadorMaterialConstrucao = additionalProperties.get("matCon").toString();
+        indicadorMaterialConstrucao = removeAspas(indicadorMaterialConstrucao);
+        indicadorMaterialConstrucao = removeEspacosBrancos(indicadorMaterialConstrucao);
+
+        return ((indicadorMaterialConstrucao.length() == TAM_MAX_INDICADOR_MATERIAL_CONSTRUCAO) ? indicadorMaterialConstrucao : " ");
     }
 
     private String getIndicadorObraFormatado(Map<String, Object> additionalProperties) {
