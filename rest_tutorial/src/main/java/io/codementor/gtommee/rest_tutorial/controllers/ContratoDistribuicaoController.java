@@ -159,6 +159,27 @@ public class ContratoDistribuicaoController {
         gravarArq.printf("%s", getCredorFormatado(contrato.getCodigoCredor() + ""));
         gravarArq.printf("%s", getCodigoAdministradorFormatado(contrato.getCodigoAdminitrador() + ""));
         gravarArq.printf("%s", getUfContratoFormatado(contrato.getAdditionalProperties()));
+        gravarArq.printf("%s", getDataAssinaturaFormatada(contrato.getDataAssinatura()));
+    }
+
+    private String getDataAssinaturaFormatada(String dataAssinatura) {
+        String newDataAssinatura = "        ";
+        dataAssinatura = removeAspas(dataAssinatura);
+        dataAssinatura = removeEspacosBrancos(dataAssinatura);
+        String dia = "", mes = "", ano = "";
+
+        if (dataAssinatura.length() == 8) { //8 = yyyy + mm + dd
+            dia = dataAssinatura.substring(6, 8);
+            mes = dataAssinatura.substring(4, 6);
+            ano = dataAssinatura.substring(0, 4);
+
+            if ((Integer.parseInt(dia) > 0) && (Integer.parseInt(dia) <= 31) &&
+                    (Integer.parseInt(mes) > 0) && (Integer.parseInt(mes) <= 12)) {
+                newDataAssinatura = ano + "" + mes + "" + dia;
+            }
+        }
+
+        return newDataAssinatura;
     }
 
     private String getUfContratoFormatado(Map<String, Object> additionalProperties) {
