@@ -751,7 +751,7 @@ public class ContratoDistribuicaoController {
             gravarArq.printf("%s", getDDDFormatado(listCoobrigado.get(i).getDddComercial()));
             gravarArq.printf("%s", getTelFormatado(listCoobrigado.get(i).getTelComercial()));
             gravarArq.printf("%s", getDDDFormatado(listCoobrigado.get(i).getDddCelular()));
-//            gravarArq.printf("%s ", listCoobrigado.get(i).getTelCelular()); //?
+            gravarArq.printf("%s", getTelFormatado(listCoobrigado.get(i).getTelCelular()));
         }
     }
 
