@@ -748,10 +748,10 @@ public class ContratoDistribuicaoController {
             gravarArq.printf("%s", getCpfFormatado(listCoobrigado.get(i).getCpf()));
             gravarArq.printf("%s", getDDDFormatado(listCoobrigado.get(i).getDddResidencia()));
             gravarArq.printf("%s", getTelFormatado(listCoobrigado.get(i).getTelResidencia()));
-//            gravarArq.printf("%s ", listCoobrigado.get(i).getDddCelular()); //?
-//            gravarArq.printf("%s ", listCoobrigado.get(i).getTelCelular()); //?
-//            gravarArq.printf("%s ", listCoobrigado.get(i).getDddComercial()); //?
+            gravarArq.printf("%s", getDDDFormatado(listCoobrigado.get(i).getDddComercial()));
 //            gravarArq.printf("%s ", listCoobrigado.get(i).getTelComercial()); //?
+            //            gravarArq.printf("%s ", listCoobrigado.get(i).getDddCelular()); //?
+//            gravarArq.printf("%s ", listCoobrigado.get(i).getTelCelular()); //?
 //            gravarArq.printf("%s", listCoobrigado.get(i).getRamalComercial()); //?
         }
     }
