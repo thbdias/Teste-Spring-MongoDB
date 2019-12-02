@@ -47,6 +47,7 @@ public class ContratoDistribuicaoController {
     private static final int TAM_MAX_GRUPO_HABITACIONAL = 5;
     private static final int TAM_MAX_PRODUTO_FINANCEIRO = 4;
     private static final int TAM_MAX_CODIGO_CREDOR = 4;
+    private static final int TAM_MAX_CODIGO_ADMINISTRADOR = 4;
 
 
     @RequestMapping(value = "/object_from_json", method = RequestMethod.GET)
@@ -155,6 +156,22 @@ public class ContratoDistribuicaoController {
         gravarArq.printf("%s", getGrupoHabitacionalFormatado(contrato.getAdditionalProperties()));
         gravarArq.printf("%s", getProdutoFinanceiroFormatado(contrato.getAdditionalProperties()));
         gravarArq.printf("%s", getCredorFormatado(contrato.getCodigoCredor() + ""));
+        gravarArq.printf("%s", getCodigoAdministradorFormatado(contrato.getCodigoAdminitrador() + ""));
+    }
+
+    private String getCodigoAdministradorFormatado(String codigoAdministrador) {
+        String newCodigoAdministrador = "";
+
+        if (codigoAdministrador.length() == TAM_MAX_CODIGO_ADMINISTRADOR){ newCodigoAdministrador = codigoAdministrador; }
+        else if (codigoAdministrador.length() < TAM_MAX_CODIGO_ADMINISTRADOR){
+            for (int i = 0; i < (TAM_MAX_CODIGO_ADMINISTRADOR - codigoAdministrador.length()); i++){
+                newCodigoAdministrador += "0";
+            }
+            newCodigoAdministrador += codigoAdministrador;
+        }
+        else{ newCodigoAdministrador = "    "; }
+
+        return newCodigoAdministrador;
     }
 
     private String getCredorFormatado(String codigoCredor) {
