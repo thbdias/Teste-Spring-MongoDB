@@ -744,15 +744,15 @@ public class ContratoDistribuicaoController {
         for (int i = 0; i < listCoobrigado.size(); i++){
             gravarArq.printf("%n%s", "C");  //gravando tipo registro
             gravarArq.printf("%s", getNumeroContratoFormatado(numeroContrato));
-            gravarArq.printf("%s", getNomeFormatado(listCoobrigado.get(i).getNome())); //ok
-            gravarArq.printf("%s ", getCpfFormatado(listCoobrigado.get(i).getCpf())); //ok
-            gravarArq.printf("%s ", listCoobrigado.get(i).getDddResidencia()); //?
-            gravarArq.printf("%s ", listCoobrigado.get(i).getTelResidencia()); //?
-            gravarArq.printf("%s ", listCoobrigado.get(i).getDddCelular()); //?
-            gravarArq.printf("%s ", listCoobrigado.get(i).getTelCelular()); //?
-            gravarArq.printf("%s ", listCoobrigado.get(i).getDddComercial()); //?
-            gravarArq.printf("%s ", listCoobrigado.get(i).getTelComercial()); //?
-            gravarArq.printf("%s", listCoobrigado.get(i).getRamalComercial()); //?
+            gravarArq.printf("%s", getNomeFormatado(listCoobrigado.get(i).getNome()));
+            gravarArq.printf("%s", getCpfFormatado(listCoobrigado.get(i).getCpf()));
+            gravarArq.printf("%s", getDDDFormatado(listCoobrigado.get(i).getDddResidencia()));
+//            gravarArq.printf("%s ", listCoobrigado.get(i).getTelResidencia()); //?
+//            gravarArq.printf("%s ", listCoobrigado.get(i).getDddCelular()); //?
+//            gravarArq.printf("%s ", listCoobrigado.get(i).getTelCelular()); //?
+//            gravarArq.printf("%s ", listCoobrigado.get(i).getDddComercial()); //?
+//            gravarArq.printf("%s ", listCoobrigado.get(i).getTelComercial()); //?
+//            gravarArq.printf("%s", listCoobrigado.get(i).getRamalComercial()); //?
         }
     }
 
