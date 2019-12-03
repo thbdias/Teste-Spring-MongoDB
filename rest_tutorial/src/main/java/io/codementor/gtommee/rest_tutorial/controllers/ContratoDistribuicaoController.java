@@ -139,7 +139,7 @@ public class ContratoDistribuicaoController {
         gravarArq.printf("%s", getValorGarantiaAtualizadaFormatada(contrato.getSituacaoContrato().getValorGarantiaAtualizada() + ""));
         gravarArq.printf("%s", getEmailFormatado(contrato.getMutuario().getEmailAlternativo()));
         gravarArq.printf("%s", getDDDFormatado(contrato.getMutuario().getDddAlternativo()));
-//        gravarArq.printf("%s", getTelFormatado(contrato.getMutuario().getTelComercial()));
+        gravarArq.printf("%s", getTelFormatado(contrato.getMutuario().getTelAlternativo()));
     }
 
     private String getValorGarantiaAtualizadaFormatada(String valorGarantiaAtualizada) {
