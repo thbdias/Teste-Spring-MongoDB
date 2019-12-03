@@ -107,7 +107,7 @@ public class ContratoDistribuicaoController {
         gravarArq.printf("%s", getUnidadeOperacionalFormatado(contrato.getAdditionalProperties()));
         gravarArq.printf("%s", getDiaVencimentoFormatado(contrato.getSituacaoContrato().getDiaVencimento()));
         gravarArq.printf("%s", getDataPrimPrestAbertaFormatada(contrato.getSituacaoContrato().getDataPrimeiraPrestacaoAberta()));
-        gravarArq.printf("%s", getValorPrestAtrasoFormatado(contrato.getSituacaoContrato().getValorUltimaPrestacaoAtraso() + ""));
+        gravarArq.printf("%s", getValorPrestAtrasoFormatado(contrato.getSituacaoContrato().getValorUltimaPrestacaoAtraso()));
         gravarArq.printf("%s", getDiasAtrasoFormatado(contrato.getSituacaoContrato().getDiasAtraso() + ""));
         gravarArq.printf("%s", getQuantPrestAtrasoFormatado(contrato.getSituacaoContrato().getQuantPrestAtraso() + ""));
         gravarArq.printf("%s", getValorDividaAtrasoFormatado(contrato.getSituacaoContrato().getValorDividaEmAtraso() + ""));
@@ -617,40 +617,56 @@ public class ContratoDistribuicaoController {
         return newDiasAtraso;
     }
 
-    private String getValorPrestAtrasoFormatado(String valorUltimaPrestacaoAtraso) {
+    private String getValorPrestAtrasoFormatado(Double valorUltimaPrestacaoAtraso) {
         String newValorUltimaPrestacaoAtraso = "";
-        String [] arrayValores = valorUltimaPrestacaoAtraso.split("\\.");
+        boolean isNegativo = valorUltimaPrestacaoAtraso < 0;
+        Double valorTratado;
+
+        //trabalhar com positivo e acrescentar sinal de negativo se precisar somente na hora de gravar no arquivo
+        if (isNegativo) valorTratado = valorUltimaPrestacaoAtraso * (-1);
+        else valorTratado = valorUltimaPrestacaoAtraso;
+
+        String [] arrayValores = (valorTratado + "").split("\\.");
         String parteInt = arrayValores[0];
         String parteDec = arrayValores[1];
 
         //tratar parte inteira
-        if (parteInt.length() == EnumLayoutSiga.TAM_MAX_VALOR_PREST_ATRASO_INT.getValor()){ newValorUltimaPrestacaoAtraso += parteInt; }
-        else if (parteInt.length() < EnumLayoutSiga.TAM_MAX_VALOR_PREST_ATRASO_INT.getValor()){
-            for (int i = 0; i < (EnumLayoutSiga.TAM_MAX_VALOR_PREST_ATRASO_INT.getValor() - parteInt.length()); i++){
-                newValorUltimaPrestacaoAtraso += "0";
+        if (!isNegativo) {
+            if (parteInt.length() < EnumLayoutSiga.TAM_MAX_VALOR_PREST_ATRASO_INT.getValor()) {
+                for (int i = 0; i < (EnumLayoutSiga.TAM_MAX_VALOR_PREST_ATRASO_INT.getValor() - parteInt.length()); i++) {
+                    newValorUltimaPrestacaoAtraso += "0";
+                }
+                newValorUltimaPrestacaoAtraso += parteInt;
+            } else {
+                    newValorUltimaPrestacaoAtraso =
+                            String.join("", Collections.nCopies(EnumLayoutSiga.TAM_MAX_VALOR_PREST_ATRASO_INT.getValor(), "0"));
             }
-            newValorUltimaPrestacaoAtraso += parteInt;
         }
-        else {
-            for (int i = 0; i < EnumLayoutSiga.TAM_MAX_VALOR_PREST_ATRASO_INT.getValor(); i++){
-                newValorUltimaPrestacaoAtraso += parteInt.charAt(i);
+        else{
+            newValorUltimaPrestacaoAtraso = "-";
+            if (parteInt.length() < EnumLayoutSiga.TAM_MAX_VALOR_PREST_ATRASO_INT.getValor()) {
+                for (int i = 0; i < (EnumLayoutSiga.TAM_MAX_VALOR_PREST_ATRASO_INT.getValor() - parteInt.length() - 1); i++) {
+                    newValorUltimaPrestacaoAtraso += "0";
+                }
+                newValorUltimaPrestacaoAtraso += parteInt;
+            } else {
+                newValorUltimaPrestacaoAtraso =
+                        String.join("", Collections.nCopies(EnumLayoutSiga.TAM_MAX_VALOR_PREST_ATRASO_INT.getValor(), "0"));
             }
         }
 
         //tratar parte decimal
-        if (parteDec.length() == EnumLayoutSiga.TAM_MAX_VALOR_PREST_ATRASO_DEC.getValor()){ newValorUltimaPrestacaoAtraso += "," + parteDec; }
-        else if (parteDec.length() < EnumLayoutSiga.TAM_MAX_VALOR_PREST_ATRASO_DEC.getValor()){
+        if (parteDec.length() == EnumLayoutSiga.TAM_MAX_VALOR_PREST_ATRASO_DEC.getValor()) {
+            newValorUltimaPrestacaoAtraso += "," + parteDec;
+        } else if (parteDec.length() < EnumLayoutSiga.TAM_MAX_VALOR_PREST_ATRASO_DEC.getValor()) {
             newValorUltimaPrestacaoAtraso += ",";
-            for (int i = 0; i < (EnumLayoutSiga.TAM_MAX_VALOR_PREST_ATRASO_DEC.getValor() - parteDec.length()); i++){
+            for (int i = 0; i < (EnumLayoutSiga.TAM_MAX_VALOR_PREST_ATRASO_DEC.getValor() - parteDec.length()); i++) {
                 newValorUltimaPrestacaoAtraso += "0";
             }
             newValorUltimaPrestacaoAtraso += parteDec;
-        }
-        else {
-            newValorUltimaPrestacaoAtraso += ",";
-            for (int i = 0; i < EnumLayoutSiga.TAM_MAX_VALOR_PREST_ATRASO_DEC.getValor(); i++){
-                newValorUltimaPrestacaoAtraso += parteDec.charAt(i);
-            }
+        } else {
+            newValorUltimaPrestacaoAtraso =
+                    String.join("", Collections.nCopies(EnumLayoutSiga.TAM_MAX_VALOR_PREST_ATRASO_DEC.getValor(), "0"));
         }
 
         return newValorUltimaPrestacaoAtraso;
