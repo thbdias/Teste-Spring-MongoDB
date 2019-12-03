@@ -110,7 +110,7 @@ public class ContratoDistribuicaoController {
         gravarArq.printf("%s", getValorPrestAtrasoFormatado(contrato.getSituacaoContrato().getValorUltimaPrestacaoAtraso()));
         gravarArq.printf("%s", getDiasAtrasoFormatado(contrato.getSituacaoContrato().getDiasAtraso() + ""));
         gravarArq.printf("%s", getQuantPrestAtrasoFormatado(contrato.getSituacaoContrato().getQuantPrestAtraso() + ""));
-        gravarArq.printf("%s", getValorDividaAtrasoFormatado(contrato.getSituacaoContrato().getValorDividaEmAtraso() + ""));
+        gravarArq.printf("%s", getValorDividaAtrasoFormatado(contrato.getSituacaoContrato().getValorDividaEmAtraso()));
         gravarArq.printf("%s", getRegenciaCriticaFormatada(contrato.getAdditionalProperties()));
         gravarArq.printf("%s", getOrigemRecursoFormatado(contrato.getAdditionalProperties()));
         gravarArq.printf("%s", getLinhaFinanciamentoFormatada(contrato.getAdditionalProperties()));
@@ -542,40 +542,56 @@ public class ContratoDistribuicaoController {
         return newRegenciaCritica;
     }
 
-    private String getValorDividaAtrasoFormatado(String valorDividaAtraso) {
+    private String getValorDividaAtrasoFormatado(Double valorDividaAtraso) {
         String newValorDividaAtraso = "";
-        String [] arrayValores = valorDividaAtraso.split("\\.");
+        boolean isNegativo = valorDividaAtraso < 0;
+        Double valorTratado;
+
+        //trabalhar com positivo e acrescentar sinal de negativo se precisar somente na hora de gravar no arquivo
+        if (isNegativo) valorTratado = valorDividaAtraso * (-1);
+        else valorTratado = valorDividaAtraso;
+
+        String [] arrayValores = (valorTratado + "").split("\\.");
         String parteInt = arrayValores[0];
         String parteDec = arrayValores[1];
 
         //tratar parte inteira
-        if (parteInt.length() == EnumLayoutSiga.TAM_MAX_VALOR_DIVIDA_ATRASO_INT.getValor()){ newValorDividaAtraso += parteInt; }
-        else if (parteInt.length() < EnumLayoutSiga.TAM_MAX_VALOR_DIVIDA_ATRASO_INT.getValor()){
-            for (int i = 0; i < (EnumLayoutSiga.TAM_MAX_VALOR_DIVIDA_ATRASO_INT.getValor() - parteInt.length()); i++){
-                newValorDividaAtraso += "0";
+        if (!isNegativo) {
+            if (parteInt.length() < EnumLayoutSiga.TAM_MAX_VALOR_DIVIDA_ATRASO_INT.getValor()) {
+                for (int i = 0; i < (EnumLayoutSiga.TAM_MAX_VALOR_DIVIDA_ATRASO_INT.getValor() - parteInt.length()); i++) {
+                    newValorDividaAtraso += "0";
+                }
+                newValorDividaAtraso += parteInt;
+            } else {
+                newValorDividaAtraso =
+                        String.join("", Collections.nCopies(EnumLayoutSiga.TAM_MAX_VALOR_DIVIDA_ATRASO_INT.getValor(), "0"));
             }
-            newValorDividaAtraso += parteInt;
         }
-        else {
-            for (int i = 0; i < EnumLayoutSiga.TAM_MAX_VALOR_DIVIDA_ATRASO_INT.getValor(); i++){
-                newValorDividaAtraso += parteInt.charAt(i);
+        else{
+            newValorDividaAtraso = "-";
+            if (parteInt.length() < EnumLayoutSiga.TAM_MAX_VALOR_DIVIDA_ATRASO_INT.getValor()) {
+                for (int i = 0; i < (EnumLayoutSiga.TAM_MAX_VALOR_DIVIDA_ATRASO_INT.getValor() - parteInt.length() - 1); i++) {
+                    newValorDividaAtraso += "0";
+                }
+                newValorDividaAtraso += parteInt;
+            } else {
+                newValorDividaAtraso =
+                        String.join("", Collections.nCopies(EnumLayoutSiga.TAM_MAX_VALOR_DIVIDA_ATRASO_INT.getValor(), "0"));
             }
         }
 
         //tratar parte decimal
-        if (parteDec.length() == EnumLayoutSiga.TAM_MAX_VALOR_DIVIDA_ATRASO_DEC.getValor()){ newValorDividaAtraso += "," + parteDec; }
-        else if (parteDec.length() < EnumLayoutSiga.TAM_MAX_VALOR_DIVIDA_ATRASO_DEC.getValor()){
+        if (parteDec.length() == EnumLayoutSiga.TAM_MAX_VALOR_DIVIDA_ATRASO_DEC.getValor()) {
+            newValorDividaAtraso += "," + parteDec;
+        } else if (parteDec.length() < EnumLayoutSiga.TAM_MAX_VALOR_DIVIDA_ATRASO_DEC.getValor()) {
             newValorDividaAtraso += ",";
-            for (int i = 0; i < (EnumLayoutSiga.TAM_MAX_VALOR_DIVIDA_ATRASO_DEC.getValor() - parteDec.length()); i++){
+            for (int i = 0; i < (EnumLayoutSiga.TAM_MAX_VALOR_DIVIDA_ATRASO_DEC.getValor() - parteDec.length()); i++) {
                 newValorDividaAtraso += "0";
             }
             newValorDividaAtraso += parteDec;
-        }
-        else {
-            newValorDividaAtraso += ",";
-            for (int i = 0; i < EnumLayoutSiga.TAM_MAX_VALOR_DIVIDA_ATRASO_DEC.getValor(); i++){
-                newValorDividaAtraso += parteDec.charAt(i);
-            }
+        } else {
+            newValorDividaAtraso =
+                    String.join("", Collections.nCopies(EnumLayoutSiga.TAM_MAX_VALOR_DIVIDA_ATRASO_DEC.getValor(), "0"));
         }
 
         return newValorDividaAtraso;
