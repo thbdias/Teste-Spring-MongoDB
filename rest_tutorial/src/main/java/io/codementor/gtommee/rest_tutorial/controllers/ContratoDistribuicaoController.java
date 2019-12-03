@@ -874,6 +874,13 @@ public class ContratoDistribuicaoController {
         newJsonMutuario.getAsJsonObject().add("ramCom", newContratoJsonElement.getAsJsonObject().getAsJsonPrimitive("ramCom"));
         newJsonMutuario.getAsJsonObject().add("email", newContratoJsonElement.getAsJsonObject().getAsJsonPrimitive("email"));
 
+        //email alternativo - não vem da alta - dado do sigma - inicia vazio na leitura do arquivo da alta
+        newJsonMutuario.getAsJsonObject().addProperty("emailAlternativo", "");
+        //ddd alternativo - não vem da alta - dado do sigma - inicia vazio na leitura do arquivo da alta
+        newJsonMutuario.getAsJsonObject().addProperty("dddAlternativo", "");
+        //telefone alternativo - não vem da alta - dado do sigma - inicia vazio na leitura do arquivo da alta
+        newJsonMutuario.getAsJsonObject().addProperty("telAlternativo", "");
+
         newContratoJsonElement.getAsJsonObject().remove("nome");
         newContratoJsonElement.getAsJsonObject().remove("TipPes");
         newContratoJsonElement.getAsJsonObject().remove("cpf");

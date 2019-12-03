@@ -29,6 +29,12 @@ public class Mutuario {
     private Endereco endereco;
     @JsonProperty("endCorresp") //chave dentro do json
     private EnderecoCorrespondencia enderecoCorrespondencia;
+    @JsonProperty("emailAlternativo") //chave dentro do json
+    private String emailAlternativo;
+    @JsonProperty("dddAlternativo") //chave dentro do json
+    private String dddAlternativo;
+    @JsonProperty("telAlternativo") //chave dentro do json
+    private String telAlternativo;
 
     public void setNome(String nome) {
         this.nome = nome;
@@ -132,5 +138,29 @@ public class Mutuario {
 
     public void setEnderecoCorrespondencia(EnderecoCorrespondencia enderecoCorrespondencia) {
         this.enderecoCorrespondencia = enderecoCorrespondencia;
+    }
+
+    public String getEmailAlternativo() {
+        return emailAlternativo;
+    }
+
+    public void setEmailAlternativo(String emailAlternativo) {
+        this.emailAlternativo = emailAlternativo;
+    }
+
+    public String getDddAlternativo() {
+        return dddAlternativo;
+    }
+
+    public void setDddAlternativo(String dddAlternativo) {
+        this.dddAlternativo = dddAlternativo;
+    }
+
+    public String getTelAlternativo() {
+        return telAlternativo;
+    }
+
+    public void setTelAlternativo(String telAlternativo) {
+        this.telAlternativo = telAlternativo;
     }
 }
