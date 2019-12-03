@@ -43,7 +43,9 @@ public enum EnumLayoutSiga {
     TAM_MAX_CEP(8),
     TAM_MAX_EMAIL(60),
     TAM_MAX_VALOR_GARANTIA_INT(16), //parte inteira
-    TAM_MAX_VALOR_GARANTIA_DEC(2); //parte decimal
+    TAM_MAX_VALOR_GARANTIA_DEC(2), //parte decimal
+    QUANT_MAX_CODIGOS_ACAO_COBRANCA(10),
+    TAM_MAX_CODIGO_ACAO_COBRANCA(3);
 
     private final int valor;
 

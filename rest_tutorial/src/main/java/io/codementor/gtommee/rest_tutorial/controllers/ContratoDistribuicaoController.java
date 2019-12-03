@@ -11,10 +11,7 @@ import com.google.gson.JsonParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import java.io.*;
 import java.text.SimpleDateFormat;
-import java.util.Collections;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @RestController
 @RequestMapping("/contrato_distribuicao")
@@ -83,7 +80,7 @@ public class ContratoDistribuicaoController {
             //ses ok
             gravarSituacaoEspecialTxt(arq, contratoDistribuicaoModel.getContrato().getSituacoesEspeciais(), contratoDistribuicaoModel.getContrato().getNumeroContrato());
             //acao cobranca ???
-            gravarAcaoCobrancaTxt(arq, contratoDistribuicaoModel.getContrato().getAcoesCobranca() + "", contratoDistribuicaoModel.getContrato().getNumeroContrato());
+            gravarAcaoCobrancaTxt(arq, contratoDistribuicaoModel.getContrato().getAcoesCobranca(), contratoDistribuicaoModel.getContrato().getNumeroContrato());
             gravarArq.printf("%n");
         }
 
@@ -725,10 +722,38 @@ public class ContratoDistribuicaoController {
         return newUnidadeOperacional;
     }
 
-    private void gravarAcaoCobrancaTxt(FileWriter arq, String acaoCobranca, Long numeroContrato) {
+    private String getCodigoAcaoCobrancaFormatado(String codigoAcaoCobranca) {
+        String newCodigoAcaoCobranca = "";
+
+        if (codigoAcaoCobranca.length() == EnumLayoutSiga.TAM_MAX_CODIGO_ACAO_COBRANCA.getValor()){ newCodigoAcaoCobranca = codigoAcaoCobranca; }
+        else if (codigoAcaoCobranca.length() < EnumLayoutSiga.TAM_MAX_CODIGO_ACAO_COBRANCA.getValor()){
+            for (int i = 0; i < (EnumLayoutSiga.TAM_MAX_CODIGO_ACAO_COBRANCA.getValor() - codigoAcaoCobranca.length()); i++){
+                newCodigoAcaoCobranca += "0";
+            }
+            newCodigoAcaoCobranca += codigoAcaoCobranca;
+        }
+        else{ newCodigoAcaoCobranca = String.join("", Collections.nCopies(EnumLayoutSiga.TAM_MAX_CODIGO_ACAO_COBRANCA.getValor(), "0")); }
+
+        return newCodigoAcaoCobranca;
+    }
+
+    private void gravarAcaoCobrancaTxt(FileWriter arq, List<AcaoCobranca> acoesCobranca, Long numeroContrato) {
         PrintWriter gravarArq = new PrintWriter(arq);
         gravarArq.printf("%n%s", "A");
         gravarArq.printf("%s", getNumeroContratoFormatado(numeroContrato));
+
+        //se tiver acoes de cobranca...
+        if (acoesCobranca.size() > 0) {
+            for (AcaoCobranca acaoCobranca : acoesCobranca) {
+                gravarArq.printf("%s", getCodigoAcaoCobrancaFormatado(acaoCobranca.getCodigoAcaoCobranca() + ""));
+            }
+        }
+
+        //preenchendo com zeros o número de acoes inexistentes
+        for (int i = 0; i < (EnumLayoutSiga.QUANT_MAX_CODIGOS_ACAO_COBRANCA.getValor() - acoesCobranca.size()); i++){
+            gravarArq.printf("%s", getCodigoAcaoCobrancaFormatado("0"));
+        }
+
     }
 
     private void gravarCoobrigadoTxt(FileWriter arq, List<Coobrigado> listCoobrigado, Long numeroContrato){
