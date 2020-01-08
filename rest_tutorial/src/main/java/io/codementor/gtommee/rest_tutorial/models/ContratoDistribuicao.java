@@ -1,27 +1,105 @@
 package io.codementor.gtommee.rest_tutorial.models;
 
-import org.bson.types.ObjectId;
-import org.springframework.data.annotation.Id;
+import java.util.List;
 
-public class ContratoDistribuicaoModel {
+import com.fasterxml.jackson.annotation.JsonProperty;
 
-    @Id
-    private ObjectId id;
-    private Contrato contrato;
+public class ContratoDistribuicao {
 
-    // Constructors
-    public ContratoDistribuicaoModel() {}
+	@JsonProperty("id")
+	private String _id;
+	@JsonProperty
+	private Long clienteCobrancaTerceirizadaId;
+	@JsonProperty
+	private Long convenioId;
+	@JsonProperty
+	private Long execucaoSelecaoId;
+	@JsonProperty
+	private String dataDistribuicao;
+	@JsonProperty
+	private Integer situacao;
+	@JsonProperty
+	private String dataEncerramento;
+	@JsonProperty
+	private Contrato contrato;
+	@JsonProperty
+	private Regras regras;
+	
+	
 
-    // ObjectId needs to be converted to string
-    public String get_id() { return id.toHexString(); }
+	public ContratoDistribuicao() {
+	}
 
-    public void set_id(ObjectId id) { this.id = id; }
+	public String get_id() {
+		return _id;
+	}
 
-    public void setContrato (Contrato contrato){
-        this.contrato = contrato;
-    }
+	public void set_id(String _id) {
+		this._id = _id;
+	}
 
-    public Contrato getContrato (){
-        return this.contrato;
-    }
+	public Long getClienteCobrancaTerceirizadaId() {
+		return clienteCobrancaTerceirizadaId;
+	}
+
+	public void setClienteCobrancaTerceirizadaId(Long clienteCobrancaTerceirizadaId) {
+		this.clienteCobrancaTerceirizadaId = clienteCobrancaTerceirizadaId;
+	}
+
+	public Long getConvenioId() {
+		return convenioId;
+	}
+
+	public void setConvenioId(Long convenioId) {
+		this.convenioId = convenioId;
+	}
+
+	public Long getExecucaoSelecaoId() {
+		return execucaoSelecaoId;
+	}
+
+	public void setExecucaoSelecaoId(Long execucaoSelecaoId) {
+		this.execucaoSelecaoId = execucaoSelecaoId;
+	}
+
+	public String getDataDistribuicao() {
+		return dataDistribuicao;
+	}
+
+	public void setDataDistribuicao(String dataDistribuicao) {
+		this.dataDistribuicao = dataDistribuicao;
+	}
+
+	public Integer getSituacao() {
+		return situacao;
+	}
+
+	public void setSituacao(Integer situacao) {
+		this.situacao = situacao;
+	}
+
+	public String getDataEncerramento() {
+		return dataEncerramento;
+	}
+
+	public void setDataEncerramento(String dataEncerramento) {
+		this.dataEncerramento = dataEncerramento;
+	}
+
+	public Contrato getContrato() {
+		return contrato;
+	}
+
+	public void setContrato(Contrato contrato) {
+		this.contrato = contrato;
+	}
+
+	public Regras getRegras() {
+		return regras;
+	}
+
+	public void setRegras(Regras regras) {
+		this.regras = regras;
+	}
+
 }

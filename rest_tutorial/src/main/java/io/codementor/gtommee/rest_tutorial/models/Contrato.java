@@ -1,118 +1,75 @@
 package io.codementor.gtommee.rest_tutorial.models;
 
-import com.fasterxml.jackson.annotation.JsonAnyGetter;
-import com.fasterxml.jackson.annotation.JsonAnySetter;
-import com.fasterxml.jackson.annotation.JsonProperty;
-
-import javax.validation.Valid;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Contrato {
 
-    @JsonProperty("contrato") //chave dentro do json
-    private Long numeroContrato;
-    @JsonProperty("credor") //chave dentro do json
-    private Integer codigoCredor;
-    @JsonProperty("adm") //chave dentro do json
-    private Integer codigoAdminitrador;
-    @JsonProperty("dtAss") //chave dentro do json
-    private String dataAssinatura; //yyyyMMdd
-    @JsonProperty("situacaoContrato") //chave dentro do json
-    private SituacaoContrato situacaoContrato;
-    @JsonProperty("mutuario") //chave dentro do json
-    private Mutuario mutuario;
-    @JsonProperty("ses") //chave dentro do json
-    private List<SituacaoEspecial> situacoesEspeciais;
-    @JsonProperty("coobrigados") //chave dentro do json
-    private List<Coobrigado> coobrigados;
-    @JsonProperty("acoesCobranca")
-    private List<AcaoCobranca> acoesCobranca;
-    @Valid
-    private Map<String, Object> additionalProperties = new HashMap<String, Object>();
+	@JsonProperty
+	private Long numero;
+	@JsonProperty
+	private Integer diasAtraso;
+	@JsonProperty
+	private String dataAtualizacaoDivida;
+	@JsonProperty
+	private Double valorDivida;
+	@JsonProperty
+	private Double valorDividaAtualizada;
+	@JsonProperty
+	private DadosContrato dadosContrato;
+	
+	
 
-    public Contrato(){}
+	public Contrato() {
+	}
 
-    public void setNumeroContrato(Long numeroContrato){
-        this.numeroContrato = numeroContrato;
-    }
+	public Long getNumero() {
+		return numero;
+	}
 
-    public Long getNumeroContrato(){
-        return this.numeroContrato;
-    }
+	public void setNumero(Long numero) {
+		this.numero = numero;
+	}
 
-    public void setCodigoCredor(Integer codigoCredor){
-        this.codigoCredor = codigoCredor;
-    }
+	public Integer getDiasAtraso() {
+		return diasAtraso;
+	}
 
-    public Integer getCodigoCredor(){
-        return this.codigoCredor;
-    }
+	public void setDiasAtraso(Integer diasAtraso) {
+		this.diasAtraso = diasAtraso;
+	}
 
-    public void setCodigoAdminitrador(Integer codigoAdminitrador){
-        this.codigoAdminitrador = codigoAdminitrador;
-    }
+	public String getDataAtualizacaoDivida() {
+		return dataAtualizacaoDivida;
+	}
 
-    public Integer getCodigoAdminitrador(){
-        return this.codigoAdminitrador;
-    }
+	public void setDataAtualizacaoDivida(String dataAtualizacaoDivida) {
+		this.dataAtualizacaoDivida = dataAtualizacaoDivida;
+	}
 
-    public String getDataAssinatura() {
-        return dataAssinatura;
-    }
+	public Double getValorDivida() {
+		return valorDivida;
+	}
 
-    public void setDataAssinatura(String dataAssinatura) {
-        this.dataAssinatura = dataAssinatura;
-    }
+	public void setValorDivida(Double valorDivida) {
+		this.valorDivida = valorDivida;
+	}
 
-    public Mutuario getMutuario() {
-        return mutuario;
-    }
+	public Double getValorDividaAtualizada() {
+		return valorDividaAtualizada;
+	}
 
-    public void setMutuario(Mutuario mutuario) {
-        this.mutuario = mutuario;
-    }
+	public void setValorDividaAtualizada(Double valorDividaAtualizada) {
+		this.valorDividaAtualizada = valorDividaAtualizada;
+	}
 
-    public List<SituacaoEspecial> getSituacoesEspeciais() {
-        return situacoesEspeciais;
-    }
+	public DadosContrato getDadosContrato() {
+		return dadosContrato;
+	}
 
-    public void setSituacoesEspeciais(List<SituacaoEspecial> situacoesEspeciais) {
-        this.situacoesEspeciais = situacoesEspeciais;
-    }
+	public void setDadosContrato(DadosContrato dadosContrato) {
+		this.dadosContrato = dadosContrato;
+	}
 
-    public List<Coobrigado> getCoobrigados() {
-        return coobrigados;
-    }
-
-    public void setCoobrigados(List<Coobrigado> coobrigados) {
-        this.coobrigados = coobrigados;
-    }
-
-    @JsonAnyGetter
-    public Map<String, Object> getAdditionalProperties() {
-        return this.additionalProperties;
-    }
-
-    @JsonAnySetter
-    public void setAdditionalProperty(String name, Object value) {
-        this.additionalProperties.put(name, value);
-    }
-
-    public SituacaoContrato getSituacaoContrato() {
-        return situacaoContrato;
-    }
-
-    public void setSituacaoContrato(SituacaoContrato situacaoContrato) {
-        this.situacaoContrato = situacaoContrato;
-    }
-
-    public List<AcaoCobranca> getAcoesCobranca() {
-        return acoesCobranca;
-    }
-
-    public void setAcoesCobranca(List<AcaoCobranca> acoesCobranca) {
-        this.acoesCobranca = acoesCobranca;
-    }
 }

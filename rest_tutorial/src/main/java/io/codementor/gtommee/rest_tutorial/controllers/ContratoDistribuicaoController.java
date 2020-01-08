@@ -5,13 +5,23 @@ import com.google.gson.JsonObject;
 import io.codementor.gtommee.rest_tutorial.models.*;
 import io.codementor.gtommee.rest_tutorial.repositories.ContratoDistribuicaoRepository;
 import org.springframework.web.bind.annotation.*;
+
+import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
+
+import ch.qos.logback.core.net.SyslogOutputStream;
+
 import org.springframework.beans.factory.annotation.Autowired;
+
+import static org.hamcrest.CoreMatchers.instanceOf;
+
 import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.*;
+
+import javax.swing.plaf.synth.SynthSeparatorUI;
 
 @RestController
 @RequestMapping("/contrato_distribuicao")
@@ -19,30 +29,51 @@ public class ContratoDistribuicaoController {
     @Autowired
     private ContratoDistribuicaoRepository contratoDistribuicaoRepository;
 
-    @RequestMapping(value = "/object_from_json", method = RequestMethod.GET)
-    public String createContratoDistribuicaoModel() {
+    @RequestMapping(value = "/gravarContratoDistribuicao", method = RequestMethod.GET)
+    public String gravarContratoDistribuicaoModel() {
 //        try (FileReader reader = new FileReader("C:\\Users\\balbinth\\Documents\\othr\\Teste-Spring-MongoDB\\cont3.json")) {
-        try (FileReader reader = new FileReader("C:\\Users\\balbinth\\Documents\\othr\\Teste-Spring-MongoDB\\cont3-1.json")) {
+//        try (FileReader reader = new FileReader("C:\\Users\\balbinth\\Documents\\othr\\Teste-Spring-MongoDB\\cont3-1.json")) {
+        	try (FileReader reader = new FileReader("C:\\Users\\balbinth\\Documents\\othr\\Teste-Spring-MongoDB\\cont3-2.json")) {
 //        try (FileReader reader = new FileReader("C:\\Users\\balbinth\\Documents\\othr\\Teste-Spring-MongoDB\\cont4.json")) {
 //        try (FileReader reader = new FileReader("C:\\Users\\balbinth\\Documents\\othr\\Teste-Spring-MongoDB\\cont5.json")) {
 //        try (FileReader reader = new FileReader("C:\\Users\\balbinth\\Documents\\othr\\Teste-Spring-MongoDB\\cont6.json")) {
             long tempo_inicio = System.currentTimeMillis();
             JsonElement jsonElement = JsonParser.parseReader(reader);
 
-            ContratoDistribuicaoModel contratoDistribuicaoModel;
-            Contratos contratos = new Contratos();
-            Contrato contrato;
+            ContratoDistribuicao contratoDistribuicao;
+//            Contratos contratos = new Contratos();
+//            Contrato contrato;
 
             for (JsonElement itemContratoArray : jsonElement.getAsJsonArray()){
-                contratoDistribuicaoModel = new ContratoDistribuicaoModel();
-                contrato = new Contrato();
-                contrato = parseContratoObject(
-                                refatorarContratoJson(itemContratoArray)
-                            );
-                contratos.addContrato(contrato);
-                contratoDistribuicaoModel.setContrato(contrato);
-                contratoDistribuicaoRepository.save(contratoDistribuicaoModel);
+                contratoDistribuicao = new ContratoDistribuicao();                
+
+                contratoDistribuicao = new ObjectMapper()
+                							.readerFor(ContratoDistribuicao.class)
+                							.readValue(itemContratoArray.getAsJsonObject()
+                									.getAsJsonObject("contratoDistribuicao")
+                									.toString());
+                
+//                contrato = new Contrato();
+//                contrato = parseContratoObject(
+//                                refatorarContratoJson(itemContratoArray)
+//                            );
+//                contratos.addContrato(contrato);
+//                contratoDistribuicaoModel.setContrato(contrato);
+//                contratoDistribuicaoRepository.save(contratoDistribuicao);
+                try {
+                	contratoDistribuicaoRepository.insert(contratoDistribuicao);
+				} catch (Exception e) {
+					if (e instanceof org.springframework.dao.DuplicateKeyException) {
+						System.out.println("chave duplicada: " + contratoDistribuicao.get_id());
+					} 
+					e.printStackTrace();
+//					System.out.println(e.getMessage());
+				}
+                                
             }
+            
+            
+            
             long tempo_fim = System.currentTimeMillis();
             long tempo_milisegundos = (tempo_fim - tempo_inicio);
             long tempo_segundos = tempo_milisegundos/1000;
@@ -56,12 +87,12 @@ public class ContratoDistribuicaoController {
             return "erro 2";
         }
     }
-
+/*
     @RequestMapping(value = "/get_txt", method = RequestMethod.GET)
     public String getContratoDistribuicaoModelTxt() throws IOException {
         long tempo_inicio = System.currentTimeMillis();
         //lendo contratos model do banco mongodb
-        List<ContratoDistribuicaoModel> listContratoDistribuicaoModel = contratoDistribuicaoRepository.findAll();
+        List<ContratoDistribuicao> listContratoDistribuicaoModel = contratoDistribuicaoRepository.findAll();
         //arquivo que será enviado para o SIGA
         FileWriter arq = new FileWriter("C:\\Users\\balbinth\\Documents\\othr\\Teste-Spring-MongoDB\\siga.txt");
         PrintWriter gravarArq = new PrintWriter(arq);
@@ -70,7 +101,7 @@ public class ContratoDistribuicaoController {
         Date date = new Date(System.currentTimeMillis());
 
         //iterando lista de contratos vindo do banco mongoDB
-        for (ContratoDistribuicaoModel contratoDistribuicaoModel: listContratoDistribuicaoModel){
+        for (ContratoDistribuicao contratoDistribuicaoModel: listContratoDistribuicaoModel){
             gravarArq.printf("%s", "H");  //gravando tipo registro ok
             gravarArq.printf("%s", formatter.format(date)); //gravando data ok
             //dados do contrato ?????
@@ -91,7 +122,9 @@ public class ContratoDistribuicaoController {
         return ">>> gerar txt (milissegundos): " + tempo_milisegundos + "\n" +
                 ">>> gerar txt (segundos): " + tempo_segundos;
     }
+*/
 
+/*    
     private void gravarDadosContratoTxt(FileWriter arq, Contrato contrato){
         PrintWriter gravarArq = new PrintWriter(arq);
         gravarArq.printf("%n%s", "D");
@@ -141,7 +174,8 @@ public class ContratoDistribuicaoController {
         gravarArq.printf("%s", getDDDFormatado(contrato.getMutuario().getDddAlternativo()));
         gravarArq.printf("%s", getTelFormatado(contrato.getMutuario().getTelAlternativo()));
     }
-
+*/
+    
     private String getValorGarantiaAtualizadaFormatada(String valorGarantiaAtualizada) {
         String newValorGarantiaAtualizada = "";
         String [] arrayValores = valorGarantiaAtualizada.split("\\.");
