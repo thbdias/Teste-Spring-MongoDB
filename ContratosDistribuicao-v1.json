@@ -1,0 +1,32 @@
+{
+	"contratoDistribuicao" : {
+		"id" : 1,
+		"clienteCobrancaTerceirizadaId": 1000,
+		"convenioId" : 1000,
+		"execucaoSelecaoId" : 1000,
+		"dataDistribuicao" : "01/02/2020",
+		"situacao" : 1,
+		"dataEncerramento" : "20/02/2020",
+		"contrato" : {
+			"numero" : 123456789012,
+			"diasAtraso" : 31,
+			"dataAtualizacaoDivida" : "01/02/2020",
+			"valorDivida" : 1400.23,
+			"valorDividaAtualizada" : 1400.23,
+			"dadosContrato" : [
+				{ "dadoContrato" : { "id" : 1, "atributo" : "diasAtraso", "valor" : 31 } }, 
+				{ "dadoContrato" : { "id" : 2, "atributo" : "valorDivida", "valor" : 1400.23 } }, 
+				{ "dadoContrato" : { "id" : 3, "atributo" : "contrato", "valor" : 106431006488 } },
+				{ "dadoContrato" : { "id" : 4, "atributo" : "ses" } },
+				{ "dadoContrato" : { "id" : 5, "atributo" : "se", "valor" : 115, "atributoPai" : "ses" } },
+				{ "dadoContrato" : { "id" : 6, "atributo" : "se", "valor" : 121, "atributoPai" : "ses" } },
+				{ "dadoContrato" : { "id" : 7, "atributo" : "se", "valor" : 125, "atributoPai" : "ses" } },
+				{ "dadoContrato" : { "id" : 8, "atributo" : "coobrigados" } },
+				{ "dadoContrato" : { "id" : 9, "atributo" : "TipPesC", "valor" : 1, "atributoPai" : "coobrigados" } },
+				{ "dadoContrato" : { "id" : 10, "atributo" : "nomeC", "valor" : "MARIA DA SILVA", "atributoPai" : "coobrigados" } },
+				{ "dadoContrato" : { "id" : 11, "atributo" : "cpfC", "valor" : 54981140525, "atributoPai" : "coobrigados" } },
+				{ "dadoContrato" : { "id" : 12, "atributo" : "dddResC", "valor" : 31, "atributoPai" : "coobrigados" } }
+			]
+		}
+	}
+}
