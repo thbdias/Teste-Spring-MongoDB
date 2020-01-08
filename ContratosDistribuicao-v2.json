@@ -29,17 +29,18 @@
 			]
 		},
 		"regras" : [
-			{ "regra" : { "regraId" : 2005,
-				"dadosContratoDistribuicao" : [
-					{ "dadoContratoDistribuicao" : { "atributo" : "meta", "valor" : 80.00 } }, 
-					{ "dadoContratoDistribuicao" : { "atributo" : "remuneracao", "valor" : 10.01 } }, 
-					{ "dadoContratoDistribuicao" : { "atributo" : "prazoPermanencia", "valor" : 530 } },
-					{ "dadoContratoDistribuicao" : { "atributo" : "situacao", "valor" : 2005 } },
-					{ "dadoContratoDistribuicao" : { "atributo" : "convenio", "valor" : 2005 } },
-					{ "dadoContratoDistribuicao" : { "atributo" : "distribuicao", "valor" : 2005 } },
-					{ "dadoContratoDistribuicao" : { "atributo" : "diasAtraso", "valor" : 31 } },
-					{ "dadoContratoDistribuicao" : { "atributo" : "uf", "valor" : "MG" } }
-				] } 
+			{ "regra" : { 	"regraId" : 2005,
+							"dadosContratoDistribuicao" : [
+								{ "dadoContratoDistribuicao" : { "atributo" : "meta", "valor" : 80.00 } }, 
+								{ "dadoContratoDistribuicao" : { "atributo" : "remuneracao", "valor" : 10.01 } }, 
+								{ "dadoContratoDistribuicao" : { "atributo" : "prazoPermanencia", "valor" : 530 } },
+								{ "dadoContratoDistribuicao" : { "atributo" : "situacao", "valor" : 2005 } },
+								{ "dadoContratoDistribuicao" : { "atributo" : "convenio", "valor" : 2005 } },
+								{ "dadoContratoDistribuicao" : { "atributo" : "distribuicao", "valor" : 2005 } },
+								{ "dadoContratoDistribuicao" : { "atributo" : "diasAtraso", "valor" : 31 } },
+								{ "dadoContratoDistribuicao" : { "atributo" : "uf", "valor" : "MG" } }
+							] 
+						} 
 			}
 		]
 	}
