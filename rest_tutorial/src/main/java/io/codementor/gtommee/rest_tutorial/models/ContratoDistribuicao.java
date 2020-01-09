@@ -6,23 +6,23 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class ContratoDistribuicao {
 
-	@JsonProperty("id")
+//	@JsonProperty("id")
 	private String _id;
-	@JsonProperty
+//	@JsonProperty
 	private Long clienteCobrancaTerceirizadaId;
-	@JsonProperty
+//	@JsonProperty
 	private Long convenioId;
-	@JsonProperty
+//	@JsonProperty
 	private Long execucaoSelecaoId;
-	@JsonProperty
+//	@JsonProperty
 	private String dataDistribuicao;
-	@JsonProperty
+//	@JsonProperty
 	private Integer situacao;
-	@JsonProperty
+//	@JsonProperty
 	private String dataEncerramento;
-	@JsonProperty
+//	@JsonProperty
 	private Contrato contrato;
-	@JsonProperty
+//	@JsonProperty
 	private Regras regras;
 	
 	

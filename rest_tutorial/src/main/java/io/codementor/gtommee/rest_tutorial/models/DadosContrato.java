@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class DadosContrato {
 	
-	@JsonProperty
+//	@JsonProperty
 	private List<DadoContrato> dadoContrato;
 	
 	public void setDadoContrato(List<DadoContrato> dadoContrato) {

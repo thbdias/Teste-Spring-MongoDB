@@ -4,9 +4,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Regra {
 
-	@JsonProperty
+//	@JsonProperty
 	private String regraId;
-	@JsonProperty
+//	@JsonProperty
 	private DadosContrato dadosContrato;
 
 	public String getRegraId() {

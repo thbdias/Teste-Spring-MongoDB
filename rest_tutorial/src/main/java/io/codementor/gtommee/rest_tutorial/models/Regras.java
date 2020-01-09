@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Regras {
 	
-	@JsonProperty
+//	@JsonProperty
 	private List<Regra> regra;
 	
 	public void setRegra(List<Regra> regra) {

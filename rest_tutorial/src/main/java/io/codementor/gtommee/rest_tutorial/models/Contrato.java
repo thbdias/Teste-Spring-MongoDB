@@ -6,17 +6,17 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Contrato {
 
-	@JsonProperty
+//	@JsonProperty
 	private Long numero;
-	@JsonProperty
+//	@JsonProperty
 	private Integer diasAtraso;
-	@JsonProperty
+//	@JsonProperty
 	private String dataAtualizacaoDivida;
-	@JsonProperty
+//	@JsonProperty
 	private Double valorDivida;
-	@JsonProperty
+//	@JsonProperty
 	private Double valorDividaAtualizada;
-	@JsonProperty
+//	@JsonProperty
 	private DadosContrato dadosContrato;
 	
 	

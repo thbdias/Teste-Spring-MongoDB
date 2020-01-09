@@ -22,53 +22,41 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 import javax.swing.plaf.synth.SynthSeparatorUI;
+import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/contrato_distribuicao")
 public class ContratoDistribuicaoController {
-    @Autowired
-    private ContratoDistribuicaoRepository contratoDistribuicaoRepository;
+	@Autowired
+	private ContratoDistribuicaoRepository contratoDistribuicaoRepository;
 
-    @RequestMapping(value = "/gravarContratoDistribuicao", method = RequestMethod.GET)
-    public String gravarContratoDistribuicaoModel() {
-        	try (FileReader reader = new FileReader("C:\\Users\\balbinth\\Documents\\othr\\Teste-Spring-MongoDB\\cont3-2.json")) {
-            long tempo_inicio = System.currentTimeMillis();
-            JsonElement jsonElement = JsonParser.parseReader(reader);
+	@RequestMapping(value = "/gravarContratoDistribuicao", method = RequestMethod.POST)
+	public String gravarContratoDistribuicaoModel(@Valid @RequestBody List<ContratosEntrada> listContratosEntrada) {
+		
+		long tempo_inicio = System.currentTimeMillis();		
 
-            ContratoDistribuicao contratoDistribuicao;
+		listContratosEntrada.forEach(contratoEntrada -> {
+			ContratoDistribuicao contratoDistribuicao = new ContratoDistribuicao();
+			contratoDistribuicao = contratoEntrada.getContratoDistribuicao();
 
-            for (JsonElement itemContratoArray : jsonElement.getAsJsonArray()){
-                contratoDistribuicao = new ContratoDistribuicao();                
-
-                contratoDistribuicao = new ObjectMapper()
-                							.readerFor(ContratoDistribuicao.class)
-                							.readValue(itemContratoArray.getAsJsonObject()
-                									.getAsJsonObject("contratoDistribuicao")
-                									.toString());
-                try {
-                	contratoDistribuicaoRepository.insert(contratoDistribuicao);
-                	System.out.println("\ncontrato gravado: " + contratoDistribuicao.get_id());
-				} catch (Exception e) {
-					if (e instanceof org.springframework.dao.DuplicateKeyException) {
-						System.out.println("\nchave duplicada: " + contratoDistribuicao.get_id());
-					} 
-					e.printStackTrace();
+			try {
+				contratoDistribuicaoRepository.insert(contratoDistribuicao);
+				System.out.println("\ncontrato gravado: " + contratoDistribuicao.get_id());
+			} catch (Exception e) {
+				if (e instanceof org.springframework.dao.DuplicateKeyException) {
+					System.out.println("\nchave duplicada: " + contratoDistribuicao.get_id());
 				}
-                                
-            }
-            
-            long tempo_fim = System.currentTimeMillis();
-            long tempo_milisegundos = (tempo_fim - tempo_inicio);
-            long tempo_segundos = tempo_milisegundos/1000;
-            return ">>> alta -> json (milissegundos): " + tempo_milisegundos + "\n" +
-                    ">>> alta -> json (segundos): " + tempo_segundos;
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-            return "erro 1";
-        } catch (IOException e) {
-            e.printStackTrace();
-            return "erro 2";
-        }
-    }
+				e.printStackTrace();
+			}
+
+		});
+
+		long tempo_fim = System.currentTimeMillis();
+		long tempo_milisegundos = (tempo_fim - tempo_inicio);
+		long tempo_segundos = tempo_milisegundos / 1000;
+		return ">>> alta -> json (milissegundos): " + tempo_milisegundos + "\n" + ">>> alta -> json (segundos): "
+				+ tempo_segundos;
+		
+	}
 
 }
