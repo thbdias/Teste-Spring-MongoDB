@@ -15,6 +15,8 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -23,15 +25,37 @@ public class PetsController {
     @Autowired
     private PetsRepository repository;
 
-    @RequestMapping(value = "/", method = RequestMethod.GET)
+    @RequestMapping(value = "/abc", method = RequestMethod.GET)
     public List<Pets> getAllPets() {
         return repository.findAll();
     }
-
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public Pets getPetById(@PathVariable("id") ObjectId id) {
-        return repository.findBy_id(id);
+    
+    
+    
+    
+    
+    @RequestMapping(value = "/{inicio}/{fim}", method = RequestMethod.GET)
+    public List<Pets> getPetData(@PathVariable("inicio") Integer inicio, @PathVariable("fim") Integer fim) {
+    	Calendar c = Calendar.getInstance();
+    	
+    	c.set(2020, Calendar.JANUARY, inicio);
+    	Date datainicial = c.getTime();
+    	
+    	c.set(2020, Calendar.JANUARY, fim);
+    	Date datafinal = c.getTime();
+    	
+    	List<Pets> p = (List<Pets>) repository.findByData(datainicial, datafinal); 
+        return p;
     }
+    
+    
+    
+    
+
+//    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+//    public Pets getPetById(@PathVariable("id") ObjectId id) {
+//        return repository.findBy_id(id);
+//    }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     public void modifyPetById(@PathVariable("id") ObjectId id, @Valid @RequestBody Pets pets) {

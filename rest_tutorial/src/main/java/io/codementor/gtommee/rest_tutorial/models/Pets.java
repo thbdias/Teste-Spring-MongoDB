@@ -3,9 +3,13 @@ package io.codementor.gtommee.rest_tutorial.models;
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
 import org.bson.types.ObjectId;
+import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.validation.Valid;
+
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -15,7 +19,8 @@ public class Pets {
 
     public String name;
     public String species;
-    public String breed;
+    public String breed;    
+    private Date dataAtual;    
 
     @Valid
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
@@ -58,4 +63,14 @@ public class Pets {
     public void setAdditionalProperty(String name, Object value) {
         this.additionalProperties.put(name, value);
     }
+    
+    public void setDataAtual(Date dataAtual) {
+		this.dataAtual = dataAtual;
+	}
+    
+    public Date getDataAtual() {
+		return dataAtual;
+	}
+    
+    
 }

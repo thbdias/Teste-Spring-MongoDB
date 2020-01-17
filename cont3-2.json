@@ -1,0 +1,157 @@
+[{
+	"contratoDistribuicao" : {
+		"_id" : 1,
+		"clienteCobrancaTerceirizadaId": 1000,
+		"convenioId" : 1000,
+		"execucaoSelecaoId" : 1000,
+		"dataDistribuicao" : "01/02/2020",
+		"situacao" : 1,
+		"dataEncerramento" : "20/02/2020",
+		"contrato" : {
+			"numero" : 123456789012,
+			"diasAtraso" : 31,
+			"dataAtualizacaoDivida" : "01/02/2020",
+			"valorDivida" : 1400.23,
+			"valorDividaAtualizada" : 1400.23,
+			"dadosContrato" : {
+				"dadoContrato": [
+					{ "id" : 1, "atributo" : "diasAtraso", "valor" : 31 }, 
+					{ "id" : 2, "atributo" : "valorDivida", "valor" : 1400.23 }, 
+					{ "id" : 3, "atributo" : "contrato", "valor" : 106431006488 } ,
+					{ "id" : 4, "atributo" : "ses" } ,
+					{ "id" : 5, "atributo" : "se", "valor" : 115, "atributoPai" : "ses" } ,
+					{ "id" : 6, "atributo" : "se", "valor" : 121, "atributoPai" : "ses" } ,
+					{ "id" : 7, "atributo" : "se", "valor" : 125, "atributoPai" : "ses" } ,
+					{ "id" : 8, "atributo" : "coobrigados" } ,
+					{ "id" : 9, "atributo" : "TipPesC", "valor" : 1, "atributoPai" : "coobrigados" } ,
+					{ "id" : 10, "atributo" : "nomeC", "valor" : "MARIA DA SILVA", "atributoPai" : "coobrigados" } ,
+					{ "id" : 11, "atributo" : "cpfC", "valor" : 54981140525, "atributoPai" : "coobrigados" } ,
+					{ "id" : 12, "atributo" : "dddResC", "valor" : 31, "atributoPai" : "coobrigados" } 
+				]
+			}
+		},
+		"regras": {
+			"regra" :[
+						{ 	"regraId" : 2005,
+							"dadosContrato":{
+								"dadoContrato": [
+									{ "atributo" : "meta", "valor" : 80.00 } , 
+									{ "atributo" : "remuneracao", "valor" : 10.01 } , 
+									{ "atributo" : "prazoPermanencia", "valor" : 530 } ,
+									{ "atributo" : "situacao", "valor" : 2005 } ,
+									{ "atributo" : "convenio", "valor" : 2005 } ,
+									{ "atributo" : "distribuicao", "valor" : 2005 } ,
+									{ "atributo" : "diasAtraso", "valor" : 31 } ,
+									{ "atributo" : "uf", "valor" : "MG" } 
+								]
+							}														
+						} 
+					]
+		}		
+	}
+},
+{
+	"contratoDistribuicao" : {
+		"_id" : 1,
+		"clienteCobrancaTerceirizadaId": 1000,
+		"convenioId" : 1000,
+		"execucaoSelecaoId" : 1000,
+		"dataDistribuicao" : "01/02/2020",
+		"situacao" : 1,
+		"dataEncerramento" : "20/02/2020",
+		"contrato" : {
+			"numero" : 123456789012,
+			"diasAtraso" : 31,
+			"dataAtualizacaoDivida" : "01/02/2020",
+			"valorDivida" : 1400.23,
+			"valorDividaAtualizada" : 1400.23,
+			"dadosContrato" : {
+				"dadoContrato": [
+					{ "id" : 1, "atributo" : "diasAtraso", "valor" : 31 }, 
+					{ "id" : 2, "atributo" : "valorDivida", "valor" : 1400.23 }, 
+					{ "id" : 3, "atributo" : "contrato", "valor" : 106431006488 } ,
+					{ "id" : 4, "atributo" : "ses" } ,
+					{ "id" : 5, "atributo" : "se", "valor" : 115, "atributoPai" : "ses" } ,
+					{ "id" : 6, "atributo" : "se", "valor" : 121, "atributoPai" : "ses" } ,
+					{ "id" : 7, "atributo" : "se", "valor" : 125, "atributoPai" : "ses" } ,
+					{ "id" : 8, "atributo" : "coobrigados" } ,
+					{ "id" : 9, "atributo" : "TipPesC", "valor" : 1, "atributoPai" : "coobrigados" } ,
+					{ "id" : 10, "atributo" : "nomeC", "valor" : "MARIA DA SILVA", "atributoPai" : "coobrigados" } ,
+					{ "id" : 11, "atributo" : "cpfC", "valor" : 54981140525, "atributoPai" : "coobrigados" } ,
+					{ "id" : 12, "atributo" : "dddResC", "valor" : 31, "atributoPai" : "coobrigados" } 
+				]
+			}
+		},
+		"regras": {
+			"regra" :[
+						{ 	"regraId" : 2005,
+							"dadosContrato":{
+								"dadoContrato": [
+									{ "atributo" : "meta", "valor" : 80.00 } , 
+									{ "atributo" : "remuneracao", "valor" : 10.01 } , 
+									{ "atributo" : "prazoPermanencia", "valor" : 530 } ,
+									{ "atributo" : "situacao", "valor" : 2005 } ,
+									{ "atributo" : "convenio", "valor" : 2005 } ,
+									{ "atributo" : "distribuicao", "valor" : 2005 } ,
+									{ "atributo" : "diasAtraso", "valor" : 31 } ,
+									{ "atributo" : "uf", "valor" : "MG" } 
+								]
+							}														
+						} 
+					]
+		}		
+	}
+},
+{
+	"contratoDistribuicao" : {
+		"_id" : 2,
+		"clienteCobrancaTerceirizadaId": 1000,
+		"convenioId" : 1000,
+		"execucaoSelecaoId" : 1000,
+		"dataDistribuicao" : "01/02/2020",
+		"situacao" : 1,
+		"dataEncerramento" : "20/02/2020",
+		"contrato" : {
+			"numero" : 123456789012,
+			"diasAtraso" : 31,
+			"dataAtualizacaoDivida" : "01/02/2020",
+			"valorDivida" : 1400.23,
+			"valorDividaAtualizada" : 1400.23,
+			"dadosContrato" : {
+				"dadoContrato": [
+					{ "id" : 1, "atributo" : "diasAtraso", "valor" : 31 }, 
+					{ "id" : 2, "atributo" : "valorDivida", "valor" : 1400.23 }, 
+					{ "id" : 3, "atributo" : "contrato", "valor" : 106431006488 } ,
+					{ "id" : 4, "atributo" : "ses" } ,
+					{ "id" : 5, "atributo" : "se", "valor" : 115, "atributoPai" : "ses" } ,
+					{ "id" : 6, "atributo" : "se", "valor" : 121, "atributoPai" : "ses" } ,
+					{ "id" : 7, "atributo" : "se", "valor" : 125, "atributoPai" : "ses" } ,
+					{ "id" : 8, "atributo" : "coobrigados" } ,
+					{ "id" : 9, "atributo" : "TipPesC", "valor" : 1, "atributoPai" : "coobrigados" } ,
+					{ "id" : 10, "atributo" : "nomeC", "valor" : "MARIA DA SILVA", "atributoPai" : "coobrigados" } ,
+					{ "id" : 11, "atributo" : "cpfC", "valor" : 54981140525, "atributoPai" : "coobrigados" } ,
+					{ "id" : 12, "atributo" : "dddResC", "valor" : 31, "atributoPai" : "coobrigados" } 
+				]
+			}
+		},
+		"regras": {
+			"regra" :[
+						{ 	"regraId" : 2005,
+							"dadosContrato":{
+								"dadoContrato": [
+									{ "atributo" : "meta", "valor" : 80.00 } , 
+									{ "atributo" : "remuneracao", "valor" : 10.01 } , 
+									{ "atributo" : "prazoPermanencia", "valor" : 530 } ,
+									{ "atributo" : "situacao", "valor" : 2005 } ,
+									{ "atributo" : "convenio", "valor" : 2005 } ,
+									{ "atributo" : "distribuicao", "valor" : 2005 } ,
+									{ "atributo" : "diasAtraso", "valor" : 31 } ,
+									{ "atributo" : "uf", "valor" : "MG" } 
+								]
+							}														
+						} 
+					]
+		}		
+	}
+}
+]
