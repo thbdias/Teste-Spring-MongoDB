@@ -1,6 +1,9 @@
 package io.codementor.gtommee.rest_tutorial.controllers;
 
+import io.codementor.gtommee.rest_tutorial.models.Domain;
+import io.codementor.gtommee.rest_tutorial.models.HostingCount;
 import io.codementor.gtommee.rest_tutorial.models.Pets;
+import io.codementor.gtommee.rest_tutorial.repositories.DomainRepository;
 import io.codementor.gtommee.rest_tutorial.repositories.PetsRepository;
 import org.bson.types.ObjectId;
 import org.json.simple.JSONArray;
@@ -8,6 +11,10 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.MongoOperations;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
+//import org.springframework.data.mongodb.repository.Query;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -15,6 +22,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -24,10 +32,16 @@ import java.util.List;
 public class PetsController {
     @Autowired
     private PetsRepository repository;
+    @Autowired
+    private DomainRepository domainRepository; 
+   
+    
+    
+    
 
-    @RequestMapping(value = "/abc", method = RequestMethod.GET)
+    @RequestMapping(value = "/", method = RequestMethod.GET)
     public List<Pets> getAllPets() {
-        return repository.findAll();
+        return (List<Pets>) repository.findAll();
     }
     
     
@@ -48,6 +62,20 @@ public class PetsController {
         return p;
     }
     
+    
+    @GetMapping(value = "/getNomeEspecie")
+    public Pets getNomeEspecie(){    	
+    	return repository.getPetsByNome("rex");    	
+    }
+    
+    
+    
+    @GetMapping(value = "/group")
+    public List<HostingCount> getGroup(){    	
+    	return domainRepository.groupDomain(); 
+//    	return domainRepository.findAll();
+    }
+   
     
     
     
