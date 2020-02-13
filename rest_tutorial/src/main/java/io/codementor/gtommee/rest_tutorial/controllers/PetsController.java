@@ -34,19 +34,11 @@ public class PetsController {
     private PetsRepository repository;
     @Autowired
     private DomainRepository domainRepository; 
-   
-    
-    
-    
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public List<Pets> getAllPets() {
         return (List<Pets>) repository.findAll();
     }
-    
-    
-    
-    
     
     @RequestMapping(value = "/{inicio}/{fim}", method = RequestMethod.GET)
     public List<Pets> getPetData(@PathVariable("inicio") Integer inicio, @PathVariable("fim") Integer fim) {
@@ -62,24 +54,22 @@ public class PetsController {
         return p;
     }
     
-    
     @GetMapping(value = "/getNomeEspecie")
     public Pets getNomeEspecie(){    	
     	return repository.getPetsByNome("rex");    	
     }
-    
-    
     
     @GetMapping(value = "/group")
     public List<HostingCount> getGroup(){    	
     	return domainRepository.groupDomain(); 
 //    	return domainRepository.findAll();
     }
+    
+    @GetMapping(value = "/group2")
+    public List<Domain> getGroup2(){    	
+    	return domainRepository.groupDomain2(); 
+    }
    
-    
-    
-    
-
 //    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
 //    public Pets getPetById(@PathVariable("id") ObjectId id) {
 //        return repository.findBy_id(id);
@@ -102,7 +92,6 @@ public class PetsController {
     public void deletePet(@PathVariable ObjectId id) {
         repository.delete(repository.findBy_id(id));
     }
-
 
     @RequestMapping(value = "/write_json", method = RequestMethod.GET)
     public String writeJson() {
@@ -141,7 +130,6 @@ public class PetsController {
             return "erro";
         }
     }
-
 
     @RequestMapping(value = "/read_json", method = RequestMethod.GET)
     public String readJson() {
