@@ -128,7 +128,7 @@ public class CustomDomainRepositoryImpl implements CustomDomainRepository {
 	}
 
 	private GroupOperation getGroupOperation() {
-		return group("hosting")
+		return group("hosting", "domainName")
 				.addToSet("domainName").as("domainName")
 				.count().as("total");
 	}
