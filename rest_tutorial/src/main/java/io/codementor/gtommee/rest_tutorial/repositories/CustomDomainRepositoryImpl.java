@@ -16,12 +16,18 @@ import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.aggregation.Aggregation;
 import org.springframework.data.mongodb.core.aggregation.AggregationResults;
+import org.springframework.data.mongodb.core.aggregation.GroupOperation;
 import org.springframework.data.mongodb.core.aggregation.MatchOperation;
+import org.springframework.data.mongodb.core.aggregation.ProjectionOperation;
+import org.springframework.data.mongodb.core.aggregation.SortOperation;
 import org.springframework.data.mongodb.core.aggregation.TypedAggregation;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Repository;
+
+
+
 import java.util.List;
 
 import io.codementor.gtommee.rest_tutorial.models.Domain;
@@ -74,10 +80,10 @@ public class CustomDomainRepositoryImpl implements CustomDomainRepository {
 	public List<Domain> groupDomain3() {
 
 		Aggregation agg = newAggregation(
-				matchOperation(10, "test2.com")
-//				group("hosting").count().as("total"),
-//				project("total").and("hosting").previousOperation(),
-//				sort(Sort.Direction.DESC, "total")					
+				matchOperation(10),
+				getGroupOperation(),
+				getProjectionOperation(),
+				getSortOperation()					
 			);
 			AggregationResults<Domain> groupResults = mongoTemplate.aggregate(agg, Domain.class, Domain.class);
 			List<Domain> result = groupResults.getMappedResults();
@@ -104,8 +110,36 @@ public class CustomDomainRepositoryImpl implements CustomDomainRepository {
 		
 		return match(criteria);
 	}
+	
+	private MatchOperation matchOperation(Integer tamMaxId) {
+		Criteria criteria = new Criteria();
+		ArrayList<Criteria> listCriteria = new ArrayList<>();
+		
+		if (tamMaxId == 10) {
+			listCriteria.add(Criteria.where("_id").lt(tamMaxId));
+		}
+		
+		criteria = new Criteria()
+					.andOperator(
+						listCriteria.toArray(new Criteria[listCriteria.size()])				
+					);
+		
+		return match(criteria);
+	}
 
-	   
+	private GroupOperation getGroupOperation() {
+		return group("hosting")
+				.addToSet("domainName").as("domainName")
+				.count().as("total");
+	}
+	
+	private ProjectionOperation getProjectionOperation() {
+		return project("total", "domainName").and("hosting").previousOperation();
+	} 
+	
+	private SortOperation getSortOperation() {
+		return sort(Sort.Direction.DESC, "total");
+	}
 }
 
 
