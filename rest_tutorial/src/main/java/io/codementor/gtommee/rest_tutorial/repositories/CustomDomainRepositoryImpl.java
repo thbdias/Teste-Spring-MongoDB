@@ -86,9 +86,7 @@ public class CustomDomainRepositoryImpl implements CustomDomainRepository {
 	
 	
 	private MatchOperation matchOperation(Integer tamMaxId, String domainName) {
-		
 		Criteria criteria = new Criteria();
-		
 		ArrayList<Criteria> listCriteria = new ArrayList<>();
 		
 		if (tamMaxId == 10) {
@@ -99,16 +97,12 @@ public class CustomDomainRepositoryImpl implements CustomDomainRepository {
 			listCriteria.add(Criteria.where("domainName").is(domainName));
 		}
 		
-		
-		
-		criteria = Criteria.where("_id").gt(1)
+		criteria = new Criteria()
 					.andOperator(
 						listCriteria.toArray(new Criteria[listCriteria.size()])				
 					);
 		
-		
 		return match(criteria);
-		
 	}
 
 	   
