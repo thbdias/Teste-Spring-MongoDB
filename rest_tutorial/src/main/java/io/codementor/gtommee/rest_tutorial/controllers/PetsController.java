@@ -69,6 +69,11 @@ public class PetsController {
     public List<Domain> getGroup2(){    	
     	return domainRepository.groupDomain2(); 
     }
+    
+    @GetMapping(value = "/group3")
+    public List<Domain> getGroup3(){    	
+    	return domainRepository.groupDomain3(); 
+    }
    
 //    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
 //    public Pets getPetById(@PathVariable("id") ObjectId id) {

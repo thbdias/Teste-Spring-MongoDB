@@ -8,7 +8,7 @@ public class Domain {
 
 	public String domainName;
 	public String hosting;
-	public Integer total;
+	public transient Integer total;
 	
 	public void setTotal(Integer total) {
 		this.total = total;

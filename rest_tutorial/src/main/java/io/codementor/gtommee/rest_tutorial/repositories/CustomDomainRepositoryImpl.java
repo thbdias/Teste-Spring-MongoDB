@@ -1,5 +1,6 @@
 package io.codementor.gtommee.rest_tutorial.repositories;
 
+import java.util.ArrayList;
 import java.util.List;
 
 //imports as static
@@ -15,6 +16,7 @@ import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.aggregation.Aggregation;
 import org.springframework.data.mongodb.core.aggregation.AggregationResults;
+import org.springframework.data.mongodb.core.aggregation.MatchOperation;
 import org.springframework.data.mongodb.core.aggregation.TypedAggregation;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
@@ -63,8 +65,63 @@ public class CustomDomainRepositoryImpl implements CustomDomainRepository {
 			
 			List<Domain> result = groupResults.getMappedResults();
 			
-	    return null;
+	    return result;
+	}
+	
+	
+	
+	@Override
+	public List<Domain> groupDomain3() {
+
+		Aggregation agg = newAggregation(
+				matchOperation(10, "test2.com")
+//				group("hosting").count().as("total"),
+//				project("total").and("hosting").previousOperation(),
+//				sort(Sort.Direction.DESC, "total")					
+			);
+			AggregationResults<Domain> groupResults = mongoTemplate.aggregate(agg, Domain.class, Domain.class);
+			List<Domain> result = groupResults.getMappedResults();
+	    return result;
+	}
+	
+	
+	private MatchOperation matchOperation(Integer tamMaxId, String domainName) {
+		
+		Criteria criteria = new Criteria();
+		
+		ArrayList<Criteria> listCriteria = new ArrayList<>();
+		
+		if (tamMaxId == 10) {
+			listCriteria.add(Criteria.where("_id").lt(tamMaxId));
+		}
+		
+		if (domainName != null && !domainName.equalsIgnoreCase("")) {
+			listCriteria.add(Criteria.where("domainName").is(domainName));
+		}
+		
+		
+		
+		criteria = Criteria.where("_id").gt(1)
+					.andOperator(
+						listCriteria.toArray(new Criteria[listCriteria.size()])				
+					);
+		
+		
+		return match(criteria);
+		
 	}
 
 	   
 }
+
+
+
+
+
+
+
+
+
+
+
+
