@@ -74,6 +74,14 @@ public class PetsController {
     public List<Domain> getGroup3(){    	
     	return domainRepository.groupDomain3(); 
     }
+    
+    @GetMapping(value = "/operadorIn")
+    public List<Domain> operadorIn(){    	
+    	List<String> list = new ArrayList<>();
+    	list.add("test1.com");
+    	list.add("test2.com");
+    	return domainRepository.operadorIn(list);    	
+    }
    
 //    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
 //    public Pets getPetById(@PathVariable("id") ObjectId id) {
