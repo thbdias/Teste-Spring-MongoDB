@@ -75,6 +75,13 @@ public class PetsController {
     	return domainRepository.groupDomain3(); 
     }
     
+    @GetMapping(value = "/gerarAtualizacaoDivida")
+    public String gerarAtualizacaoDivida(){    	
+    	return repository.gerarAtualizacaoDivida(); 
+    }
+    
+    
+    
     @GetMapping(value = "/operadorIn")
     public List<Domain> operadorIn(){    	
     	List<String> list = new ArrayList<>();

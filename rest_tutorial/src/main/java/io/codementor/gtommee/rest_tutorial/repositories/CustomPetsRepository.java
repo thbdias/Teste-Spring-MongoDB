@@ -8,4 +8,6 @@ public interface CustomPetsRepository {
 	 Pets getPetsByNome(String nome);
 	 
 	 List<Pets> groupPets();
+	 
+	 String gerarAtualizacaoDivida();
 }
