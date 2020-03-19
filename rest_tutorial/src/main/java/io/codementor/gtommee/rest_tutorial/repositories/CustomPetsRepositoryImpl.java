@@ -42,8 +42,8 @@ public class CustomPetsRepositoryImpl implements CustomPetsRepository {
 		try {
 			//{"contrato":111512010010,"vlrDiv":" 00000000017345,79","datRemessa":20200310},
 			
-			int tam = 10;
-			FileWriter arq = new FileWriter("C:\\Users\\balbinth\\Documents\\atualizacao_divida\\novo.txt");
+			int tam = 1500000;
+			FileWriter arq = new FileWriter("C:\\Users\\balbinth\\Documents\\atualizacao_divida\\atualizacaoDivida-sigma-1.500.000.txt");
 		    BufferedWriter gravarArq = new BufferedWriter(arq);
 	    
 		    for (int i = 1; i <= tam; i++) {			    
